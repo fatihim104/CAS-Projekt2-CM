@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Course, Language, Status } from 'src/app/domain/course';
+import { map, tap } from 'rxjs/operators';
+import { Course, Language, Status } from 'src/app/domain/course.model';
 import { CourseService } from 'src/app/services/course.service';
 
 interface Column {
@@ -15,16 +15,16 @@ interface Column {
   providers: [CourseService]
 })
 export class CoursesComponent implements OnInit {
-  courses: Course[] = [] ;
+  courses?: Course[] | any ;
 
   cols! : Column[];
 
 
 
-  constructor(private http: HttpClient, private courseService:CourseService){}
+  constructor( private courseService:CourseService){}
 
   ngOnInit(): void {
-    this.courseService.getCourses().subscribe(result => this.courses=result)
+    this.getCourses()
 
     this.cols = [
       { field: 'language', header: 'Language' },
@@ -36,19 +36,38 @@ export class CoursesComponent implements OnInit {
 
   }
 
+  getCourses(){
+    this.courseService.getCourses().snapshotChanges().pipe(
+       
+         map(changes =>
+    
+        changes.map(c=>          
+          ({id: c.payload.doc.id, ...c.payload.doc.data()})
+        
+          )
+        )
+    ).subscribe(data=> {
+      this.courses = data;
+      
+    }, 
+    (error) => {
+      console.error("Error fetching courses", error);
+      this.courses = [];
+    });
+  }
+
   planNewCourse(){
 
     const course={
-      id: 2,
-      language: Language.SPANIS,
+      language: Language.SPANISH,
       level: "A2",
       place: "Luzern",
       status: Status.PLANNING,
       price: 700,
     }
-    this.http.post('https://cas-project2-default-rtdb.europe-west1.firebasedatabase.app/courses.json', course)
-    .subscribe(data => console.log(data))
+    this.courseService.create(course).then(() => {
+      console.log("created successfully!");
+    })
   
   }
-
 }

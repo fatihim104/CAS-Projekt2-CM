@@ -1,17 +1,17 @@
 export interface Course {
-    id: any;
-    language: Language;
-    level: string;
-    place: string;
-    status: Status;
-    price: number;
+    id?: string;
+    language?: Language;
+    level?: string;
+    place?: string;
+    status?: Status;
+    price?: number;
 }
 
 export enum Language{
     ENGLISH = "ENGLISH",
     GERMAN = "GERMAN",
     ITALIAN = "ITALIAN",
-    SPANIS = "SPANIS",
+    SPANISH = "SPANISH",
     FRENCH = "FRENCH"
 }
 

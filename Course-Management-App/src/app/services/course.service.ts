@@ -1,26 +1,35 @@
 import { HttpClient } from '@angular/common/http';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+
 import { Injectable } from '@angular/core';
-import { Observable, map, tap } from "rxjs";
-import { Course } from '../domain/course';
+import { Course } from '../domain/course.model';
 
 @Injectable({providedIn: 'root'})
 export class CourseService {
-    private url = "https://cas-project2-default-rtdb.europe-west1.firebasedatabase.app/"
+    private dbPath = "/courses"
 
-    constructor(private http: HttpClient) { }
+    coursesRef: AngularFirestoreCollection<Course>
     
-    getCourses():Observable<Course[]>{
-     return this.http.get<Course[]>(this.url+"courses.json")
-        .pipe(
-            map(data => {
-                const courses : Course[] = [];
-                for(const key in data){
-                    courses.push({...data[key], id:key})
-                }
-                return courses; 
-            }),
-            tap(data => console.log(data)
-            )
-        )   
+    constructor(private db: AngularFirestore) {
+        this.coursesRef = db.collection(this.dbPath)
+     }
+    
+    getCourses():AngularFirestoreCollection<Course>{
+     return this.coursesRef;
+        
     }
+
+    create(course: Course) {
+        return this.coursesRef.add({ ...course });
+    }
+
+    update(id: string, data: any): Promise<void> {
+        return this.coursesRef.doc(id).update(data);
+    }
+
+    delete(id: string): Promise<void> {
+        return this.coursesRef.doc(id).delete();
+    }
+
+
 }

@@ -3,18 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ButtonModule } from 'primeng/button';
+
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TabMenuComponent } from './tab-menu/tab-menu';
 
 import { TeamComponent } from './components/team/team.component';
-import { TableModule } from 'primeng/table';
+
 import { HomeComponent } from './components/home/home.component';
-import { CoursesComponent } from './components/courses/courses.component';
+
 import { ParticipantsComponent } from './components/participants/participants.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { environment } from 'src/environments/environment.development';
+import { CourseModule } from './course/course.module';
+
 
 @NgModule({
   declarations: [
@@ -22,18 +28,18 @@ import { ContactComponent } from './components/contact/contact.component';
     TabMenuComponent,
     HomeComponent,
     TeamComponent,
-    CoursesComponent,
     ParticipantsComponent,
-    ContactComponent
+    ContactComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ButtonModule,
-    TabMenuModule,
-    TableModule
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
+    HttpClientModule,   
+    TabMenuModule,  
+    CourseModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
