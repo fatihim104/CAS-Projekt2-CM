@@ -4,27 +4,30 @@ import { Team } from 'src/app/domain/team.model';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
 import { Status } from 'src/app/domain/course.model';
+import { Language } from 'src/app/domain/course.model';
+import { Level } from 'src/app/domain/course.model';
+import { TitleCasePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-plan-new-course',
   templateUrl: './plan-new-course.component.html',
-  styleUrls: ['./plan-new-course.component.scss']
+  styleUrls: ['./plan-new-course.component.scss'],
+  providers: [TitleCasePipe]
 })
 export class PlanNewCourseComponent implements OnInit {
   students!: Participant[] ;
   teachers!: Team[] ;
-  // statusOptions = Status;
-  // statusKey:any[];
-
-  statusOptions: { label: string }[]= []
+  statusOptions: { label: string }[]= [] ;
+  languageOptions: { label: string }[]= [] ;
+  levelOptions: { label: string }[]= [] ;
 
 
   form: FormGroup = new FormGroup({
-    language: new FormControl(''),
-    level: new FormControl(''),
+    selectedLanguage: new FormControl(''),
+    selectedLevel: new FormControl(''),
     place: new FormControl(''),
-    status: new FormControl(''),
+    selectedStatus: new FormControl(''),
     date: new FormControl(''),
     time: new FormControl(''),
     selectedStudents: new FormControl([]),
@@ -34,8 +37,9 @@ export class PlanNewCourseComponent implements OnInit {
 
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private courseService:CourseService) {
-    // this.statusKey = Object.keys(this.statusOptions)
+  constructor(private formBuilder: FormBuilder, private courseService:CourseService, private titlecasePipe: TitleCasePipe) {
+    this.languageOptions = Object.keys(Language).map(key => ({ label: this.titlecasePipe.transform(key) }));
+    this.levelOptions = Object.keys(Level).map(key => ({ label: key }));
     this.statusOptions = Object.keys(Status).map(key => ({ label: key.toLowerCase() }));
   }
 
@@ -47,10 +51,10 @@ export class PlanNewCourseComponent implements OnInit {
 
     this.form = this.formBuilder.group(
       {
-        language:['', [Validators.required, Validators.minLength(3), Validators.maxLength(8)]],
-        level:['', Validators.required],
+        selectedLanguage:['', [Validators.required, Validators.minLength(3), Validators.maxLength(8)]],
+        selectedLevel:['', Validators.required],
         place:[''],
-        status:['', Validators.required],
+        selectedStatus:['', Validators.required],
         date:['', Validators.required],
         time:['', Validators.required],
         selectedStudents:[''],
@@ -68,13 +72,13 @@ export class PlanNewCourseComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
 
-    // if (this.form.invalid) {
-    //   return;
-    // }
+    if (this.form.invalid) {
+      return;
+    }
 
-    // this.courseService.create(this.form.value).then(() => {
-    //   console.log("created successfully!");
-    // })
+    this.courseService.create(this.form.value).then(() => {
+      console.log("created successfully!");
+    })
 
     console.log(JSON.stringify(this.form.value, null, 2));
     console.log(this.f['language'])
