@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Course, Language, Status } from 'src/app/domain/course.model';
 import { CourseService } from 'src/app/services/course.service';
 

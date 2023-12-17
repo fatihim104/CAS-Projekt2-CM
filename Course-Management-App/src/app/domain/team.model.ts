@@ -2,12 +2,12 @@ import { Course } from "./course.model";
 
 export interface Team {
     id?: string;
-    name?: string;
+    name: string;
     lastName?: string;
     email?: string;
-    startDate: string;
+    startDate?: string;
     birthDay?: string;
     nationality?: number;
-    activeCourses: Course[];
-    completedCourses: Course[];
+    activeCourses?: Course[];
+    passivCourses?: Course[];
 }

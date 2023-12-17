@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TabMenuComponent } from './tab-menu/tab-menu';
 
+
 import { TeamComponent } from './components/team/team.component';
 
 import { HomeComponent } from './components/home/home.component';
@@ -39,7 +40,12 @@ import { CourseModule } from './course/course.module';
     HttpClientModule,   
     TabMenuModule,  
     CourseModule,
-    AppRoutingModule
+    AppRoutingModule,
+   
+    // FormsModule
+  ],
+  exports:[
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

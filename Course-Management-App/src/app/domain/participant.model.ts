@@ -7,6 +7,6 @@ export interface Participant {
     email?: string;
     birthDay?: string;
     nationality?: number;
-    activeCourses: Course[];
-    completedCourses: Course[];
+    activeCourses?: Course[];
+    completedCourses?: Course[];
 }

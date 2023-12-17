@@ -1,14 +1,20 @@
+import { Participant } from "./participant.model";
+import { Team } from "./team.model";
+
 export interface Course {
     id?: string;
-    language?: Language;
+    language: Language;
     level?: string;
     place?: string;
+    time?: string;
     status?: Status;
     price?: number;
+    teacher?: Team;
+    participants?: Participant[];
 }
 
 export enum Language{
-    ENGLISH = "ENGLISH",
+    ENGLISH = "English",
     GERMAN = "GERMAN",
     ITALIAN = "ITALIAN",
     SPANISH = "SPANISH",

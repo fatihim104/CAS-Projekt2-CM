@@ -1,84 +1,120 @@
-<!-- <div class="row">
-    <div class="col">
-        <span class="p-float-label">
-     
-            <input pInputText id="username"  formControlName="text" />
-            <label for="username">Username</label>
-        </span>
-
-    </div>
- 
-
-</div> -->
-
 <div class="card px-5 col-8 m-auto">
   <h2>PLAN NEW COURSE</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="grid p-fluid mt-5">
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <input
+            type="text"
+            id="language"
+            pInputText
+            class="validation"
+            formControlName="language"
+          />
+          <label for="language">Course Language</label>
+        </span>
+        <div *ngIf="f['language'].touched && f['language'].errors" >
+          <small *ngIf="f['language'].errors['minlength']" class="text-pink-600">Language must be at least 3 characters</small>
+          <small *ngIf="f['language'].errors['required']" class="text-pink-600">Language is required</small>
+          <small *ngIf="f['language'].errors['maxlength']" class="text-pink-600">Language must nod exceed 8 characters</small>
+        </div>
+      </div>
 
-  <div class="grid p-fluid mt-5">
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <input type="text" id="level" class="validation" pInputText formControlName="level" />
+          <label for="level">Level</label>
+        </span>
+        <div *ngIf="f['level'].touched && f['level'].errors" >
+          <small *ngIf="f['level'].errors['required']" class="text-pink-600">Level is required</small>
+        </div>
+      </div>
 
-    <div class="field col-12 md:col-6 p-2">
-      <span class="p-float-label">
-        <input
-          type="text"
-          id="language"
-          pInputText
-          formControlName="language"
-          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        />
-        <label for="language" >Course Language</label>
-      </span>
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <input type="text" id="place" pInputText formControlName="place" />
+          <label for="place">Place</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <p-dropdown
+          id="selectedStatus"
+          [options]="statusOptions"
+          formControlName="selectedStatus"
+          placeholder="Select Status"
+        ></p-dropdown>
+        <label for="selectedStatus">Status</label>
+        </span>
+        <div *ngIf="f['status'].touched && f['status'].errors">
+          <small *ngIf="f['status'].errors['required']" class="text-pink-600">Status is required</small>
+        </div>
+      </div>
+
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <p-calendar
+            id="date"
+            formControlName="date"
+            selectionMode="range"
+            dateFormat="dd.mm.yy"
+            [showIcon]="true"
+            [showButtonBar]="true"
+            class="ng-invalid"
+          ></p-calendar>
+          <label for="date">Date</label>
+        </span>
+        <div *ngIf="f['date'].touched && f['date'].errors">
+          <small *ngIf="f['date'].errors['required']" class="text-pink-600">Date is required</small>
+        </div>
+      </div>
+
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <p-calendar id="time" formControlName="time" [timeOnly]="true" ></p-calendar>
+          <label for="time">Time</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <p-multiSelect
+            id="selectedStudents"
+            inputId="float-label"
+            [options]="students"
+            formControlName="selectedStudents"
+            optionLabel="name"
+            placeholder="Select Participants"
+          ></p-multiSelect>
+
+          <label for="participants">Select Participants</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <p-dropdown
+            id="selectedTeacher"
+            [options]="teachers"
+            formControlName="selectedTeacher"
+            placeholder="Select Teacher"
+            optionLabel="name"
+          ></p-dropdown>
+          <label for="selectedTeacher">Select Teacher</label>
+        </span>
+      </div>
+
+      <div class="field col-12 md:col-6 p-2">
+        <span class="p-float-label">
+          <input type="number" id="price" class="validation" pInputText formControlName="price" />
+          <label for="price">Price</label>
+        </span>
+      </div>
     </div>
-
-    <div class="field col-12 md:col-6 p-2">
-      <span class="p-float-label">
-        <input
-          type="text"
-          id="level"
-          pInputText
-          formControlName="level"
-          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        />
-        <label for="level">Level</label>
-      </span>
+    <div class="flex justify-content-around">
+      <p-button label="Reset" severity="secondary" (click)="onReset()"></p-button>
+      <p-button type="submit" label="Submit" severity="success"></p-button>
     </div>
-
-    <div class="field col-12 md:col-6 p-2">
-      <span class="p-float-label">
-        <input
-          type="text"
-          id="place"
-          pInputText
-          formControlName="place"
-          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        />
-        <label for="place">Place</label>
-      </span>
-    </div>
-
-    <div class="field col-12 md:col-6 p-2">
-      <span class="p-float-label ">
-        <input
-          type="text"
-          id="status"
-          pInputText
-          formControlName="status"
-          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        />
-        <label for="status">Status</label>
-      </span>
-    </div>
-
-    <div class="field col-12 md:col-6 p-2">
-      <span class="p-float-label">
-        <input
-          type="number"
-          id="price"
-          pInputText
-          formControlName="price"
-          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-        />
-        <label for="price">Price</label>
-      </span>
-    </div>
-  </div>
+  </form>
 </div>
