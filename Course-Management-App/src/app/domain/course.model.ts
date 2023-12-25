@@ -6,6 +6,7 @@ export interface Course {
     language: Language;
     level?: string;
     place?: string;
+    date?: string;
     time?: string;
     status?: Status;
     price?: number;

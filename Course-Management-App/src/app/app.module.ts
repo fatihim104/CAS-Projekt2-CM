@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TabMenuComponent } from './tab-menu/tab-menu';
+import { ToastModule } from 'primeng/toast';
 
 
 import { TeamComponent } from './components/team/team.component';
@@ -21,6 +22,7 @@ import { ParticipantsComponent } from './components/participants/participants.co
 import { ContactComponent } from './components/contact/contact.component';
 import { environment } from 'src/environments/environment.development';
 import { CourseModule } from './course/course.module';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -30,7 +32,7 @@ import { CourseModule } from './course/course.module';
     HomeComponent,
     TeamComponent,
     ParticipantsComponent,
-    ContactComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -41,13 +43,14 @@ import { CourseModule } from './course/course.module';
     TabMenuModule,  
     CourseModule,
     AppRoutingModule,
+    ToastModule
    
     // FormsModule
   ],
   exports:[
    
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

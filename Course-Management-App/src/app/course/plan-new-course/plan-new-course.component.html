@@ -5,18 +5,18 @@
       <div class="field col-12 md:col-6 p-2">
         <span class="p-float-label">
           <p-dropdown
-            id="selectedLanguage"
+            id="language"
             [options]="languageOptions"
-            formControlName="selectedLanguage"
+            formControlName="language"
             placeholder="Select Language"
             optionLabel="label"
             [showClear]="true"
           ></p-dropdown>
-          <label for="selectedLanguage">Select Language</label>
+          <label for="language">Select Language</label>
         </span>
-        <div *ngIf="f['selectedLanguage'].touched && f['selectedLanguage'].errors">
-          <small *ngIf="f['selectedLanguage'].errors['required']" class="text-pink-600"
-            >Level is required</small
+        <div *ngIf="f['language'].touched && f['language'].errors">
+          <small *ngIf="f['language'].errors['required']" class="text-pink-600"
+            >Language is required</small
           >
         </div>
       </div>
@@ -24,16 +24,16 @@
       <div class="field col-12 md:col-6 p-2">
         <span class="p-float-label">
           <p-dropdown
-            id="selectedLevel"
+            id="level"
             [options]="levelOptions"
-            formControlName="selectedLevel"
+            formControlName="level"
             placeholder="Select Level"
             [showClear]="true"
           ></p-dropdown>
-          <label for="selectedLanguage">Select Level</label>
+          <label for="level">Select Level</label>
         </span>
-        <div *ngIf="f['selectedLevel'].touched && f['selectedLevel'].errors">
-          <small *ngIf="f['selectedLevel'].errors['required']" class="text-pink-600"
+        <div *ngIf="f['level'].touched && f['level'].errors">
+          <small *ngIf="f['level'].errors['required']" class="text-pink-600"
             >Level is required</small
           >
         </div>
@@ -49,16 +49,16 @@
       <div class="field col-12 md:col-6 p-2">
         <span class="p-float-label">
           <p-dropdown
-            id="selectedStatus"
+            id="status"
             [options]="statusOptions"
-            formControlName="selectedStatus"
+            formControlName="status"
             placeholder="Select Status"
             [showClear]="true"
           ></p-dropdown>
-          <label for="selectedStatus">Status</label>
+          <label for="status">Status</label>
         </span>
-        <div *ngIf="f['selectedStatus'].touched && f['selectedStatus'].errors">
-          <small *ngIf="f['selectedStatus'].errors['required']" class="text-pink-600"
+        <div *ngIf="f['status'].touched && f['status'].errors">
+          <small *ngIf="f['status'].errors['required']" class="text-pink-600"
             >Status is required</small
           >
         </div>
@@ -92,34 +92,40 @@
           ></p-calendar>
           <label for="time">Time</label>
         </span>
+        <div *ngIf="f['time'].touched && f['time'].errors">
+          <small *ngIf="f['time'].errors['required']" class="text-pink-600">Time is required</small>
+        </div>
       </div>
 
       <div class="field col-12 md:col-6 p-2">
         <span class="p-float-label">
           <p-multiSelect
-            id="selectedStudents"
+            id="students"
             inputId="float-label"
             [options]="students"
-            formControlName="selectedStudents"
+            formControlName="students"
             optionLabel="name"
             placeholder="Select Participants"
           ></p-multiSelect>
 
-          <label for="participants">Select Participants</label>
+          <label for="students">Select Participants</label>
         </span>
       </div>
 
       <div class="field col-12 md:col-6 p-2">
         <span class="p-float-label">
           <p-dropdown
-            id="selectedTeacher"
+            id="teacher"
             [options]="teachers"
-            formControlName="selectedTeacher"
+            formControlName="teacher"
             placeholder="Select Teacher"
             optionLabel="name"
           ></p-dropdown>
-          <label for="selectedTeacher">Select Teacher</label>
+          <label for="teacher">Select Teacher</label>
         </span>
+        <div *ngIf="f['teacher'].touched && f['teacher'].errors">
+          <small *ngIf="f['teacher'].errors['required']" class="text-pink-600">Teacher is required</small>
+        </div>
       </div>
 
       <div class="field col-12 md:col-6 p-2">
@@ -134,7 +140,7 @@
         </span>
         <div *ngIf="f['price'].touched && f['price'].errors">
           <small *ngIf="f['price'].errors['required']" class="text-pink-600"
-            >Date is required</small
+            >Price is required</small
           >
           <small *ngIf="f['price'].errors['pattern']" class="text-pink-600"
             >Only number accepted</small
@@ -148,7 +154,8 @@
         severity="secondary"
         (click)="onReset()"
       ></p-button>
-      <p-button type="submit" label="Submit" severity="success"></p-button>
+      <p-button type="submit" label="Submit" [disabled]="!form.valid"  severity="success"></p-button>
     </div>
   </form>
+  <p-toast position="center" key="tl" ></p-toast>
 </div>

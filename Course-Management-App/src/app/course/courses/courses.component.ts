@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { map } from 'rxjs/operators';
 import { Course, Language, Status } from 'src/app/domain/course.model';
 import { CourseService } from 'src/app/services/course.service';
@@ -12,19 +13,21 @@ interface Column {
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
-  providers: [CourseService]
+  providers: [CourseService, ConfirmationService, MessageService],
 })
 export class CoursesComponent implements OnInit {
-  courses?: Course[] | any ;
+  courses?: Course[] | any;
 
-  cols! : Column[];
+  cols!: Column[];
 
-
-
-  constructor( private courseService:CourseService){}
+  constructor(
+    private courseService: CourseService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
-    this.getCourses()
+    this.getCourses();
 
     this.cols = [
       { field: 'language', header: 'Language' },
@@ -32,42 +35,81 @@ export class CoursesComponent implements OnInit {
       { field: 'place', header: 'Place' },
       { field: 'status', header: 'Status' },
       { field: 'price', header: 'Price' },
-  ];
-
+    ];
   }
 
-  getCourses(){
-    this.courseService.getCourses().snapshotChanges().pipe(
-       
-         map(changes =>
-    
-        changes.map(c=>          
-          ({id: c.payload.doc.id, ...c.payload.doc.data()})
-        
-          )
+  getCourses() {
+    this.courseService
+      .getCourses()
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({
+            id: c.payload.doc.id,
+            ...c.payload.doc.data(),
+          }))
         )
-    ).subscribe(data=> {
-      this.courses = data;
-      
-    }, 
-    (error) => {
-      console.error("Error fetching courses", error);
-      this.courses = [];
+      )
+      .subscribe(
+        (data) => {
+          this.courses = data;
+        },
+        (error) => {
+          console.error('Error fetching courses', error);
+          this.courses = [];
+        }
+      );
+  }
+
+  planNewCourse() {
+    const course = {
+      language: Language.SPANISH,
+      level: 'A2',
+      place: 'Luzern',
+      status: Status.PLANNING,
+      price: 700,
+    };
+    this.courseService.create(course).then(() => {
+      console.log('created successfully!');
     });
   }
 
-  planNewCourse(){
+  editCourse(course: Course) {
+    return console.log(course);
+  }
 
-    const course={
-      language: Language.SPANISH,
-      level: "A2",
-      place: "Luzern",
-      status: Status.PLANNING,
-      price: 700,
+  deleteCourse(course: Course) {
+    console.log(course.language)
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ' + course.language + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.courseService.delete(course.id)
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Product Deleted',
+          life: 2000,
+        });
+      },
+    });
+  }
+
+  getSeverity(status: string) {
+    switch (status.toUpperCase()) {
+      case 'ONGOING':
+        return 'success';
+      case 'PLANNING':
+        return 'warning';
+      case 'READY':
+        return 'info';
+      case 'CANCELLED':
+        return 'danger';
+      case 'FINISHED':
+        return 'primary';
+      default:
+        return 'info';
     }
-    this.courseService.create(course).then(() => {
-      console.log("created successfully!");
-    })
-  
   }
 }

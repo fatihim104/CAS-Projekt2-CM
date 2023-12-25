@@ -1,0 +1,169 @@
+<div class="grid mt-5">
+    <div class="col-8 card px-4">
+        <div class="card px-5 col-8 m-auto">
+            <h2>UPDATE COURSE</h2>
+            <form [formGroup]="editForm" (ngSubmit)="save()">
+              <div class="grid p-fluid mt-5">
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <p-dropdown
+                      id="language"
+                      [options]="languageOptions"
+                      formControlName="language"
+                      placeholder="Select Language"
+                      optionLabel="label"
+                      [showClear]="true"
+                    ></p-dropdown>
+                    <label for="language">Select Language</label>
+                  </span>
+                  <div *ngIf="f['language'].touched && f['language'].errors">
+                    <small *ngIf="f['language'].errors['required']" class="text-pink-600"
+                      >Language is required</small
+                    >
+                  </div>
+                </div>
+          
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <p-dropdown
+                      id="level"
+                      [options]="levelOptions"
+                      formControlName="level"
+                      placeholder="Select Level"
+                      [showClear]="true"
+                    ></p-dropdown>
+                    <label for="level">Select Level</label>
+                  </span>
+                  <div *ngIf="f['level'].touched && f['level'].errors">
+                    <small *ngIf="f['level'].errors['required']" class="text-pink-600"
+                      >Level is required</small
+                    >
+                  </div>
+                </div>
+          
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <input type="text" id="place" pInputText editFormControlName="place" />
+                    <label for="place">Place</label>
+                  </span>
+                </div>
+          
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <p-dropdown
+                      id="status"
+                      [options]="statusOptions"
+                      formControlName="status"
+                      placeholder="Select Status"
+                      [showClear]="true"
+                    ></p-dropdown>
+                    <label for="status">Status</label>
+                  </span>
+                  <div *ngIf="f['status'].touched && f['status'].errors">
+                    <small *ngIf="f['status'].errors['required']" class="text-pink-600"
+                      >Status is required</small
+                    >
+                  </div>
+                </div>
+          
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <p-calendar
+                      id="date"
+                      formControlName="date"
+                      selectionMode="range"
+                      dateFormat="dd.mm.yy"
+                      [showIcon]="true"
+                      [showButtonBar]="true"
+                    ></p-calendar>
+                    <label for="date">Date</label>
+                  </span>
+                  <div *ngIf="f['date'].touched && f['date'].errors">
+                    <small *ngIf="f['date'].errors['required']" class="text-pink-600"
+                      >Date is required</small
+                    >
+                  </div>
+                </div>
+          
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <p-calendar
+                      id="time"
+                      formControlName="time"
+                      [timeOnly]="true"
+                    ></p-calendar>
+                    <label for="time">Time</label>
+                  </span>
+                  <div *ngIf="f['time'].touched && f['time'].errors">
+                    <small *ngIf="f['time'].errors['required']" class="text-pink-600">Time is required</small>
+                  </div>
+                </div>
+          
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <p-multiSelect
+                      id="students"
+                      inputId="float-label"
+                      [options]="students"
+                      formControlName="students"
+                      optionLabel="name"
+                      placeholder="Select Participants"
+                    ></p-multiSelect>
+          
+                    <label for="students">Select Participants</label>
+                  </span>
+                </div>
+          
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <p-dropdown
+                      id="teacher"
+                      [options]="teachers"
+                      formControlName="teacher"
+                      placeholder="Select Teacher"
+                      optionLabel="name"
+                    ></p-dropdown>
+                    <label for="teacher">Select Teacher</label>
+                  </span>
+                  <div *ngIf="f['teacher'].touched && f['teacher'].errors">
+                    <small *ngIf="f['teacher'].errors['required']" class="text-pink-600">Teacher is required</small>
+                  </div>
+                </div>
+          
+                <div class="field col-12 md:col-6 p-2">
+                  <span class="p-float-label">
+                    <input
+                      type="number"
+                      id="price"    
+                      pInputText
+                      formControlName="price"
+                    />
+                    <label for="price">Price</label>
+                  </span>
+                  <div *ngIf="f['price'].touched && f['price'].errors">
+                    <small *ngIf="f['price'].errors['required']" class="text-pink-600"
+                      >Price is required</small
+                    >
+                    <small *ngIf="f['price'].errors['pattern']" class="text-pink-600"
+                      >Only number accepted</small
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-content-around">
+                <p-button
+                  label="Back"
+                  severity="secondary"
+                  (click)="goBack()"
+                ></p-button>
+                <p-button type="submit" label="Save" [disabled]="!editForm.valid"  severity="success"></p-button>
+              </div>
+            </form>
+           
+          </div>
+          
+          <p-toast position="center" key="tl" ></p-toast>
+    </div>
+
+    <div class="col card"><span>----</span> </div>
+</div>
