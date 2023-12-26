@@ -1,6 +1,6 @@
 <p-button label="Plan New Course" routerLink="/courses/plan"></p-button>
 
-<div class="card flex justify-content-center table">
+<div class="card flex justify-content-center">
   <p-toast></p-toast>
   <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
   <p-table
@@ -8,8 +8,9 @@
     [value]="courses"
     [rows]="6"
     [paginator]="true"
+    [scrollable]="true"
+    scrollDirection="horizontal"
     [globalFilterFields]="['language', 'level', 'price', 'status']"
-    [tableStyle]="{ 'min-width': '75rem' }"
     [rowHover]="true"
     dataKey="id"
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -35,19 +36,19 @@
         <th pSortableColumn="language.label" style="min-width: 5rem">
           Language <p-sortIcon field="language"></p-sortIcon>
         </th>
-        <th pSortableColumn="level.label">
+        <th pSortableColumn="level.label" style="min-width: 5rem">
           Level <p-sortIcon field="level"></p-sortIcon>
         </th>
         <th pSortableColumn="place" style="min-width: 5rem">
           Place <p-sortIcon field="place"></p-sortIcon>
         </th>
-        <th pSortableColumn="status.label">
+        <th pSortableColumn="status.label" style="min-width: 5rem">
           Status <p-sortIcon field="status"></p-sortIcon>
         </th>
         <th pSortableColumn="price" style="min-width: 5rem">
           Price <p-sortIcon field="price"></p-sortIcon>
         </th>
-        <th></th>
+        <th  style="min-width: 5rem"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-course>
@@ -64,6 +65,13 @@
         <td>{{ course.price }} fr</td>
 
         <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-eye"
+            class="p-button-rounded p-button-info mr-2"
+            routerLink="/courses/detail/{{course.id}}"
+          ></button>
           <button
             pButton
             pRipple

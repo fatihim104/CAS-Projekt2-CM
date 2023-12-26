@@ -12,9 +12,8 @@ import {
 } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Course, Language, Level, Status } from 'src/app/domain/course.model';
-
-
+import { Language, Level, Status } from 'src/app/domain/course.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-course',
@@ -30,7 +29,7 @@ export class EditCourseComponent implements OnInit {
   levelOptions: { label: string }[] = [];
 
   selectedCourse:any;
-  selectedCourseId:string;
+  selectedCourseId:string = "";
 
   editForm: FormGroup = new FormGroup({
     language: new FormControl(''),
@@ -50,6 +49,7 @@ export class EditCourseComponent implements OnInit {
     private courseService: CourseService,
     private titlecasePipe: TitleCasePipe,
     private router: Router,
+    private location: Location,
     private messageService: MessageService
   ) {
     this.languageOptions = Object.keys(Language).map((key) => ({
@@ -63,24 +63,10 @@ export class EditCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getForm();
-    this.selectedCourseId = this.activatedRoute.snapshot.paramMap.get('id')
+    this.selectedCourseId = this.activatedRoute.snapshot.paramMap.get('id')!
     this.courseService.getCourse(this.selectedCourseId).subscribe((course: any) => {
       this.selectedCourse=course;
-      this.editForm.setValue(this.selectedCourse)
-    
-      // this.editForm.patchValue({language:this.selectedCourse.language})
-      // this.editForm.patchValue({level:this.selectedCourse.level})
-      // this.editForm.patchValue({place:this.selectedCourse.place})
-      // this.editForm.patchValue({status:this.selectedCourse.status})
-      // this.editForm.patchValue({date:this.selectedCourse.date})
-      // this.editForm.patchValue({time:this.selectedCourse.time})
-      // this.editForm.patchValue({students:this.selectedCourse.students})
-      // this.editForm.patchValue({teacher:this.selectedCourse.teacher})
-      // this.editForm.patchValue({status:this.selectedCourse.status})
-      // this.editForm.patchValue({price:this.selectedCourse.price})
-            
-      // this.editCourse(this.selectedCourse)
-     
+      this.editForm.setValue(this.selectedCourse)    
     })
     
     this.students = [{ name: 'Ali' }, { name: 'Veli' }, { name: 'Mehmet' },{ name: 'Metin' }, { name: 'Mesut' }, { name: 'Fatih' }];
@@ -114,8 +100,7 @@ export class EditCourseComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-    console.log(this.selectedCourseId, this.editForm.value)
-    
+       
     this.courseService.update(this.selectedCourseId, this.editForm.value).then(() => {
     
       this.messageService.add({
@@ -125,8 +110,8 @@ export class EditCourseComponent implements OnInit {
       });
       
       setTimeout(() => {
-        this.router.navigate(['/courses']);
-      }, 1500);
+        this.goBack()
+      }, 1000);
       }
     ).catch((error:any) => {
       console.log(error);
@@ -142,6 +127,6 @@ export class EditCourseComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/courses']);
+    this.location.back();
   }
 }

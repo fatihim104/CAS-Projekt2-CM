@@ -16,7 +16,10 @@ import { PlanNewCourseComponent } from './plan-new-course/plan-new-course.compon
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
+import { ChipModule } from 'primeng/chip';
+
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { DetailCourseComponent } from './detail-course/detail-course.component';
 
 
 const routes: Routes = [
@@ -26,6 +29,7 @@ const routes: Routes = [
             {path:"", component:CoursesComponent},
             {path:"courses/plan", component:PlanNewCourseComponent},
             {path:"courses/edit/:id", component:EditCourseComponent},
+            {path:"courses/detail/:id", component:DetailCourseComponent},
 
         ]
     }
@@ -41,12 +45,13 @@ const routes: Routes = [
         InputTextModule,
         ReactiveFormsModule,
         ToastModule,
-        TagModule, 
+        TagModule,
+        ChipModule,
         ConfirmDialogModule,         
         RouterModule.forChild(routes)
     ],
     exports: [],
-    declarations: [CoursesComponent, PlanNewCourseComponent, EditCourseComponent],
+    declarations: [CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent],
     providers: [MessageService, ConfirmationService],
 })
 export class CourseModule { }

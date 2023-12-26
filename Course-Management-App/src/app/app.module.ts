@@ -44,8 +44,6 @@ import { MessageService } from 'primeng/api';
     CourseModule,
     AppRoutingModule,
     ToastModule
-   
-    // FormsModule
   ],
   exports:[
    

@@ -15,6 +15,7 @@ interface Column {
   styleUrls: ['./courses.component.scss'],
   providers: [CourseService, ConfirmationService, MessageService],
 })
+
 export class CoursesComponent implements OnInit {
   courses?: Course[] | any;
 
