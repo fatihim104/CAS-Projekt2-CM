@@ -66,7 +66,9 @@ export class EditCourseComponent implements OnInit {
     this.selectedCourseId = this.activatedRoute.snapshot.paramMap.get('id')!
     this.courseService.getCourse(this.selectedCourseId).subscribe((course: any) => {
       this.selectedCourse=course;
-      this.editForm.setValue(this.selectedCourse)    
+      this.editForm.setValue(this.selectedCourse) 
+      this.editForm.controls['date'].patchValue(this.selectedCourse.date.toDate())
+      this.editForm.controls['time'].patchValue(this.selectedCourse.time.toDate())
     })
     
     this.students = [{ name: 'Ali' }, { name: 'Veli' }, { name: 'Mehmet' },{ name: 'Metin' }, { name: 'Mesut' }, { name: 'Fatih' }];

@@ -80,7 +80,6 @@ export class CoursesComponent implements OnInit {
   }
 
   deleteCourse(course: Course) {
-    console.log(course.language)
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + course.language + '?',
       header: 'Confirm',

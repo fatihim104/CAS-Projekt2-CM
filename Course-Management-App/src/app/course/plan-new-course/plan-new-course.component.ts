@@ -12,7 +12,7 @@ import { CourseService } from 'src/app/services/course.service';
 import { Status } from 'src/app/domain/course.model';
 import { Language } from 'src/app/domain/course.model';
 import { Level } from 'src/app/domain/course.model';
-import { TitleCasePipe } from '@angular/common';
+import { TitleCasePipe, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
@@ -21,7 +21,7 @@ import { MessageService } from 'primeng/api';
   selector: 'app-plan-new-course',
   templateUrl: './plan-new-course.component.html',
   styleUrls: ['./plan-new-course.component.scss'],
-  providers: [TitleCasePipe, MessageService],
+  providers: [TitleCasePipe, MessageService, DatePipe],
 })
 export class PlanNewCourseComponent implements OnInit {
   students!: Participant[];
@@ -46,6 +46,7 @@ export class PlanNewCourseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private courseService: CourseService,
     private titlecasePipe: TitleCasePipe,
+    private datePipe: DatePipe,
     private router: Router,
     private messageService: MessageService
   ) {
@@ -61,7 +62,11 @@ export class PlanNewCourseComponent implements OnInit {
   ngOnInit(): void {
     this.students = [{ name: 'Ali' }, { name: 'Veli' }, { name: 'Mehmet' }];
     this.teachers = [{ name: 'Hans' }, { name: 'Müller' }, { name: 'Kafka' }];
+    this.getForm();
+   
+  }
 
+  getForm(){
     this.form = this.formBuilder.group({
       language: [
         '',
@@ -83,10 +88,15 @@ export class PlanNewCourseComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const fDate = this.form.value; 
+    // fDate.date = this.datePipe.transform(fDate.date , 'dd-MM-YYYY')
+    // fDate.time = this.datePipe.transform(fDate.time , 'HH:mm')
+    console.log(this.form.controls['date'].value)
+    console.log(this.f['time'].value)
     
-    if (this.form.invalid) {
-      return;
-    }
+    // if (this.form.invalid) {
+    //   return;
+    // }
 
     this.courseService
       .create(this.form.value)

@@ -42,8 +42,11 @@
         class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
       >
         <div class="text-500 w-6 md:w-2 font-medium">Date</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse.date }}
+        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1" >
+          <!-- {{ selectedCourse.date }}  -->
+          {{ selectedCourse.date.seconds * 1000 | date: 'dd-MM-yyyy' }}
+          <!-- {{getDate()}} -->
+         
         </div>
       </li>
 
@@ -52,7 +55,7 @@
       >
         <div class="text-500 w-6 md:w-2 font-medium">Time</div>
         <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse.time }}
+          {{ selectedCourse.time * 1000 | date: 'HH:mm'}}
         </div>
       </li>
 
@@ -97,14 +100,14 @@
     </li>
   </div>
 
-  <div class="w-full my-4 md:w-8 flex flex-row justify-content-around">
+  <div class="w-full my-4 flex flex-row justify-content-around">
     <button
       pButton
       pRipple
       label="Courses"
       icon="pi pi-angle-left"
       routerLink="/courses"
-      class="p-button-text text-blue-900 ml-2 border-1 border-green-900"
+      class="p-button-text text-blue-900 ml-2 border-1 border-teal-600 hover:border-orange-700"
     ></button>
     <button
       pButton
@@ -112,7 +115,7 @@
       label="Edit"
       icon="pi pi-pencil"
       routerLink="/courses/edit/{{ selectedCourseId }}"
-      class="p-button-text text-green-900 border-1 border-green-900"
+      class="p-button-text text-green-900 border-1 border-teal-600 hover:border-orange-700"
     ></button>
   </div>
 </div>
