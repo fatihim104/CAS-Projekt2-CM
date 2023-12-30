@@ -30,10 +30,9 @@ const routes: Routes = [
             {path:"courses/plan", component:PlanNewCourseComponent},
             {path:"courses/edit/:id", component:EditCourseComponent},
             {path:"courses/detail/:id", component:DetailCourseComponent},
-
         ]
     }
-]
+]   
 @NgModule({
     imports: [ 
         CommonModule,

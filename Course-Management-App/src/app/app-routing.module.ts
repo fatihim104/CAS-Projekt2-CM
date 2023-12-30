@@ -2,9 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { TeamComponent } from './components/team/team.component';
-import { ParticipantsComponent } from './components/participants/participants.component';
 import { ContactComponent } from './components/contact/contact.component';
-
 
 const routes: Routes = [
   {
@@ -20,7 +18,7 @@ const routes: Routes = [
     path:"team", component:TeamComponent,
   },
   {
-    path:"participants", component:ParticipantsComponent,
+    path:"participants", loadChildren:() => import('./participant/participant.module').then(m=>m.ParticipantModule),
   },
   {
     path:"contact", component:ContactComponent,

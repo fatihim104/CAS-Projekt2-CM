@@ -2,11 +2,12 @@ import { Course } from "./course.model";
 
 export interface Participant {
     id?: string;
-    name?: string;
+    firstName?: string;
     lastName?: string;
+    phone?:number;
     email?: string;
     birthDay?: string;
-    nationality?: number;
+    nationality?: string;
     activeCourses?: Course[];
     completedCourses?: Course[];
 }

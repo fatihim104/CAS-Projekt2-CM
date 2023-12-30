@@ -1,0 +1,19 @@
+<p-button label="Add New Participant" routerLink="/participants/add" styleClass="mb-4" severity="success" ></p-button>
+
+<p-toast></p-toast>
+
+<p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+
+<div class="card flex flex-column md:flex-row justify-content-start flex-wrap">
+    <p-card *ngFor="let student of students" header="{{student.firstName + ' ' + student.lastName}}" subheader="actif kurs" [style]="{width:'200px'}" class="mb-4 mr-2">
+        <ng-template pTemplate="header">
+            <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
+        </ng-template>
+       
+        <ng-template pTemplate="footer">
+            <p-button pTooltip="Detail"  [outlined]="true" icon="pi pi-eye" routerLink="/participants/detail/{{student.id}}"  styleClass="p-button-warning" ></p-button>
+            <p-button pTooltip="Edit" [outlined]="true" icon="pi pi-pencil" routerLink="/participants/edit/{{student.id}}" [style]="{ 'margin-left': '.5em', }"></p-button>
+            <p-button pTooltip="Delete" [outlined]="true" icon="pi pi-times" styleClass="p-button-danger" (click)="deleteStudent(student)" [style]="{ 'margin-left': '.5em' }"></p-button>
+        </ng-template>
+    </p-card>
+</div>

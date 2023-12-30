@@ -1,11 +1,10 @@
-<p-toast position="center" key="tl" ></p-toast>
-<div class="grid">
-  <div class="col-12">
-    <!-- <div class="col-6 col-offset-6"></div> -->
-    <div class="text-center p-3 border-round-sm bg-green-900 font-bold">
+
+<div class="grid container">
+  <div class="col-12 m-0 p-0">
+    <nav class="text-center p-3 bg-green-900 font-bold">
      <tab-menu ></tab-menu>
+    </nav>
+    <div class="col-12 h-screen bg-green-100">
+      <router-outlet></router-outlet>
     </div>
-</div>
-<div class="col-12 bg-green-200">
-  <router-outlet></router-outlet>
 </div>

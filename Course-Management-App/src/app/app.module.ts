@@ -18,11 +18,11 @@ import { TeamComponent } from './components/team/team.component';
 
 import { HomeComponent } from './components/home/home.component';
 
-import { ParticipantsComponent } from './components/participants/participants.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { environment } from 'src/environments/environment.development';
 import { CourseModule } from './course/course.module';
 import { MessageService } from 'primeng/api';
+import { ParticipantModule } from './participant/participant.module';
 
 
 @NgModule({
@@ -31,7 +31,6 @@ import { MessageService } from 'primeng/api';
     TabMenuComponent,
     HomeComponent,
     TeamComponent,
-    ParticipantsComponent,
     ContactComponent
   ],
   imports: [
@@ -42,6 +41,7 @@ import { MessageService } from 'primeng/api';
     HttpClientModule,   
     TabMenuModule,  
     CourseModule,
+    ParticipantModule,
     AppRoutingModule,
     ToastModule
   ],

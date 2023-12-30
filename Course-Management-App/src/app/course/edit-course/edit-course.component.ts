@@ -14,6 +14,8 @@ import { CourseService } from 'src/app/services/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Language, Level, Status } from 'src/app/domain/course.model';
 import { Location } from '@angular/common';
+import { ParticipantService } from 'src/app/services/participant.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-course',
@@ -47,6 +49,7 @@ export class EditCourseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
+    private participantService: ParticipantService,
     private titlecasePipe: TitleCasePipe,
     private router: Router,
     private location: Location,
@@ -63,6 +66,7 @@ export class EditCourseComponent implements OnInit {
 
   ngOnInit(): void {
     this.getForm();
+    this.getParticipants();
     this.selectedCourseId = this.activatedRoute.snapshot.paramMap.get('id')!
     this.courseService.getCourse(this.selectedCourseId).subscribe((course: any) => {
       this.selectedCourse=course;
@@ -71,7 +75,7 @@ export class EditCourseComponent implements OnInit {
       this.editForm.controls['time'].patchValue(this.selectedCourse.time.toDate())
     })
     
-    this.students = [{ name: 'Ali' }, { name: 'Veli' }, { name: 'Mehmet' },{ name: 'Metin' }, { name: 'Mesut' }, { name: 'Fatih' }];
+    
     this.teachers = [{ name: 'Hans' }, { name: 'Müller' }, { name: 'Kafka' }];
 
  
@@ -126,6 +130,34 @@ export class EditCourseComponent implements OnInit {
       });
     })
     
+  }
+
+  getParticipants() {
+    this.participantService
+      .getParticipants()
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => {
+            const studentData = c.payload.doc.data();
+            return {
+              id: c.payload.doc.id,
+              ...studentData,
+              name: `${studentData.firstName} ${studentData.lastName}`,
+            };
+          })
+        )
+      )
+      .subscribe(
+        (data) => {
+          this.students = data;
+          console.log(this.students)
+        },
+        (error) => {
+          console.error('Error fetching participants', error);
+          this.students = [];
+        }
+      );
   }
 
   goBack(): void {

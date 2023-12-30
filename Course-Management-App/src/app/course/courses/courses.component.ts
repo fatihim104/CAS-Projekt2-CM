@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { map } from 'rxjs/operators';
-import { Course, Language, Status } from 'src/app/domain/course.model';
+import { Course } from 'src/app/domain/course.model';
 import { CourseService } from 'src/app/services/course.service';
 
 interface Column {
@@ -60,19 +60,6 @@ export class CoursesComponent implements OnInit {
           this.courses = [];
         }
       );
-  }
-
-  planNewCourse() {
-    const course = {
-      language: Language.SPANISH,
-      level: 'A2',
-      place: 'Luzern',
-      status: Status.PLANNING,
-      price: 700,
-    };
-    this.courseService.create(course).then(() => {
-      console.log('created successfully!');
-    });
   }
 
   editCourse(course: Course) {

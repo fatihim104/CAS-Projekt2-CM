@@ -16,6 +16,8 @@ import { TitleCasePipe, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
+import { ParticipantService } from 'src/app/services/participant.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-plan-new-course',
@@ -44,9 +46,9 @@ export class PlanNewCourseComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private courseService: CourseService,
     private titlecasePipe: TitleCasePipe,
-    private datePipe: DatePipe,
+    private courseService: CourseService,
+    private participantService: ParticipantService,
     private router: Router,
     private messageService: MessageService
   ) {
@@ -60,9 +62,10 @@ export class PlanNewCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.students = [{ name: 'Ali' }, { name: 'Veli' }, { name: 'Mehmet' }];
+    
     this.teachers = [{ name: 'Hans' }, { name: 'Müller' }, { name: 'Kafka' }];
     this.getForm();
+    this.getParticipants();
    
   }
 
@@ -88,15 +91,10 @@ export class PlanNewCourseComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const fDate = this.form.value; 
-    // fDate.date = this.datePipe.transform(fDate.date , 'dd-MM-YYYY')
-    // fDate.time = this.datePipe.transform(fDate.time , 'HH:mm')
-    console.log(this.form.controls['date'].value)
-    console.log(this.f['time'].value)
-    
-    // if (this.form.invalid) {
-    //   return;
-    // }
+     
+    if (this.form.invalid) {
+      return;
+    }
 
     this.courseService
       .create(this.form.value)
@@ -121,6 +119,34 @@ export class PlanNewCourseComponent implements OnInit {
           detail: error,
         });
       });
+  }
+
+  getParticipants() {
+    this.participantService
+      .getParticipants()
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => {
+            const studentData = c.payload.doc.data();
+            return {
+              id: c.payload.doc.id,
+              ...studentData,
+              name: `${studentData.firstName} ${studentData.lastName}`,
+            };
+          })
+        )
+      )
+      .subscribe(
+        (data) => {
+          this.students = data;
+          console.log(this.students)
+        },
+        (error) => {
+          console.error('Error fetching participants', error);
+          this.students = [];
+        }
+      );
   }
 
   onReset(): void {
