@@ -1,0 +1,126 @@
+<div class="card px-5 col-8 m-auto">
+    <h2>EDIT TEACHER</h2>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="grid p-fluid mt-5">
+        <div class="field col-12 md:col-6 p-2">
+          <span class="p-float-label">
+            <input
+              type="text"
+              id="firstName"
+              pInputText
+              formControlName="firstName"
+              placeholder="First Name"
+            />
+            <label for="firstName">First Name</label>
+          </span>
+          <div *ngIf="f['firstName'].touched && f['firstName'].errors">
+            <small
+              *ngIf="f['firstName'].errors['firstName']"
+              class="text-pink-600"
+              >First name is required</small
+            >
+            <small
+              *ngIf="f['firstName'].errors['minlength']"
+              class="text-pink-600"
+              >First name must be minumun 3 letters</small
+            >
+            <small
+              *ngIf="f['firstName'].errors['maxlength']"
+              class="text-pink-600"
+              >First name must be maximun 8 letters</small
+            >
+          </div>
+        </div>
+  
+        <div class="field col-12 md:col-6 p-2">
+          <span class="p-float-label">
+            <input
+              type="text"
+              id="lastName"
+              pInputText
+              formControlName="lastName"
+              placeholder="Last Name"
+            />
+            <label for="lastName">Last Name</label>
+          </span>
+          <div *ngIf="f['lastName'].touched && f['lastName'].errors">
+            <small *ngIf="f['lastName'].errors['lastName']" class="text-pink-600"
+              >Last name is required</small
+            >
+          </div>
+        </div>
+  
+        <div class="field col-12 md:col-6 p-2">
+          <span class="p-float-label">
+            <input
+              pInputText
+              type="number"
+              id="phone"
+              formControlName="phone"
+              placeholder="Phone"
+            />
+            <label for="phone">Phone Number</label>
+          </span>
+          <div *ngIf="f['phone'].touched && f['phone'].errors">
+            <small *ngIf="f['phone'].errors['phone']" class="text-pink-600"
+              >Phone number is required</small
+            >
+          </div>
+        </div>
+  
+        <div class="field col-12 md:col-6 p-2">
+          <span class="p-float-label">
+            <input type="email" id="email" pInputText formControlName="email" />
+            <label for="email">E-Mail</label>
+          </span>
+        </div>
+  
+        <div class="field col-12 md:col-6 p-2">
+          <span class="p-float-label">
+            <p-calendar
+              id="birthDay"
+              formControlName="birthDay"
+              dateFormat="dd.mm.yy"
+              [showIcon]="true"
+              [showButtonBar]="true"
+            ></p-calendar>
+            <label for="birthDay">Birthday</label>
+          </span>
+        </div>
+
+        <div class="field col-12 md:col-6 p-2">
+          <span class="p-float-label">
+            <p-calendar
+              id="startDay"
+              formControlName="startDay"
+              dateFormat="dd.mm.yy"
+              [showIcon]="true"
+              [showButtonBar]="true"
+            ></p-calendar>
+            <label for="birthDay">Start Date</label>
+          </span>
+        </div>
+  
+        <div class="field col-12 md:col-6 p-2">
+          <span class="p-float-label">
+            <input type="text" id="nationality" pInputText formControlName="nationality" />
+            <label for="nationality">Nationality</label>
+          </span>
+        </div>
+      </div>
+      <div class="flex justify-content-around">
+        <p-button
+          label="Back"
+          severity="secondary"
+          (click)="goBack()"
+        ></p-button>
+        <p-button
+          type="submit"
+          label="Save"
+          [disabled]="!form.valid"
+          severity="success"
+        ></p-button>
+      </div>
+    </form>
+    <p-toast position="center" key="tl"></p-toast>
+  </div>

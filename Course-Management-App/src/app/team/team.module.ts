@@ -17,29 +17,29 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
 
-import { ParticipantsComponent } from './participants/participants.component';
-import { AddParticipantComponent } from './add-participant/add-participant.component';
-import { DetailParticipantComponent } from './detail-participant/detail-participant.component';
-import { EditParticipantComponent } from './edit-participant/edit-participant.component';
+import { TeachersComponent } from './teachers/teachers.component';
+import { AddTeacherComponent } from './add-teacher/add-teacher.component';
+import { EditTeacherComponent } from './edit-teacher/edit-teacher.component';
+import { DetailTeacherComponent } from './detail-teacher/detail-teacher.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', component: ParticipantsComponent },
-      { path: 'participants/add', component: AddParticipantComponent },
-      { path: 'participants/edit/:id', component: EditParticipantComponent },
-      { path: 'participants/detail/:id', component: DetailParticipantComponent },
+      { path: '', component: TeachersComponent },
+      { path: 'team/add', component: AddTeacherComponent },
+      { path: 'team/edit/:id', component: EditTeacherComponent },
+      { path: 'team/detail/:id', component: DetailTeacherComponent },
     ],
   },
 ];
 
 @NgModule({
   declarations: [
-    ParticipantsComponent,
-    AddParticipantComponent,
-    DetailParticipantComponent,
-    EditParticipantComponent,
+    TeachersComponent,
+    AddTeacherComponent,
+    EditTeacherComponent,
+    DetailTeacherComponent
   ],
   imports: [
     CommonModule,
@@ -60,7 +60,6 @@ const routes: Routes = [
   ],
   exports:[],
   providers:[MessageService, ConfirmationService]
+
 })
-export class ParticipantModule {
-  
-}
+export class TeamModule { }

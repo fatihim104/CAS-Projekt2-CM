@@ -2,7 +2,7 @@ import { Course } from "./course.model";
 
 export interface Team {
     id?: string;
-    name: string;
+    firstName: string;
     lastName?: string;
     email?: string;
     startDate?: string;

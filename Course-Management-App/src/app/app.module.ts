@@ -23,6 +23,7 @@ import { environment } from 'src/environments/environment.development';
 import { CourseModule } from './course/course.module';
 import { MessageService } from 'primeng/api';
 import { ParticipantModule } from './participant/participant.module';
+import { TeamModule } from './team/team.module';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { ParticipantModule } from './participant/participant.module';
     TabMenuModule,  
     CourseModule,
     ParticipantModule,
+    TeamModule,
     AppRoutingModule,
     ToastModule
   ],

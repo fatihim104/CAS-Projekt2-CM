@@ -1,0 +1,20 @@
+<p-button label="Add New Teacher" routerLink="/team/add" styleClass="mb-4" severity="success" ></p-button>
+
+<p-toast></p-toast>
+
+<p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+
+<div class="card flex flex-column md:flex-row justify-content-start flex-wrap">
+    <p-card *ngFor="let teacher of teachers" header="{{teacher.firstName + ' ' + teacher.lastName}}" subheader="actif kurs" [style]="{width:'250px', height:'300px'}" class="mb-4 mr-2">
+        <ng-template pTemplate="header">
+            <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
+        </ng-template>
+       
+        <ng-template pTemplate="footer" class="absolute bottom-0">
+            <p-button pTooltip="Detail"  [outlined]="true" icon="pi pi-eye" routerLink="/team/detail/{{teacher .id}}"  styleClass="p-button-warning" ></p-button>
+            <p-button pTooltip="Edit" [outlined]="true" icon="pi pi-pencil" routerLink="/team/edit/{{teacher .id}}" [style]="{ 'margin-left': '.5em', }"></p-button>
+            <p-button pTooltip="Delete" [outlined]="true" icon="pi pi-times" styleClass="p-button-danger" (click)="deleteTeacher(teacher )" [style]="{ 'margin-left': '.5em' }"></p-button>
+        </ng-template>
+    </p-card>
+</div>
+

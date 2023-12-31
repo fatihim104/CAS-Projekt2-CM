@@ -16,6 +16,7 @@ import { Language, Level, Status } from 'src/app/domain/course.model';
 import { Location } from '@angular/common';
 import { ParticipantService } from 'src/app/services/participant.service';
 import { map } from 'rxjs/operators';
+import { TeamService } from 'src/app/services/team.service';
 
 @Component({
   selector: 'app-edit-course',
@@ -50,6 +51,7 @@ export class EditCourseComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
     private participantService: ParticipantService,
+    private teamService: TeamService,
     private titlecasePipe: TitleCasePipe,
     private router: Router,
     private location: Location,
@@ -67,6 +69,7 @@ export class EditCourseComponent implements OnInit {
   ngOnInit(): void {
     this.getForm();
     this.getParticipants();
+    this.getTeachers()
     this.selectedCourseId = this.activatedRoute.snapshot.paramMap.get('id')!
     this.courseService.getCourse(this.selectedCourseId).subscribe((course: any) => {
       this.selectedCourse=course;
@@ -75,9 +78,6 @@ export class EditCourseComponent implements OnInit {
       this.editForm.controls['time'].patchValue(this.selectedCourse.time.toDate())
     })
     
-    
-    this.teachers = [{ name: 'Hans' }, { name: 'Müller' }, { name: 'Kafka' }];
-
  
   }
   getForm(){
@@ -158,6 +158,30 @@ export class EditCourseComponent implements OnInit {
           this.students = [];
         }
       );
+  }
+
+  getTeachers(){
+    this.teamService
+    .getTeachers()
+    .snapshotChanges()
+    .pipe(
+      map((changes) =>
+        changes.map((c) => ({
+          id: c.payload.doc.id,
+          ...c.payload.doc.data(),
+        }))
+      )
+    )
+    .subscribe(
+      (data) => {
+        this.teachers = data;
+      },
+      (error) => {
+        console.error('Error fetching participants', error);
+        this.teachers = [];
+      }
+    );
+
   }
 
   goBack(): void {

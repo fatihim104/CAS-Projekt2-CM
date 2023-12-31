@@ -24,6 +24,11 @@ export class CourseService {
     return this.coursesRef;
   }
 
+  getCoursesByTeacher(id:string){
+    return this.coursesRef.ref.where("teacher.id","==", id)
+
+  }
+
   create(course: Course) {
     return this.coursesRef.add({ ...course });
   }

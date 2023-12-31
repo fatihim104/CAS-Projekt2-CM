@@ -9,6 +9,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
+import { TeamService } from 'src/app/services/team.service';
+import { ParticipantService } from 'src/app/services/participant.service';
 import { Status } from 'src/app/domain/course.model';
 import { Language } from 'src/app/domain/course.model';
 import { Level } from 'src/app/domain/course.model';
@@ -16,7 +18,6 @@ import { TitleCasePipe, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
-import { ParticipantService } from 'src/app/services/participant.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -49,6 +50,7 @@ export class PlanNewCourseComponent implements OnInit {
     private titlecasePipe: TitleCasePipe,
     private courseService: CourseService,
     private participantService: ParticipantService,
+    private teamService: TeamService,
     private router: Router,
     private messageService: MessageService
   ) {
@@ -62,11 +64,9 @@ export class PlanNewCourseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-    this.teachers = [{ name: 'Hans' }, { name: 'Müller' }, { name: 'Kafka' }];
     this.getForm();
     this.getParticipants();
-   
+    this.getTeachers()
   }
 
   getForm(){
@@ -147,6 +147,30 @@ export class PlanNewCourseComponent implements OnInit {
           this.students = [];
         }
       );
+  }
+
+  getTeachers(){
+    this.teamService
+    .getTeachers()
+    .snapshotChanges()
+    .pipe(
+      map((changes) =>
+        changes.map((c) => ({
+          id: c.payload.doc.id,
+          ...c.payload.doc.data(),
+        }))
+      )
+    )
+    .subscribe(
+      (data) => {
+        this.teachers = data;
+      },
+      (error) => {
+        console.error('Error fetching participants', error);
+        this.teachers = [];
+      }
+    );
+
   }
 
   onReset(): void {
