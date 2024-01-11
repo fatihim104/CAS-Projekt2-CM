@@ -16,6 +16,7 @@ import { ChipModule } from 'primeng/chip';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
+import { DividerModule } from 'primeng/divider';
 
 import { ParticipantsComponent } from './participants/participants.component';
 import { AddParticipantComponent } from './add-participant/add-participant.component';
@@ -55,6 +56,7 @@ const routes: Routes = [
     ChipModule,
     CardModule,
     TooltipModule,
+    DividerModule,
     ConfirmDialogModule,
     RouterModule.forChild(routes),
   ],

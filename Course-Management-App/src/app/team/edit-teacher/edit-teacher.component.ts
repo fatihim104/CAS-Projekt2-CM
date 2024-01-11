@@ -48,8 +48,8 @@ export class EditTeacherComponent {
     this.teamService.getTeacher(this.selectedTeacherId).subscribe((teacher:any) => {
       this.selectedTeacher = teacher;
       this.form.setValue(this.selectedTeacher)
-      this.form.controls['birthDay'].patchValue(this.selectedTeacher.birthDay.toDate())
-      this.form.controls['startDay'].patchValue(this.selectedTeacher.startDay.toDate())
+      this.form.controls['birthDay'].patchValue(this.selectedTeacher.birthDay?.toDate())
+      this.form.controls['startDay'].patchValue(this.selectedTeacher.startDay?.toDate())
     })
 
   }

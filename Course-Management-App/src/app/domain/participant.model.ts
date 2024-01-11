@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import { Course } from "./course.model";
 
 export interface Participant {
@@ -6,7 +7,7 @@ export interface Participant {
     lastName?: string;
     phone?:number;
     email?: string;
-    birthDay?: string;
+    birthDay?: string | Timestamp;
     nationality?: string;
     activeCourses?: Course[];
     completedCourses?: Course[];

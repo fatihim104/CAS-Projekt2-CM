@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Course } from 'src/app/domain/course.model';
 import { CourseService } from 'src/app/services/course.service';
 
@@ -29,14 +29,6 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCourses();
-
-    this.cols = [
-      { field: 'language', header: 'Language' },
-      { field: 'level', header: 'Level' },
-      { field: 'place', header: 'Place' },
-      { field: 'status', header: 'Status' },
-      { field: 'price', header: 'Price' },
-    ];
   }
 
   getCourses() {
@@ -44,6 +36,8 @@ export class CoursesComponent implements OnInit {
       .getCourses()
       .snapshotChanges()
       .pipe(
+        tap(changes => console.log(changes)
+        ),
         map((changes) =>
           changes.map((c) => ({
             id: c.payload.doc.id,

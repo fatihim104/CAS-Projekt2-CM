@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Language, Level } from 'src/app/domain/course.model';
+import { LanguageEnum, Level, LevelEnum } from 'src/app/domain/course.model';
 import { Participant } from 'src/app/domain/participant.model';
 import { ParticipantService } from 'src/app/services/participant.service';
 
@@ -42,10 +42,10 @@ export class AddParticipantComponent {
     private router: Router,
     private messageService: MessageService
   ) {
-    this.languageOptions = Object.keys(Language).map((key) => ({
+    this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));
-    this.levelOptions = Object.keys(Level).map((key) => ({ label: key }));
+    this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
   }
 
   ngOnInit(): void {

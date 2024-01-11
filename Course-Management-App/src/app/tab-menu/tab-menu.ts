@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { User } from '../domain/user.model';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Observable, switchMap } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
 @Component({
@@ -10,54 +15,65 @@ import { Router } from '@angular/router';
 
 export class TabMenuComponent implements OnInit {
     items: MenuItem[] | undefined;
-
     activeItem: MenuItem | undefined;
 
-    constructor(private router: Router) {}
+    isLoggedIn: Observable<boolean>
+    currentUser$:Observable<User | undefined> ;
+    role:string = "";
 
-    ngOnInit() {
-        
-        this.getActiveRoute();
+    constructor(private router: Router, private cdRef: ChangeDetectorRef, public authService: AuthService, public afAuth: AngularFireAuth, private firestore: AngularFirestore) {
+        this.isLoggedIn = this.authService.hasToken;
+        this.currentUser$=this.afAuth.authState.pipe(
+          switchMap(user => {
+            return user? this.firestore.collection('users').doc<User>(user.uid).valueChanges() : [];
+          })
+         
+        )
     }
 
-    
+    ngOnInit() {
+         
+        this.currentUser$.subscribe((user) => {
+          if(user){
+            this.role = user?.role || "";
+            this.getActiveRoute(); 
+          }
+          
+        });                  
+    }
+
+    logout(){
+      this.authService.signOut()
+      this.router.navigate(['/auth'])
+    }
 
     onActiveItemChange(event: MenuItem) {
         this.activeItem = event;
     }
 
     getActiveRoute() {
-
         this.items = [
             {
               label: 'Home',
-              //command: () => this.router.navigate(['home']),
               routerLink: 'home',
             },
             {
               label: 'Courses',
-              //command: () => this.router.navigate(['tab-1']),
               routerLink: 'courses',
             },
             {
               label: 'Team',
-              //command: () => this.router.navigate(['tab-2']),
               routerLink: 'team',
             },
             {
                 label: 'Participants',
-                //command: () => this.router.navigate(['tab-2']),
                 routerLink: 'participants',
             },
             {
                 label: 'Contact',
-                //command: () => this.router.navigate(['tab-2']),
                 routerLink: 'contact',
             },
           ];
-        //   this.activeItem = this.items[0];
+        
     }
-    
-
-   
-}
+  }

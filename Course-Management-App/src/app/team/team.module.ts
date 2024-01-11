@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -16,6 +16,7 @@ import { ChipModule } from 'primeng/chip';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
+import { DividerModule } from 'primeng/divider';
 
 import { TeachersComponent } from './teachers/teachers.component';
 import { AddTeacherComponent } from './add-teacher/add-teacher.component';
@@ -55,11 +56,12 @@ const routes: Routes = [
     ChipModule,
     CardModule,
     TooltipModule,
+    DividerModule,
     ConfirmDialogModule,
     RouterModule.forChild(routes),
   ],
   exports:[],
-  providers:[MessageService, ConfirmationService]
+  providers:[MessageService, ConfirmationService, DatePipe]
 
 })
 export class TeamModule { }

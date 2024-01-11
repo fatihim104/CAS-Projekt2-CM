@@ -1,3 +1,5 @@
-<div class="card flex justify-content-end">
-    <p-tabMenu styleClass="bg-green-200" [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
+<div class="card flex justify-content-between">
+    <p-tabMenu styleClass="bg-green-300" [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
+    <button *ngIf="!(isLoggedIn | async)" pButton routerLink="/auth" > LOGIN</button>
+    <button *ngIf="isLoggedIn | async" pButton (click)="logout()" > LOGOUT</button>
 </div>

@@ -11,9 +11,8 @@ import {
 import { CourseService } from 'src/app/services/course.service';
 import { TeamService } from 'src/app/services/team.service';
 import { ParticipantService } from 'src/app/services/participant.service';
-import { Status } from 'src/app/domain/course.model';
-import { Language } from 'src/app/domain/course.model';
-import { Level } from 'src/app/domain/course.model';
+import { LevelEnum, Status } from 'src/app/domain/course.model';
+import { LanguageEnum } from 'src/app/domain/course.model';
 import { TitleCasePipe, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -54,10 +53,10 @@ export class PlanNewCourseComponent implements OnInit {
     private router: Router,
     private messageService: MessageService
   ) {
-    this.languageOptions = Object.keys(Language).map((key) => ({
+    this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));
-    this.levelOptions = Object.keys(Level).map((key) => ({ label: key }));
+    this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
     this.statusOptions = Object.keys(Status).map((key) => ({
       label: key.toLowerCase(),
     }));

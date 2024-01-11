@@ -1,0 +1,29 @@
+<div class="card flex flex-column justify-content-center p-5">
+  <h3>Thank You for Registering</h3>
+  <div class="formGroup" *ngIf="authService.userData as user">
+    <p >
+      We have sent a confirmation email to <strong>{{ user.email }}</strong
+      >.
+    </p>
+    <p >
+      Please check your email and click on the link to verfiy your email
+      address.
+    </p>
+  </div>
+  <div class="mb-4">
+    <p-button
+    severity="secondary"  
+      (click)="authService.sendVerificationMail()"
+    >
+      Resend Verification Email
+    </p-button>
+  </div>
+  <span
+  >Go back to?<a  routerLink="/auth/sign-in">
+    Sign in</a
+  ></span
+>
+</div>
+
+ 
+

@@ -11,8 +11,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Language, Level, Status } from 'src/app/domain/course.model';
+import { ActivatedRoute} from '@angular/router';
+import { LanguageEnum, LevelEnum, Status } from 'src/app/domain/course.model';
 import { Location } from '@angular/common';
 import { ParticipantService } from 'src/app/services/participant.service';
 import { map } from 'rxjs/operators';
@@ -53,14 +53,13 @@ export class EditCourseComponent implements OnInit {
     private participantService: ParticipantService,
     private teamService: TeamService,
     private titlecasePipe: TitleCasePipe,
-    private router: Router,
     private location: Location,
     private messageService: MessageService
   ) {
-    this.languageOptions = Object.keys(Language).map((key) => ({
+    this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));
-    this.levelOptions = Object.keys(Level).map((key) => ({ label: key }));
+    this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
     this.statusOptions = Object.keys(Status).map((key) => ({
       label: key.toLowerCase(),
     }));
