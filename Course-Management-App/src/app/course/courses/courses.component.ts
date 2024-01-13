@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Course } from 'src/app/domain/course.model';
+import { User } from 'src/app/domain/user.model';
 import { CourseService } from 'src/app/services/course.service';
+import { UserService } from 'src/app/services/user.service';
 
 interface Column {
   field: string;
@@ -18,17 +21,22 @@ interface Column {
 
 export class CoursesComponent implements OnInit {
   courses?: Course[] | any;
+  currentUser$:Observable<User | undefined> ;
 
   cols!: Column[];
 
   constructor(
     private courseService: CourseService,
+    private userService: UserService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {}
+  ) {
+    this.currentUser$ =  this.userService.getCurrentUser()
+  }
 
   ngOnInit(): void {
     this.getCourses();
+   
   }
 
   getCourses() {

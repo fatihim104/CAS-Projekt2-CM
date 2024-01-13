@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ContactComponent } from './components/contact/contact.component';
-import { AuthModule } from './auth/auth.module';
-import { SignInComponent } from './auth/sign-in/sign-in.component';
 
 const routes: Routes = [
   {

@@ -102,6 +102,7 @@
       class="p-button-text text-blue-900 ml-2 border-1 border-teal-600 hover:border-orange-700"
     ></button>
     <button
+      *ngIf="(currentUser$ | async)?.role === 'admin'"
       pButton
       pRipple
       label="Edit"

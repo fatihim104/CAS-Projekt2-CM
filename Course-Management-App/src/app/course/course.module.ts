@@ -20,6 +20,7 @@ import { ChipModule } from 'primeng/chip';
 
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { DetailCourseComponent } from './detail-course/detail-course.component';
+import { AdminGuard } from '../guard/admin.guard';
 
 
 const routes: Routes = [
@@ -27,8 +28,8 @@ const routes: Routes = [
         path:"",
         children:[
             {path:"", component:CoursesComponent},
-            {path:"courses/plan", component:PlanNewCourseComponent},
-            {path:"courses/edit/:id", component:EditCourseComponent},
+            {path:"courses/plan", component:PlanNewCourseComponent, canActivate: [AdminGuard]},
+            {path:"courses/edit/:id", component:EditCourseComponent, canActivate: [AdminGuard]},
             {path:"courses/detail/:id", component:DetailCourseComponent},
         ]
     }

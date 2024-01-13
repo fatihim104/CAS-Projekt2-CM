@@ -1,3 +1,3 @@
-// .table{
-//     width:80vw;
-// }
+:host ::ng-deep .custom-table .p-datatable .p-datatable-thead th, td{
+    background-color: #CAF1D8;
+}

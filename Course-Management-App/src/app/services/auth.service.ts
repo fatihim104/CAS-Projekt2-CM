@@ -18,31 +18,34 @@ export class AuthService {
     public afs: AngularFirestore, 
     public afAuth: AngularFireAuth, 
     public router: Router,
-    public ngZone: NgZone 
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
-      if (user) {
-        console.log(user)
-        this.hasToken.next(true);
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
+    if (user) {
+      this.userData = user;
+      localStorage.setItem('user', JSON.stringify(this.userData));
+      this.hasToken.next(true)
+      this.userSubject.next(this.userData);
       } else {
         localStorage.setItem('user', 'null');
+        this.userSubject.next(null);
         this.hasToken.next(false)
       }
-    });
+  }
+  )
+
+
   }
 
-  signIn(email: string, password: string) {
+  async signIn(email: string, password: string) {
     return this.afAuth
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
-        this.setUserData(result.user);
+        // this.setUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            this.router.navigate(['/course/courses']);
+            this.router.navigate(['/']);
           }
         });
       })
@@ -57,6 +60,7 @@ export class AuthService {
       .then((result) => {
         console.log(result.user)
         this.setUserData(result.user);
+        this.sendVerificationMail();
       })
       .catch((error) => {
         window.alert(error.message);
@@ -82,13 +86,14 @@ export class AuthService {
       });
   }
 
-  get isLoggedIn(): boolean {
-    const currentUser = this.userSubject.value;
-    return currentUser !== null && currentUser.emailVerified !== false ? true : false;
+  // get isLoggedIn(): boolean {
+  //   const currentUser = this.userSubject.value;
+  //   return currentUser !== null && currentUser.emailVerified ;
+  
 
-    // this.user.next(JSON.parse(localStorage.getItem('user')!));
-    // return this.user !== null && this.user.emailVerified !== false ? true : false;
-  }
+  //   // this.user.next(JSON.parse(localStorage.getItem('user')!));
+  //   // return this.user !== null && this.user.emailVerified !== false ? true : false;
+  // }
  
   setUserData(user: any) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
@@ -110,9 +115,10 @@ export class AuthService {
   signOut() {
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
-      // this.hasToken.next(false);
+      this.userSubject.next(null);
       this.router.navigate(['/auth/sign-in']);
-    });
-  }
+  })
+}
+
   
 }

@@ -13,7 +13,7 @@
         <ng-template pTemplate="footer">
             <p-button pTooltip="Detail"  [outlined]="true" icon="pi pi-eye" routerLink="/participants/detail/{{student.id}}"  styleClass="p-button-warning" ></p-button>
             <p-button pTooltip="Edit" [outlined]="true" icon="pi pi-pencil" routerLink="/participants/edit/{{student.id}}" [style]="{ 'margin-left': '.5em', }"></p-button>
-            <p-button pTooltip="Delete" [outlined]="true" icon="pi pi-times" styleClass="p-button-danger" (click)="deleteStudent(student)" [style]="{ 'margin-left': '.5em' }"></p-button>
+            <p-button pTooltip="Delete" [outlined]="true" icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteStudent(student)" [style]="{ 'margin-left': '.5em' }"></p-button>
         </ng-template>
     </p-card>
 </div>

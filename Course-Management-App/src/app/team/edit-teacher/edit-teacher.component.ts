@@ -4,8 +4,10 @@ import { Team } from 'src/app/domain/team.model';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { ParticipantService } from 'src/app/services/participant.service';
 import { TeamService } from 'src/app/services/team.service';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/domain/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-edit-teacher',
@@ -38,9 +40,9 @@ export class EditTeacherComponent {
     private teamService: TeamService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private router: Router,
     private messageService: MessageService
-  ) {}  
+  ) {
+  }  
 
   ngOnInit(): void {
     this.getForm();

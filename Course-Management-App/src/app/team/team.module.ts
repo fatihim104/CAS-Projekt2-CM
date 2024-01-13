@@ -22,14 +22,15 @@ import { TeachersComponent } from './teachers/teachers.component';
 import { AddTeacherComponent } from './add-teacher/add-teacher.component';
 import { EditTeacherComponent } from './edit-teacher/edit-teacher.component';
 import { DetailTeacherComponent } from './detail-teacher/detail-teacher.component';
+import { AdminGuard } from '../guard/admin.guard';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       { path: '', component: TeachersComponent },
-      { path: 'team/add', component: AddTeacherComponent },
-      { path: 'team/edit/:id', component: EditTeacherComponent },
+      { path: 'team/add', component: AddTeacherComponent, canActivate: [AdminGuard] },
+      { path: 'team/edit/:id', component: EditTeacherComponent, canActivate: [AdminGuard] },
       { path: 'team/detail/:id', component: DetailTeacherComponent },
     ],
   },

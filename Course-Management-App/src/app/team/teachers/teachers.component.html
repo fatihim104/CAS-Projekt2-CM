@@ -1,4 +1,5 @@
-<p-button label="Add New Teacher" routerLink="/team/add" styleClass="mb-4" severity="success" ></p-button>
+<h2 class="mb-4">Our Team</h2>
+<p-button *ngIf="(currentUser$ | async)?.role === 'admin'" label="Add New Teacher" routerLink="/team/add" styleClass="mb-4" severity="success" ></p-button>
 
 <p-toast></p-toast>
 
@@ -12,8 +13,8 @@
        
         <ng-template pTemplate="footer" class="absolute bottom-0">
             <p-button pTooltip="Detail"  [outlined]="true" icon="pi pi-eye" routerLink="/team/detail/{{teacher .id}}"  styleClass="p-button-warning" ></p-button>
-            <p-button pTooltip="Edit" [outlined]="true" icon="pi pi-pencil" routerLink="/team/edit/{{teacher .id}}" [style]="{ 'margin-left': '.5em', }"></p-button>
-            <p-button pTooltip="Delete" [outlined]="true" icon="pi pi-times" styleClass="p-button-danger" (click)="deleteTeacher(teacher )" [style]="{ 'margin-left': '.5em' }"></p-button>
+            <p-button *ngIf="(currentUser$ | async)?.role === 'admin'" pTooltip="Edit" [outlined]="true" icon="pi pi-pencil" routerLink="/team/edit/{{teacher .id}}" [style]="{ 'margin-left': '.5em', }"></p-button>
+            <p-button *ngIf="(currentUser$ | async)?.role === 'admin'" pTooltip="Delete" [outlined]="true" icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteTeacher(teacher )" [style]="{ 'margin-left': '.5em' }"></p-button>
         </ng-template>
     </p-card>
 </div>

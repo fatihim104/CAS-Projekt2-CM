@@ -1,6 +1,7 @@
-<p-button label="Plan New Course" routerLink="/courses/plan"></p-button>
 
-<div class="card flex justify-content-center">
+
+<div class="flex flex-column justify-content-between w-10 m-auto ">
+  <p-button *ngIf="(currentUser$ | async)?.role === 'admin'" label="Plan New Course" routerLink="/courses/plan" class="align-self-start mb-3"></p-button>
   <p-toast></p-toast>
   <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
   <p-table
@@ -13,6 +14,8 @@
     [globalFilterFields]="['language', 'level', 'price', 'status']"
     [rowHover]="true"
     dataKey="id"
+    [ngClass]="{'custom-table': true}"
+    class="custom-table"
     [tableStyle]="{ 'min-width': '50rem' }"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true"
@@ -77,6 +80,7 @@
             pRipple
             icon="pi pi-pencil"
             class="p-button-rounded p-button-success mr-2"
+            *ngIf="(currentUser$ | async)?.role === 'admin'"
             routerLink="/courses/edit/{{course.id}}"
           ></button>
           <button
@@ -84,6 +88,7 @@
             pRipple
             icon="pi pi-trash"
             class="p-button-rounded p-button-warning"
+            *ngIf="(currentUser$ | async)?.role === 'admin'"
             (click)="deleteCourse(course)"
           ></button>
         </td>
@@ -91,7 +96,7 @@
     </ng-template>
 
     <ng-template pTemplate="summary">
-      <div class="flex align-items-center justify-content-between">
+      <div class="flex align-items-center justify-content-between ">
         In total there are {{ courses ? courses.length : 0 }} course.
       </div>
     </ng-template>

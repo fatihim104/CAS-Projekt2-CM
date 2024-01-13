@@ -1,5 +1,6 @@
 export const environment = {
     production: false,
+    adminEmail: "fatihimal@gmail.com",
     firebaseConfig: {
     apiKey: 'AIzaSyDUQaJt-tsQChBxf8KE4UeSYGk6BXb9Z5g',
     authDomain: 'cas-cm.firebaseapp.com',

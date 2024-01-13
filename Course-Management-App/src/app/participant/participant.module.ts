@@ -22,14 +22,15 @@ import { ParticipantsComponent } from './participants/participants.component';
 import { AddParticipantComponent } from './add-participant/add-participant.component';
 import { DetailParticipantComponent } from './detail-participant/detail-participant.component';
 import { EditParticipantComponent } from './edit-participant/edit-participant.component';
+import { AdminGuard } from '../guard/admin.guard';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       { path: '', component: ParticipantsComponent },
-      { path: 'participants/add', component: AddParticipantComponent },
-      { path: 'participants/edit/:id', component: EditParticipantComponent },
+      { path: 'participants/add', component: AddParticipantComponent, canActivate:[AdminGuard] },
+      { path: 'participants/edit/:id', component: EditParticipantComponent, canActivate:[AdminGuard] },
       { path: 'participants/detail/:id', component: DetailParticipantComponent },
     ],
   },
