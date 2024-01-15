@@ -1,5 +1,5 @@
 <div class="card flex justify-content-between">
     <p-tabMenu  [model]="items" [activeItem]="activeItem" (activeItemChange)="onActiveItemChange($event)"></p-tabMenu>
-    <button *ngIf="!(hasToken | async)" pButton routerLink="/auth" class="bg-green-900" > LOGIN</button>
-    <button *ngIf="hasToken | async" pButton (click)="logout()" class="bg-green-900" > LOGOUT</button>
+    <button *ngIf="!(hasToken | async)" pButton routerLink="/auth" class="bg-green-900 border-yellow-900" > LOGIN</button>
+    <button *ngIf="hasToken | async" pButton (click)="logout()" class="bg-green-900 border-orange-900" > LOGOUT</button>
 </div>

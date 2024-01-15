@@ -1,10 +1,13 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit  
+} from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { User } from '../domain/user.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, map, tap } from 'rxjs';
+import { Observable} from 'rxjs';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -18,12 +21,9 @@ export class TabMenuComponent implements OnInit {
   hasToken: Observable<boolean>;
   currentUser$: Observable<User | undefined>;
   role: string | undefined = '';
-  user: User | undefined;
-  // isLoggedin : boolean=false;
 
   constructor(
     private router: Router,
-    private cdRef: ChangeDetectorRef,
     public authService: AuthService,
     public afAuth: AngularFireAuth,
     private userService: UserService
@@ -31,38 +31,19 @@ export class TabMenuComponent implements OnInit {
     this.hasToken = this.authService.hasToken;
 
     this.currentUser$ = this.userService.getCurrentUser();
-    // this.currentUser$.subscribe((user) => {
-    //   this.role = user?.role;
-    // });
   }
 
   ngOnInit() {
-    // this.currentUser$.pipe(switchMap(user => {
-    //   return user ? user : " "
-
-    // })
-    // ).subscribe((user) => {
-    //   if(user){
-    //     this.role = user?.role || "";
-    //   }
-    //   console.log("rol:", this.role);
-
-    // console.log("rol:", this.role);
-    // this.getActiveRoute();
-
-//bu calisti
     this.currentUser$.subscribe((user) => {
       this.role = user?.role;
-      this.getActiveRoute();
+      this.getActiveRoute(this.role == 'admin');
     });
-    this.getActiveRoute()
-
-
-}
-  
+    this.getActiveRoute(this.role == 'admin');
+  }
 
   logout() {
     this.authService.signOut();
+    this.getActiveRoute(false);
     this.router.navigate(['/auth']);
   }
 
@@ -70,35 +51,29 @@ export class TabMenuComponent implements OnInit {
     this.activeItem = event;
   }
 
-  getActiveRoute() {
-    console.log('rol:', this.role);
-    // this.currentUser$.subscribe((user) => {
-    //   console.log('currentuser:', user);
-
-      this.items = [
-        {
-          label: 'Home',
-          routerLink: 'home',
-        },
-        {
-          label: 'Courses',
-          routerLink: 'courses',
-          visible: true,
-        },
-        {
-          label: 'Team',
-          routerLink: 'team',
-        },
-        {
-          label: 'Participants',
-          routerLink: 'participants',
-          visible: this.role == 'admin',
-        },
-        {
-          label: 'Contact',
-          routerLink: 'contact',
-        },
-      ];
-    // });
+  getActiveRoute(visible: boolean) {
+    this.items = [
+      {
+        label: 'Home',
+        routerLink: 'home',
+      },
+      {
+        label: 'Courses',
+        routerLink: 'courses',
+      },
+      {
+        label: 'Team',
+        routerLink: 'team',
+      },
+      {
+        label: 'Participants',
+        routerLink: 'participants',
+        visible: visible,
+      },
+      {
+        label: 'Contact',
+        routerLink: 'contact',
+      },
+    ];
   }
 }
