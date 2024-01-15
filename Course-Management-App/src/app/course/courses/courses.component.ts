@@ -1,11 +1,17 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { BehaviorSubject} from 'rxjs';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { Course } from 'src/app/domain/course.model';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Course, LanguageEnum, LevelEnum } from 'src/app/domain/course.model';
 import { User } from 'src/app/domain/user.model';
 import { CourseService } from 'src/app/services/course.service';
 import { UserService } from 'src/app/services/user.service';
+import { combineLatest } from 'rxjs';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/combineLatest';
 
 interface Column {
   field: string;
@@ -16,22 +22,51 @@ interface Column {
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
-  providers: [CourseService, ConfirmationService, MessageService],
+  providers: [CourseService, ConfirmationService, MessageService, TitleCasePipe],
 })
 
 export class CoursesComponent implements OnInit {
   courses?: Course[] | any;
   currentUser$:Observable<User | undefined> ;
+  languageOptions: { label: string }[] = [];
+  levelOptions: { label: string }[] = [];
+
+  languageFilter$ = new BehaviorSubject<string|null>(null);
+  levelFilter$ = new BehaviorSubject<string|null>(null);
+  filteredCourses$ : Observable<Course[] | any> ;
 
   cols!: Column[];
 
   constructor(
     private courseService: CourseService,
     private userService: UserService,
+    private titlecasePipe: TitleCasePipe,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private afs : AngularFirestore
   ) {
+
+    this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
+      label: this.titlecasePipe.transform(key),
+    }));
+
+    this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
+
     this.currentUser$ =  this.userService.getCurrentUser()
+
+    this.filteredCourses$ = combineLatest(
+     [ this.languageFilter$,
+      this.levelFilter$]
+    ).pipe(
+      switchMap(([language, level]:[string | null, string | null] ) => 
+
+      this.courseService.filterCourses(language,level) as Observable<Course[]>
+     
+    )
+
+    );
+    
+   
   }
 
   ngOnInit(): void {
@@ -84,6 +119,36 @@ export class CoursesComponent implements OnInit {
       },
     });
   }
+
+  // filterByLanguage(event:any){
+  //   if(event.value){
+  //     this.languageFilter$.next(event.value?.label)
+  //     console.log("event",event);
+      
+  //     // this.courseService.filterByLanguage(this.languageFilter$).subscribe((data: Course[])  => {
+  //     //   this.courses =  data;
+  //     // })
+  //   }
+  //   this.getCourses()
+  // }
+
+  // filterByLevel(event:any){
+
+  //   if(event.value){
+  //     this.levelFilter$.next(event.value?.label)
+  //     console.log("event",event);
+      
+  //     // this.courseService.filterByLevel(this.selectedLevel).subscribe((data: Course[])  => {
+  //     //   this.courses =  data;
+  //     })
+  //   }
+  //   this.getCourses()
+
+  // }
+
+  
+  
+
 
   getSeverity(status: string) {
     switch (status.toUpperCase()) {

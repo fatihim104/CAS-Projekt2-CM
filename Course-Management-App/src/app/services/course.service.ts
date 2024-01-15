@@ -3,8 +3,8 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
 import { Injectable } from '@angular/core';
-import { Course } from '../domain/course.model';
-import { Observable, from, map } from 'rxjs';
+import { Course, LevelEnum } from '../domain/course.model';
+import { Observable, combineLatest, from, map } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Participant } from '../domain/participant.model';
 import { ParticipantService } from './participant.service';
@@ -39,52 +39,6 @@ export class CourseService {
     );
   }
 
-  // getCoursesByStudent(selectedStudentId:any): Observable<Course[]> {
-        
-  //   this.participantService.getParticipant(selectedStudentId)
-  //   .subscribe((student) => {
-  //     this.selectedStudent = student;
-      
-  //     console.log(this.selectedStudent);
-  // })
-  // console.log(this.selectedStudent);
-  
-  
-    
-  //   return from(
-  //     this.coursesRef.ref.where("students", "array-contains", this.selectedStudent).get()).pipe(
-  //     map(querySnapshot => {
-  //       console.log(querySnapshot);
-  //       return querySnapshot.docs.map(doc => doc.data() as Course);
-  //     })
-  //   );
-  // }
-
-  
-
-
-  // getCoursesByStudent(selectedStudentId: any): Observable<Course[]> {
-  //   return this.participantService.getParticipant(selectedStudentId).pipe(
-  //     tap((student) => {
-  //       this.selectedStudent = student;
-  //       console.log('Selected Student:', this.selectedStudent);
-  //     }),
-  //     switchMap(() => {
-       
-  //       return from(
-  //         this.coursesRef.ref.where("course.students", "array-contains", this.selectedStudent).get()
-  //       ).pipe(
-  //         tap((querySnapshot) => {
-  //           console.log('Firebase Query Result:', querySnapshot);
-  //         }),
-  //         map(querySnapshot => {
-  //           return querySnapshot.docs.map(doc => doc.data() as Course);
-  //         })
-  //       );
-  //     })
-  //   );
-  // }
-
   getCoursesByStudent(selectedStudentId:any):Observable<Course[]>{
     return this.db.collection<Course>(this.dbPath).valueChanges().pipe(
       map(courses => {
@@ -96,7 +50,49 @@ export class CourseService {
     );
 
   }
-  
+
+
+
+  filterCourses(language: string | null, level: string | null): Observable<Course[] | any> {
+    return combineLatest([
+      this.db.collection<Course>('courses', ref => {
+        let query: firebase.firestore.Query = ref;
+        
+        if (language) {
+          query = query.where('language', '==', language);
+        }
+
+        if (level) {
+          query = query.where('level', '==', level);
+        }
+
+        return query;
+      }).valueChanges()
+    ]);
+  }
+
+  filterByLanguage(language:any):Observable<Course[]>{
+    return from(
+      this.coursesRef.ref.where("language.label", "==", language).get()
+    ).pipe(
+      map(querySnapshot => {
+        console.log("language filtered:",querySnapshot);
+        return querySnapshot.docs.map(doc => doc.data() as Course);
+      })
+    );
+
+  }
+
+  filterByLevel(level:LevelEnum){
+    return from(
+      this.coursesRef.ref.where("level.label", "==", level).get()
+    ).pipe(
+      map(querySnapshot => {
+        console.log("language filtered:",querySnapshot);
+        return querySnapshot.docs.map(doc => doc.data() as Course);
+      })
+    );
+  } 
 
   create(course: Course) {
     return this.coursesRef.add({ ...course });

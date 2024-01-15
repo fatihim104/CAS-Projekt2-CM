@@ -2,8 +2,43 @@
 
 <div class="flex flex-column justify-content-between w-10 m-auto ">
   <p-button *ngIf="(currentUser$ | async)?.role === 'admin'" label="Plan New Course" routerLink="/courses/plan" class="align-self-start mb-3"></p-button>
+
+ <div class="flex justify-content-center">
+  <div class="field col-12 md:col-4">
+    <span class="p-float-label">
+      <p-dropdown
+        id="language"
+        [options]="languageOptions"
+        [(ngModel)]="languageFilter$" 
+        (onChange)="filterByLanguage($event)"
+        placeholder="Select Language"
+        optionLabel="label"
+        [showClear]="true"
+      ></p-dropdown>
+      <label for="language">Filter Language</label>
+    </span>
+  </div>
+
+  
+  <div class="field col-12 md:col-4">
+    <span class="p-float-label">
+      <p-dropdown
+        id="level"
+        [options]="levelOptions"
+        [(ngModel)]="levelFilter$" 
+        placeholder="Select Level"
+        (onChange)="filterByLevel($event)"
+        [showClear]="true"
+      ></p-dropdown>
+      <label for="level">Filter Level</label>
+    </span>
+  </div>
+
+ </div>
   <p-toast></p-toast>
+
   <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+
   <p-table
     #dt
     [value]="courses"
