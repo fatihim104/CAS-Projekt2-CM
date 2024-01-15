@@ -53,10 +53,13 @@ export class PlanNewCourseComponent implements OnInit {
     private router: Router,
     private messageService: MessageService
   ) {
+
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));
+
     this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
+    
     this.statusOptions = Object.keys(Status).map((key) => ({
       label: key.toLowerCase(),
     }));

@@ -65,7 +65,7 @@
     </ul>
   </div>
 
-  <div class="col">
+  <div  *ngIf="(currentUser$ | async)?.role === 'admin'" class="col">
     <div class="text-500 w-8 md:w-2 font-medium mb-2">Courses</div>
     <ul *ngFor="let course of courses" class="list-none p-0 m-0 text-900 flex">
       <li class="mr-3 mb-1" class="grid">

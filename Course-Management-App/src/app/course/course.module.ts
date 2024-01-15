@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -47,6 +47,7 @@ const routes: Routes = [
         ToastModule,
         TagModule,
         ChipModule,
+        FormsModule,
         ConfirmDialogModule,         
         RouterModule.forChild(routes)
     ],
