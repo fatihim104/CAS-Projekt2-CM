@@ -1,9 +1,10 @@
-<div class="font-bold text-3xl text-900 p-2 mb-3">Teacher Information</div>
-<div class="grid w-full">
+<div class="w-8 m-auto">
+<div class="font-bold text-3xl text-900 p-1 mb-3">Teacher Information</div>
+<div class="grid">
   <div class="col mr-8">
     <ul class="list-none p-0 m-0">
       <li class="flex align-items-center py-3 px-2 flex-wrap">
-        <div class="text-500 w-6 md:w-2 font-medium">First Name</div>
+        <div class="text-500 w-6 md:w-3 font-medium">First Name</div>
         <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
           {{ selectedTeacher?.firstName }}
         </div>
@@ -12,7 +13,7 @@
       <li
         class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
       >
-        <div class="text-500 w-6 md:w-2 font-medium">Last Name</div>
+        <div class="text-500 w-6 md:w-3 font-medium">Last Name</div>
         <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
           {{ selectedTeacher?.lastName }}
         </div>
@@ -21,7 +22,7 @@
       <li
         class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
       >
-        <div class="text-500 w-6 md:w-2 font-medium">Phone Number</div>
+        <div class="text-500 w-6 md:w-3 font-medium">Phone Number</div>
         <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
           {{ selectedTeacher?.phone }}
         </div>
@@ -30,7 +31,7 @@
       <li
         class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
       >
-        <div class="text-500 w-6 md:w-2 font-medium">E-Mail</div>
+        <div class="text-500 w-6 md:w-3 font-medium">E-Mail</div>
         <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
           {{ selectedTeacher?.email }}
         </div>
@@ -39,7 +40,7 @@
       <li
         class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
       >
-        <div class="text-500 w-6 md:w-2 font-medium">Birthday</div>
+        <div class="text-500 w-6 md:w-3 font-medium">Birthday</div>
         <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
           {{ selectedTeacher?.birthDay?.seconds * 1000 | date : "dd-MM-yyyy" }}
         </div>
@@ -48,7 +49,7 @@
       <li
         class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
       >
-        <div class="text-500 w-6 md:w-2 font-medium">Start Day</div>
+        <div class="text-500 w-6 md:w-3 font-medium">Start Day</div>
         <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
           {{ selectedTeacher?.startDay?.seconds * 1000 | date : "dd-MM-yyyy" }}
         </div>
@@ -57,7 +58,7 @@
       <li
         class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
       >
-        <div class="text-500 w-6 md:w-2 font-medium">Nationality</div>
+        <div class="text-500 w-6 md:w-3 font-medium">Nationality</div>
         <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
           {{ selectedTeacher?.nationality }}
         </div>
@@ -96,4 +97,6 @@
       class="p-button-text text-green-900 border-1 min-width-2 border-teal-600 hover:border-orange-700"
     ></button>
   </div>
+</div>
+
 </div>

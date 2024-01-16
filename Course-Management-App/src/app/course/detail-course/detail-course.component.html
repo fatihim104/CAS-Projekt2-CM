@@ -1,114 +1,116 @@
-<div class="font-bold text-3xl text-900 p-2 mb-3">Course Information</div>
-<div class="grid w-full">
-  <div class="col mr-8">
-    <ul class="list-none p-0 m-0">
-      <li class="flex align-items-center py-3 px-2 flex-wrap">
-        <div class="text-500 w-6 md:w-2 font-medium">Languge</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse?.language.label }}
+<div class="w-8 m-auto">
+  <div class="font-bold text-3xl text-900 p-2 mb-3">Course Information</div>
+  <div class="grid w-full">
+    <div class="col mr-8">
+      <ul class="list-none p-0 m-0">
+        <li class="flex align-items-center py-3 px-2 flex-wrap">
+          <div class="text-500 w-6 md:w-3 font-medium">Languge</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ selectedCourse?.language.label }}
+          </div>
+        </li>
+
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-3 font-medium">Level</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ selectedCourse?.level.label }}
+          </div>
+        </li>
+
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-3 font-medium">Place</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ selectedCourse?.place }}
+          </div>
+        </li>
+
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-3 font-medium">Price</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ selectedCourse?.price }}
+          </div>
+        </li>
+
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-3 font-medium">Date</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ selectedCourse?.date.seconds * 1000 | date : "dd-MM-yyyy" }}
+          </div>
+        </li>
+
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-3 font-medium">Time</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ selectedCourse?.time * 1000 | date : "HH:mm" }}
+          </div>
+        </li>
+
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-3 font-medium">Status</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ selectedCourse?.status.label }}
+          </div>
+        </li>
+
+        <li
+          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+        >
+          <div class="text-500 w-6 md:w-3 font-medium">Teacher</div>
+          <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+            {{ selectedCourse?.teacher.firstName }}
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="(currentUser$ | async)?.role === 'admin'" class="col-6">
+      <li class="flex py-3 px-2 align-items-center flex-wrap">
+        <div class="grid">
+          <div class="col">
+            <div class="text-500 w-8 md:w-3 font-medium">Participants</div>
+          </div>
+          <div class="col">
+            <ul
+              *ngFor="let participant of participants"
+              class="list-none p-0 m-0"
+            >
+              <li class="mr-3 mb-1 w-full">{{ participant.name }}</li>
+            </ul>
+          </div>
         </div>
       </li>
+    </div>
 
-      <li
-        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-      >
-        <div class="text-500 w-6 md:w-2 font-medium">Level</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse?.level.label }}
-        </div>
-      </li>
-
-      <li
-        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-      >
-        <div class="text-500 w-6 md:w-2 font-medium">Place</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse?.place }}
-        </div>
-      </li>
-
-      <li
-        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-      >
-        <div class="text-500 w-6 md:w-2 font-medium">Price</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse?.price }}
-        </div>
-      </li>
-
-      <li
-        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-      >
-        <div class="text-500 w-6 md:w-2 font-medium">Date</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse?.date.seconds * 1000 | date : "dd-MM-yyyy" }}
-        </div>
-      </li>
-
-      <li
-        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-      >
-        <div class="text-500 w-6 md:w-2 font-medium">Time</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse?.time * 1000 | date : "HH:mm" }}
-        </div>
-      </li>
-
-      <li
-        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-      >
-        <div class="text-500 w-6 md:w-2 font-medium">Status</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse?.status.label }}
-        </div>
-      </li>
-
-      <li
-        class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
-      >
-        <div class="text-500 w-6 md:w-2 font-medium">Teacher</div>
-        <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
-          {{ selectedCourse?.teacher.firstName }}
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  <div  *ngIf="(currentUser$ | async)?.role === 'admin'" class="col-6">
-    <li class="flex py-3 px-2 align-items-center flex-wrap">
-      <div class="grid">
-        <div class="col">
-          <div class="text-500 w-8 md:w-2 font-medium">Participants</div>
-        </div>
-        <div class="col">
-          <ul
-            *ngFor="let participant of participants"
-            class="list-none p-0 m-0"
-          >
-            <li class="mr-3 mb-1 w-full">{{ participant.name }}</li>
-          </ul>
-        </div>
-      </div>
-    </li>
-  </div>
-
-  <div class="w-full my-4 flex flex-row justify-content-around">
-    <button
-      pButton
-      pRipple
-      label="Courses"
-      icon="pi pi-angle-left"
-      routerLink="/courses"
-      class="p-button-text text-blue-900 ml-2 border-1 border-teal-600 hover:border-orange-700"
-    ></button>
-    <button
-      *ngIf="(currentUser$ | async)?.role === 'admin'"
-      pButton
-      pRipple
-      label="Edit"
-      icon="pi pi-pencil"
-      routerLink="/courses/edit/{{ selectedCourseId }}"
-      class="p-button-text text-green-900 border-1 border-teal-600 hover:border-orange-700"
-    ></button>
+    <div class="w-full my-4 flex flex-row justify-content-around">
+      <button
+        pButton
+        pRipple
+        label="Courses"
+        icon="pi pi-angle-left"
+        routerLink="/courses"
+        class="p-button-text text-blue-900 ml-2 border-1 border-teal-600 hover:border-orange-700"
+      ></button>
+      <button
+        *ngIf="(currentUser$ | async)?.role === 'admin'"
+        pButton
+        pRipple
+        label="Edit"
+        icon="pi pi-pencil"
+        routerLink="/courses/edit/{{ selectedCourseId }}"
+        class="p-button-text text-green-900 border-1 border-teal-600 hover:border-orange-700"
+      ></button>
+    </div>
   </div>
 </div>

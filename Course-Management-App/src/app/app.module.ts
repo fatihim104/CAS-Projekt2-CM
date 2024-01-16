@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire/compat';
@@ -11,7 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { TabMenuModule } from 'primeng/tabmenu';
-import { TabMenuComponent } from './tab-menu/tab-menu';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 
@@ -25,6 +22,9 @@ import { CourseModule } from './course/course.module';
 import { ParticipantModule } from './participant/participant.module';
 import { TeamModule } from './team/team.module';
 import { AuthModule } from './auth/auth.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TabMenuComponent } from './tab-menu/tab-menu';
 
 
 

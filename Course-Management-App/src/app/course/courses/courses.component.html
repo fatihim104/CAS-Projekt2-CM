@@ -1,7 +1,10 @@
-
-
-<div class="flex flex-column justify-content-between w-10 m-auto ">
-  <p-button *ngIf="(currentUser$ | async)?.role === 'admin'" label="Plan New Course" routerLink="/courses/plan" class="align-self-start mb-3"></p-button>
+<div class="flex flex-column justify-content-between w-10 m-auto">
+  <p-button
+    *ngIf="(currentUser$ | async)?.role === 'admin'"
+    label="Plan New Course"
+    routerLink="/courses/plan"
+    class="align-self-start mb-3"
+  ></p-button>
   <p-toast></p-toast>
   <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
   <p-table
@@ -11,47 +14,84 @@
     [paginator]="true"
     [scrollable]="true"
     scrollDirection="horizontal"
-    [globalFilterFields]="['language', 'level', 'price', 'status']"
+    [globalFilterFields]="[
+      'language.label',
+      'level.label',
+      'price',
+      'status.label'
+    ]"
     [rowHover]="true"
     dataKey="id"
-    [ngClass]="{'custom-table': true}"
+    [ngClass]="{ 'custom-table': true }"
     class="custom-table"
     [tableStyle]="{ 'min-width': '50rem' }"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true"
+    [filterDelay]="0"
   >
-    <!-- <ng-template pTemplate="caption">
-      <div class="flex align-items-center justify-content-between">
-        <h5 class="m-0">Manage Products</h5>
-        <span class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input
-            pInputText
-            type="text"
-            (input)="dt.filterGlobal($event.target.value, 'contains')"
-            placeholder="Search..."
-          />
-        </span>
-      </div>
-    </ng-template> -->
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="language.label" style="min-width: 5rem">
-          Language <p-sortIcon field="language"></p-sortIcon>
+          <div class="flex justify-content-start align-items-center">
+            Language <p-sortIcon field="language.label"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="language.label"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
         </th>
+
         <th pSortableColumn="level.label" style="min-width: 5rem">
-          Level <p-sortIcon field="level"></p-sortIcon>
+          <div class="flex justify-content-start align-items-center">
+            Level <p-sortIcon field="level.label"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="level.label"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
         </th>
+
         <th pSortableColumn="place" style="min-width: 5rem">
-          Place <p-sortIcon field="place"></p-sortIcon>
+          <div class="flex justify-content-start align-items-center">
+            Place <p-sortIcon field="place"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="place"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
         </th>
+
         <th pSortableColumn="status.label" style="min-width: 5rem">
-          Status <p-sortIcon field="status"></p-sortIcon>
+          <div class="flex justify-content-start align-items-center">
+            Status <p-sortIcon field="status"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="status"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
         </th>
+
         <th pSortableColumn="price" style="min-width: 5rem">
-          Price <p-sortIcon field="price"></p-sortIcon>
+          <div class="flex justify-content-start align-items-center">
+            Price <p-sortIcon field="price"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="price"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
         </th>
-        <th  style="min-width: 5rem"></th>
+
+        <th style="min-width: 5rem"></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-course>
@@ -73,7 +113,7 @@
             pRipple
             icon="pi pi-eye"
             class="p-button-rounded p-button-info mr-2"
-            routerLink="/courses/detail/{{course.id}}"
+            routerLink="/courses/detail/{{ course.id }}"
           ></button>
           <button
             pButton
@@ -81,7 +121,7 @@
             icon="pi pi-pencil"
             class="p-button-rounded p-button-success mr-2"
             *ngIf="(currentUser$ | async)?.role === 'admin'"
-            routerLink="/courses/edit/{{course.id}}"
+            routerLink="/courses/edit/{{ course.id }}"
           ></button>
           <button
             pButton
@@ -96,7 +136,7 @@
     </ng-template>
 
     <ng-template pTemplate="summary">
-      <div class="flex align-items-center justify-content-between ">
+      <div class="flex align-items-center justify-content-between">
         In total there are {{ courses ? courses.length : 0 }} course.
       </div>
     </ng-template>

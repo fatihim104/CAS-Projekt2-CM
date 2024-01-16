@@ -1,5 +1,5 @@
 :host ::ng-deep .p-menuitem-text {
-  color: red;
+  color: green;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
 }
 
 .footer {
-  height: 10vh;
-  position: absolute;
+  height: 5vh;
+  position: fixed;
   bottom:0;
 }
