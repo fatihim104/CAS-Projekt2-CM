@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Course } from 'src/app/domain/course.model';
 import { User } from 'src/app/domain/user.model';
 import { CourseService } from 'src/app/services/course.service';
@@ -36,7 +36,6 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCourses();
-   
   }
 
   getCourses() {
@@ -44,28 +43,22 @@ export class CoursesComponent implements OnInit {
       .getCourses()
       .snapshotChanges()
       .pipe(
-        tap(changes => console.log(changes)
-        ),
         map((changes) =>
           changes.map((c) => ({
             id: c.payload.doc.id,
             ...c.payload.doc.data(),
-          }))
+          })) 
         )
       )
       .subscribe(
         (data) => {
           this.courses = data;
-        },
+        }, 
         (error) => {
           console.error('Error fetching courses', error);
           this.courses = [];
         }
       );
-  }
-
-  editCourse(course: Course) {
-    return console.log(course);
   }
 
   deleteCourse(course: Course) {

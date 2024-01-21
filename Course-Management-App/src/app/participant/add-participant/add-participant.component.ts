@@ -19,6 +19,7 @@ import { ParticipantService } from 'src/app/services/participant.service';
   styleUrls: ['./add-participant.component.scss'],
   providers: [TitleCasePipe, MessageService],
 })
+
 export class AddParticipantComponent {
   students!: Participant[];
   languageOptions: { label: string }[] = [];

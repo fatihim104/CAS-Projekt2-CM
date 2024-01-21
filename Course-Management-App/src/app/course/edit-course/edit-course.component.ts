@@ -75,9 +75,7 @@ export class EditCourseComponent implements OnInit {
       this.editForm.setValue(this.selectedCourse) 
       this.editForm.controls['date'].patchValue(this.selectedCourse.date.toDate())
       this.editForm.controls['time'].patchValue(this.selectedCourse.time.toDate())
-    })
-    
- 
+    }) 
   }
   getForm(){
     this.editForm = this.formBuilder.group({
@@ -150,7 +148,6 @@ export class EditCourseComponent implements OnInit {
       .subscribe(
         (data) => {
           this.students = data;
-          console.log(this.students)
         },
         (error) => {
           console.error('Error fetching participants', error);
@@ -180,7 +177,6 @@ export class EditCourseComponent implements OnInit {
         this.teachers = [];
       }
     );
-
   }
 
   goBack(): void {

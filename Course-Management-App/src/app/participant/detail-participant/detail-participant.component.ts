@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'src/app/domain/course.model';
-import { Participant } from 'src/app/domain/participant.model';
 import { CourseService } from 'src/app/services/course.service';
 import { ParticipantService } from 'src/app/services/participant.service';
 
@@ -37,7 +36,6 @@ export class DetailParticipantComponent {
       .getCoursesByStudent(this.selectedStudentId)
       .subscribe((data: Course[]) => {
         this.courses = data;
-        console.log(this.courses);
       });
   }
 

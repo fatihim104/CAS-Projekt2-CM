@@ -142,7 +142,6 @@ export class PlanNewCourseComponent implements OnInit {
       .subscribe(
         (data) => {
           this.students = data;
-          console.log(this.students)
         },
         (error) => {
           console.error('Error fetching participants', error);

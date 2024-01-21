@@ -26,8 +26,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabMenuComponent } from './tab-menu/tab-menu';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

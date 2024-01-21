@@ -17,11 +17,9 @@ import { EditCourseComponent } from './edit-course/edit-course.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ChipModule } from 'primeng/chip';
-
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { DetailCourseComponent } from './detail-course/detail-course.component';
 import { AdminGuard } from '../guard/admin.guard';
-
 
 const routes: Routes = [
     {

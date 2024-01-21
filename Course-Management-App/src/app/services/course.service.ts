@@ -5,8 +5,6 @@ import {
 import { Injectable } from '@angular/core';
 import { Course } from '../domain/course.model';
 import { Observable, from, map } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
-import { Participant } from '../domain/participant.model';
 import { ParticipantService } from './participant.service';
 
 @Injectable({ providedIn: 'root' })
@@ -33,57 +31,10 @@ export class CourseService {
       this.coursesRef.ref.where("teacher.id", "==", id).get()
     ).pipe(
       map(querySnapshot => {
-        console.log(querySnapshot);
         return querySnapshot.docs.map(doc => doc.data() as Course);
       })
     );
   }
-
-  // getCoursesByStudent(selectedStudentId:any): Observable<Course[]> {
-        
-  //   this.participantService.getParticipant(selectedStudentId)
-  //   .subscribe((student) => {
-  //     this.selectedStudent = student;
-      
-  //     console.log(this.selectedStudent);
-  // })
-  // console.log(this.selectedStudent);
-  
-  
-    
-  //   return from(
-  //     this.coursesRef.ref.where("students", "array-contains", this.selectedStudent).get()).pipe(
-  //     map(querySnapshot => {
-  //       console.log(querySnapshot);
-  //       return querySnapshot.docs.map(doc => doc.data() as Course);
-  //     })
-  //   );
-  // }
-
-  
-
-
-  // getCoursesByStudent(selectedStudentId: any): Observable<Course[]> {
-  //   return this.participantService.getParticipant(selectedStudentId).pipe(
-  //     tap((student) => {
-  //       this.selectedStudent = student;
-  //       console.log('Selected Student:', this.selectedStudent);
-  //     }),
-  //     switchMap(() => {
-       
-  //       return from(
-  //         this.coursesRef.ref.where("course.students", "array-contains", this.selectedStudent).get()
-  //       ).pipe(
-  //         tap((querySnapshot) => {
-  //           console.log('Firebase Query Result:', querySnapshot);
-  //         }),
-  //         map(querySnapshot => {
-  //           return querySnapshot.docs.map(doc => doc.data() as Course);
-  //         })
-  //       );
-  //     })
-  //   );
-  // }
 
   getCoursesByStudent(selectedStudentId:any):Observable<Course[]>{
     return this.db.collection<Course>(this.dbPath).valueChanges().pipe(
@@ -94,9 +45,7 @@ export class CourseService {
         );
       })
     );
-
-  }
-  
+  }  
 
   create(course: Course) {
     return this.coursesRef.add({ ...course });
