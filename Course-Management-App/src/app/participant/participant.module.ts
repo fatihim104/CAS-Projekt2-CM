@@ -18,11 +18,11 @@ import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
 import { DividerModule } from 'primeng/divider';
 
-import { ParticipantsComponent } from './participants/participants.component';
-import { AddParticipantComponent } from './add-participant/add-participant.component';
-import { DetailParticipantComponent } from './detail-participant/detail-participant.component';
-import { EditParticipantComponent } from './edit-participant/edit-participant.component';
-import { AdminGuard } from '../guard/admin.guard';
+import { ParticipantsComponent } from './components/participants/participants.component';
+import { AddParticipantComponent } from './components/add-participant/add-participant.component';
+import { DetailParticipantComponent } from './components/detail-participant/detail-participant.component';
+import { EditParticipantComponent } from './components/edit-participant/edit-participant.component';
+import { AdminGuard } from '../shared/guard/admin.guard';
 
 const routes: Routes = [
   {

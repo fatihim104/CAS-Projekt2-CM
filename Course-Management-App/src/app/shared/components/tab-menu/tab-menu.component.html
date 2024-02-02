@@ -1,0 +1,17 @@
+<div class="card flex flex-column  md:flex-row justify-content-between">
+    <p-menubar class="flex flex-column  md:flex-row justify-content-between"  [model]="items" styleClass="custom-menu">
+        <ng-template pTemplate="start">
+            <img src="../../../../assets/logo-2/png/logo-no-background.png"  class="mr-2 h-3rem md:h-4rem lg:h-7rem" />
+        </ng-template>
+        
+        <ng-template pTemplate="end">
+          
+            <div>
+                <p-button *ngIf="!(hasToken | async)" routerLink="/auth" [text]="true" severity="help" class="font-bold"> LOGIN</p-button>
+                <p-button *ngIf="hasToken | async"  (click)="logout()" [text]="true" severity="help" class="font-bold"> LOGOUT</p-button>
+            </div>
+           
+        </ng-template>
+    
+    </p-menubar>
+</div>

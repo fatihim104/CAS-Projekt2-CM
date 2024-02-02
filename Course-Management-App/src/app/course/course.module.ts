@@ -10,16 +10,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog'; 
 
-import { CoursesComponent } from './courses/courses.component';
+import { CoursesComponent } from './components/courses/courses.component';
 import { Routes, RouterModule } from '@angular/router';
-import { PlanNewCourseComponent } from './plan-new-course/plan-new-course.component';
-import { EditCourseComponent } from './edit-course/edit-course.component';
+import { PlanNewCourseComponent } from './components/plan-new-course/plan-new-course.component';
+import { EditCourseComponent } from './components/edit-course/edit-course.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ChipModule } from 'primeng/chip';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { DetailCourseComponent } from './detail-course/detail-course.component';
-import { AdminGuard } from '../guard/admin.guard';
+import { DetailCourseComponent } from './components/detail-course/detail-course.component';
+import { AdminGuard } from '../shared/guard/admin.guard';
 
 const routes: Routes = [
     {

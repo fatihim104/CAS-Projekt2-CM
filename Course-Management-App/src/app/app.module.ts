@@ -12,8 +12,6 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
 
-import { HomeComponent } from './components/home/home.component';
-import { ContactComponent } from './components/contact/contact.component';
 
 import { environment } from 'src/environments/environment.development';
 import { MessageService } from 'primeng/api';
@@ -21,11 +19,13 @@ import { MessageService } from 'primeng/api';
 import { CourseModule } from './course/course.module';
 import { ParticipantModule } from './participant/participant.module';
 import { TeamModule } from './team/team.module';
-import { AuthModule } from './auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TabMenuComponent } from './tab-menu/tab-menu';
 import { MenubarModule } from 'primeng/menubar';
+import { ContactComponent } from './shared/components/contact/contact.component';
+import { HomeComponent } from './shared/components/home/home.component';
+import { TabMenuComponent } from './shared/components/tab-menu/tab-menu';
+import { AuthModule } from './auth/auth.module';
 
 
 @NgModule({

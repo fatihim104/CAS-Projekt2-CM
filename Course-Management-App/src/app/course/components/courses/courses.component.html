@@ -1,0 +1,150 @@
+<div class="flex flex-column justify-content-between w-10 m-auto">
+  <div class="flex flex-column md:flex-row justify-content-between mb-4">
+    <h2>Active Courses</h2>
+    <p-button
+      *ngIf="(currentUser$ | async)?.role === 'admin'"
+      label="Plan New Course"
+      routerLink="/courses/plan"
+      [outlined]="true" 
+      styleClass="text-purple-500"
+    ></p-button>
+  </div>
+ 
+  <p-toast></p-toast>
+  <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
+  <p-table
+  
+    #dt
+    [value]="courses"
+    [rows]="6"
+    [paginator]="true"
+    [globalFilterFields]="[
+      'language.label',
+      'level.label',
+      'price',
+      'status.label'
+    ]"
+    [rowHover]="true"
+    dataKey="id"
+    [ngClass]="{ 'custom-table': true }"
+    class="custom-table"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [showCurrentPageReport]="true"
+    [filterDelay]="0"
+    responsiveLayout="stack" 
+    [breakpoint]="'960px'"
+   
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="language.label" style="min-width: 15%">
+          <div class="flex justify-content-start align-items-center">
+            Language <p-sortIcon field="language.label"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="language.label"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+
+        <th pSortableColumn="level.label" style="min-width: 15%">
+          <div class="flex justify-content-start align-items-center">
+            Level <p-sortIcon field="level.label"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="level.label"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+
+        <th pSortableColumn="place" style="min-width: 15%">
+          <div class="flex justify-content-start align-items-center">
+            Place <p-sortIcon field="place"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="place"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+
+        <th pSortableColumn="status.label" style="min-width: 15%">
+          <div class="flex justify-content-start align-items-center">
+            Status <p-sortIcon field="status"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="status"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+
+        <th pSortableColumn="price" style="min-width: 15%">
+          <div class="flex justify-content-start align-items-center">
+            Price <p-sortIcon field="price"></p-sortIcon>
+            <p-columnFilter
+              type="text"
+              field="price"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-course>
+      <tr>
+        <td><span class="p-column-title">Language</span>{{ course.language.label }}</td>
+        <td><span class="p-column-title">Level</span>{{ course.level.label }}</td>
+        <td><span class="p-column-title">Place</span>{{ course.place }}</td>
+        <td><span class="p-column-title">Status</span>
+          <p-tag
+            [value]="course.status.label"
+            [severity]="getSeverity(course.status.label)"
+          ></p-tag>
+        </td>
+        <td><span class="p-column-title">Price</span>{{ course.price }} fr</td>
+
+        <td class="">
+          <p-button
+            pRipple
+            icon="pi pi-eye"
+            [outlined]="true" 
+            styleClass="text-cyan-700 mr-2"
+            routerLink="/courses/detail/{{ course.id }}"
+          ></p-button>
+          <p-button
+            pRipple
+            icon="pi pi-pencil"
+            [outlined]="true" 
+            styleClass="text-teal-500 mr-2"
+            *ngIf="(currentUser$ | async)?.role === 'admin'"
+            routerLink="/courses/edit/{{ course.id }}"
+          ></p-button>
+          <p-button
+            pRipple
+            icon="pi pi-trash"
+            [outlined]="true" 
+            styleClass="text-pink-500"
+            *ngIf="(currentUser$ | async)?.role === 'admin'"
+            (click)="deleteCourse(course)"
+          ></p-button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ courses ? courses.length : 0 }} course.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
