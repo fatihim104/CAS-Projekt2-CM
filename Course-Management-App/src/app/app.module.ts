@@ -25,6 +25,8 @@ import { AuthModule } from './auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabMenuComponent } from './tab-menu/tab-menu';
+import { MenubarModule } from 'primeng/menubar';
+
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { TabMenuComponent } from './tab-menu/tab-menu';
     TeamModule,
     AppRoutingModule,
     ToastModule,
-    ButtonModule
+    ButtonModule,
+    MenubarModule
   ],
   exports:[
    
