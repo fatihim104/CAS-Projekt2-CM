@@ -1,3 +1,31 @@
-:host ::ng-deep .custom-table .p-datatable .p-datatable-thead th, td{
-    // background-color: #CAF1D8;
+h2{
+    color: #ffffff;
+} 
+
+.p-table tr > td > .p-column-title {
+    display: none;
+    font-weight: 600;
+  }
+  
+  @media screen and (max-width: 960px) {
+    .p-table tr > th,
+    .p-table tr > td {
+      display: none !important;
+    }
+  
+    .p-table tr > td:not(:last-child) {
+      border: 0 none;
+    }
+  
+    .p-table > tr > td {
+      display: flex;
+      width: 100% !important;
+      align-items: center;
+      justify-content: space-between !important;
+    }
+  
+    .p-table > tr > td > .p-column-title {
+      display: block;
+    }
 }
+  
