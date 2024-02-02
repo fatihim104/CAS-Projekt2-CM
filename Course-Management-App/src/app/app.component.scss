@@ -1,16 +1,45 @@
 :host ::ng-deep .p-menuitem-text {
-  color: green;
+  color: white;
+  font-size: x-large;
+  font-weight: 800;
 }
+
+:host ::ng-deep .p-menubar{
+  background: none;
+  border: none;
+  border-radius: 0;
+  width: 100vw;
+
+}
+
+:host ::ng-deep .p-button{
+  font-weight:bold; 
+  font-size: large; 
+}
+
+
+@media (max-width: 767px) {
+  :host ::ng-deep .p-menuitem-text {
+    font-size: medium;
+    font-weight: 600;
+    color: #0c85a78b
+  }
+ 
+}
+
 
 body {
   margin: 0;
   padding: -5rem;
   box-sizing: content-box;
+
 }
 
 .container {
   margin-bottom: -5rem;
   height: 100vh;
+  width: 100vw;
+  background: linear-gradient(0deg, #fafafa55, #0c85a78b);
 }
 
 .footer {
