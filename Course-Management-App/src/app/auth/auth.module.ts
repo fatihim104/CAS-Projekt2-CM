@@ -5,11 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
-import { SignInComponent } from './sign-in/sign-in.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './verify-email/verify-email.component';
+
 
 const routes: Routes = [
   {
@@ -26,8 +27,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    SignInComponent,
     SignUpComponent,
+    SignInComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
   ],
