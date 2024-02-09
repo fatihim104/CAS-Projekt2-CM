@@ -8,8 +8,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { TagModule } from 'primeng/tag';
-import { ConfirmDialogModule } from 'primeng/confirmdialog'; 
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog'; 
 import { CoursesComponent } from './components/courses/courses.component';
 import { Routes, RouterModule } from '@angular/router';
 import { PlanNewCourseComponent } from './components/plan-new-course/plan-new-course.component';
@@ -17,6 +17,8 @@ import { EditCourseComponent } from './components/edit-course/edit-course.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ChipModule } from 'primeng/chip';
+import { FieldsetModule } from 'primeng/fieldset';
+import { SpeedDialModule } from 'primeng/speeddial';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { DetailCourseComponent } from './components/detail-course/detail-course.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
@@ -46,7 +48,10 @@ const routes: Routes = [
         TagModule,
         ChipModule,
         FormsModule,
-        ConfirmDialogModule,         
+        DialogModule,
+        ConfirmDialogModule,
+        SpeedDialModule,   
+        FieldsetModule,      
         RouterModule.forChild(routes)
     ],
     exports: [],

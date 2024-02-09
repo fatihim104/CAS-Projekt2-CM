@@ -23,6 +23,10 @@ export class CourseRegistrationService {
     return this.registrationsRef.add({ ...participant });
   }
 
+  delete(id?: string ): Promise<void> {
+    return this.registrationsRef.doc(id).delete();
+  }
+
   getCandidatesByCourseId(courseId: string): Observable<Participant[]> {
     const collectionRef = this.db.collection<Participant>(this.dbPath, (ref) =>
       ref.where('courseId', '==', courseId)

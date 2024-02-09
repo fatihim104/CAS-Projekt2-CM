@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { Confirmation, ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Participant } from 'src/app/participant/participant.model';
 import { User } from 'src/app/shared/user/user.model';
@@ -26,6 +26,7 @@ export class DetailCourseComponent implements OnInit {
   participants: any[] = [];
   currentUser$: Observable<User | undefined>;
   candidates: Participant[] = [];
+  visible: boolean = false;
 
   form: FormGroup = new FormGroup({
     firstName: new FormControl(''),
@@ -41,7 +42,8 @@ export class DetailCourseComponent implements OnInit {
     private router: Router,
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {
     this.currentUser$ = this.userService.getCurrentUser();
   }
@@ -65,6 +67,23 @@ export class DetailCourseComponent implements OnInit {
       .subscribe((data) => {
         this.candidates = data;
       });
+  }
+
+  deleteCandidate(candidate: Participant) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ' + candidate.firstName + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.registrationService.delete(candidate.id)
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Product Deleted',
+          life: 2000,
+        });
+      },
+    });
   }
 
   getForm() {
@@ -103,6 +122,7 @@ export class DetailCourseComponent implements OnInit {
           });
         }
         this.form.reset();
+        this.closeDialog()
       })
       .catch((error) => {
         this.messageService.add({
@@ -112,6 +132,14 @@ export class DetailCourseComponent implements OnInit {
           detail: error,
         });
       });
+  }
+
+  showDialog() {
+    this.visible = true;
+  }
+
+  closeDialog() {
+    this.visible = false;
   }
 
   goBack(): void {
