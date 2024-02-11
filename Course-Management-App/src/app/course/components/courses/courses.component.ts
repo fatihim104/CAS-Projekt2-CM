@@ -50,8 +50,7 @@ export class CoursesComponent implements OnInit {
           })) 
         )
       )
-      .subscribe(
-        (data) => {
+      .subscribe( (data) => {
           this.courses = data;
         }, 
         (error) => {
@@ -59,9 +58,10 @@ export class CoursesComponent implements OnInit {
           this.courses = [];
         }
       );
+
   }
 
-  deleteCourse(course: Course) {
+  deleteCourse(course: Course) {    
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + course.language + '?',
       header: 'Confirm',

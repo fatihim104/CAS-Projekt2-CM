@@ -7,18 +7,21 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Confirmation, ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { Observable } from 'rxjs';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Observable, catchError, of } from 'rxjs';
 import { Participant } from 'src/app/participant/participant.model';
 import { User } from 'src/app/shared/user/user.model';
 import { CourseRegistrationService } from 'src/app/course/services/services/course-registration.service';
 import { CourseService } from 'src/app/course/services/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
+import { ParticipantService } from 'src/app/participant/services/participant.service';
+import { DocumentReference } from 'firebase/firestore';
 
 @Component({
   selector: 'app-detail-course',
   templateUrl: './detail-course.component.html',
   styleUrls: ['./detail-course.component.scss'],
+  providers: [ConfirmationService, MessageService],
 })
 export class DetailCourseComponent implements OnInit {
   selectedCourse: any;
@@ -38,6 +41,7 @@ export class DetailCourseComponent implements OnInit {
   constructor(
     private courseService: CourseService,
     private registrationService: CourseRegistrationService,
+    private participantService: ParticipantService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private userService: UserService,
@@ -61,6 +65,14 @@ export class DetailCourseComponent implements OnInit {
     this.getForm();
   }
 
+  removeParticipant(participant: Participant, selectedCourseId: string){
+    this.registrationService.removeParticipantFromCourse(participant, selectedCourseId)
+      .subscribe({
+        next: () => this.showMessage('success', 'Successful', 'Participant removed from course'),
+        error: (error) => console.error('Error removing student',  error)
+      })
+  }
+
   getCandidates(courseId: string) {
     return this.registrationService
       .getCandidatesByCourseId(this.selectedCourseId)
@@ -69,19 +81,44 @@ export class DetailCourseComponent implements OnInit {
       });
   }
 
+  acceptCourse(candidate: Participant, courseId: string) {
+    let participantId : string = "";
+    this.participantService.create({
+      firstName: candidate.firstName,
+      lastName: candidate.lastName,
+      phone: candidate.phone,
+      email: candidate.email,
+      birthDay:"",
+    }
+    ).then((documentReference) => {
+      participantId = documentReference.id
+
+      this.registrationService
+      .addCandidateToCourse(courseId, participantId)
+      .subscribe({
+        next: () => {
+          this.showMessage('success', 'Successful', 'Candidate added to course')
+     
+          this.registrationService.delete(candidate.id)
+          this.showMessage('success', 'Successful', 'Candidate added Participants list.')
+
+          
+        },
+        error: (error) => console.error(error),
+    });
+    })
+    
+    
+  }
+
   deleteCandidate(candidate: Participant) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + candidate.firstName + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.registrationService.delete(candidate.id)
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Successful',
-          detail: 'Product Deleted',
-          life: 2000,
-        });
+        this.registrationService.delete(candidate.id);
+        this.showMessage('success', 'Successful', 'Candidate Deleted')
       },
     });
   }
@@ -115,23 +152,24 @@ export class DetailCourseComponent implements OnInit {
       .create(newRegistration)
       .then((data) => {
         if (data) {
-          this.messageService.add({
-            key: 'tl',
-            severity: 'success',
-            summary: 'Thank you for your apply. We will contact with you!',
-          });
+          this.showMessage('success', 'Successful', 'Thank you for your apply. We will contact with you!')
         }
         this.form.reset();
-        this.closeDialog()
+        this.closeDialog();
       })
       .catch((error) => {
-        this.messageService.add({
-          key: 'tl',
-          severity: 'error',
-          summary: 'There is an error',
-          detail: error,
-        });
+        this.showMessage('error', 'There is an error', error)
       });
+  }
+
+
+  showMessage(severity?:string, summary?:string, detail?: string, life?:number){
+    this.messageService.add({
+      severity: severity,
+      summary: summary,
+      detail: detail,
+      life: life ? life : 2000 ,
+    });
   }
 
   showDialog() {
@@ -140,9 +178,5 @@ export class DetailCourseComponent implements OnInit {
 
   closeDialog() {
     this.visible = false;
-  }
-
-  goBack(): void {
-    this.router.navigate(['/courses']);
   }
 }

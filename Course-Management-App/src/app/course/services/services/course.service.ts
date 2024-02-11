@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Course } from '../../course.model';
 import { Observable, from, map } from 'rxjs';
 import { ParticipantService } from '../../../participant/services/participant.service';
+import { Participant } from 'src/app/participant/participant.model';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
@@ -36,16 +37,15 @@ export class CourseService {
     );
   }
 
-  getCoursesByStudent(selectedStudentId:any):Observable<Course[]>{
+  getCoursesByStudent(selectedStudentId:string):Observable<Course[]>{
     return this.db.collection<Course>(this.dbPath).valueChanges().pipe(
       map(courses => {
         return courses.filter(course => 
-        course.students && course.students.some(student => student.id===selectedStudentId
-         )
+        course.students && course.students.some(student => student.id===selectedStudentId)
         );
       })
     );
-  }  
+  } 
 
   create(course: Course) {
     return this.coursesRef.add({ ...course });

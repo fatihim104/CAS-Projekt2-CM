@@ -1,12 +1,13 @@
 <div class="flex flex-column justify-content-between w-10 m-auto">
   <div class="flex flex-column md:flex-row justify-content-between mb-4">
-    <h2>Active Courses</h2>
+    <h3>Active Courses</h3>
     <p-button
       *ngIf="(currentUser$ | async)?.role === 'admin'"
       label="Plan New Course"
       routerLink="/courses/plan"
       [outlined]="true" 
       styleClass="text-purple-500"
+      size="small"
     ></p-button>
   </div>
  
@@ -120,6 +121,7 @@
             [outlined]="true" 
             styleClass="text-cyan-700 mr-2"
             routerLink="/courses/detail/{{ course.id }}"
+            size="small"
           ></p-button>
           <p-button
             pRipple
@@ -128,6 +130,7 @@
             styleClass="text-teal-500 mr-2"
             *ngIf="(currentUser$ | async)?.role === 'admin'"
             routerLink="/courses/edit/{{ course.id }}"
+            size="small"
           ></p-button>
           <p-button
             pRipple
@@ -136,6 +139,7 @@
             styleClass="text-pink-500"
             *ngIf="(currentUser$ | async)?.role === 'admin'"
             (click)="deleteCourse(course)"
+            size="small"
           ></p-button>
         </td>
       </tr>

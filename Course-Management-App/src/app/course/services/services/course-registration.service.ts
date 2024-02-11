@@ -4,8 +4,9 @@ import {
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
 import { Participant } from '../../../participant/participant.model';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { arrayRemove, arrayUnion } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -19,12 +20,37 @@ export class CourseRegistrationService {
     this.registrationsRef = db.collection(this.dbPath);
   }
 
+  removeParticipantFromCourse( participant: Participant, selectedCourseId: string ) {
+    const courseRef = this.db.collection('courses').doc(selectedCourseId);
+    return from(courseRef.update({
+      students: arrayRemove(participant)
+    }));
+  }
+
   create(participant: Participant) {
     return this.registrationsRef.add({ ...participant });
   }
 
-  delete(id?: string ): Promise<void> {
+  delete(id?: string): Promise<void> {
     return this.registrationsRef.doc(id).delete();
+  }
+
+  addCandidateToCourse(courseId: string, participantId: string | undefined) {
+    const participant$ = this.db.collection('participants').doc(participantId).snapshotChanges().pipe(
+      map(action => {
+        const data = action.payload.data() as Participant;
+        const id = action.payload.id;
+        return { id, ...data }; // Verilere ID'yi ekleyin
+      })
+    );
+  
+    return participant$.pipe(
+      switchMap((participant) => {
+        const courseRef = this.db.collection('courses').doc(courseId);
+        // participant objesine ID eklenmiş halde, arrayUnion ile students array'ine ekle
+        return from(courseRef.update({ students: arrayUnion(participant) }));
+      })
+    );
   }
 
   getCandidatesByCourseId(courseId: string): Observable<Participant[]> {
@@ -32,10 +58,13 @@ export class CourseRegistrationService {
       ref.where('courseId', '==', courseId)
     );
 
-    return collectionRef.valueChanges().pipe(
-      map((candidates) => {
-        return candidates;
-      })
+    return collectionRef.snapshotChanges().pipe(
+      map((changes) =>
+        changes.map((c) => ({
+          id: c.payload.doc.id,
+          ...(c.payload.doc.data() as Participant),
+        }))
+      )
     );
   }
 }

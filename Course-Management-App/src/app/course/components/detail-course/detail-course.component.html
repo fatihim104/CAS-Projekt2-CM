@@ -3,7 +3,7 @@
     <div class="font-bold text-3xl text-white p-2 mb-3">Course Information</div>
     <p-button
       (click)="showDialog()"
-      label="Register for this course"
+      label="Register"
       class="m-2"
     ></p-button>
   </div>
@@ -20,7 +20,7 @@
         <li
           class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Level</div>
+          <div class="text-500 font-medium">Level</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedCourse?.level.label }}
           </div>
@@ -29,7 +29,7 @@
         <li
           class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Place</div>
+          <div class="text-500 font-medium">Place</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedCourse?.place }}
           </div>
@@ -38,7 +38,7 @@
         <li
           class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Price</div>
+          <div class="text-500 font-medium">Price</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedCourse?.price }}
           </div>
@@ -47,7 +47,7 @@
         <li
           class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Date</div>
+          <div class="text-500 font-medium">Date</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedCourse?.date.seconds * 1000 | date : "dd-MM-yyyy" }}
           </div>
@@ -56,7 +56,7 @@
         <li
           class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Time</div>
+          <div class="text-500 font-medium">Time</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedCourse?.time * 1000 | date : "HH:mm" }}
           </div>
@@ -65,7 +65,7 @@
         <li
           class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Status</div>
+          <div class="text-500 font-medium">Status</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedCourse?.status.label }}
           </div>
@@ -74,7 +74,7 @@
         <li
           class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Teacher</div>
+          <div class="text-500 font-medium">Teacher</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedCourse?.teacher.firstName }}
           </div>
@@ -90,7 +90,15 @@
       >
         <ul *ngFor="let participant of participants" class="list-none p-0 m-0">
           <li class="mb-1 w-full border-bottom-1 surface-border mb-2">
-            {{ participant.name }}
+            {{ participant.firstName }} {{ participant.lastName }}   <p-button
+            icon="pi pi-times"
+            [rounded]="true"
+            severity="danger"
+            [text]="true"
+            size="small"
+            pTooltip="Delete"
+            (click)="removeParticipant(participant, selectedCourseId)"
+          ></p-button>
           </li>
           
         </ul>
@@ -114,6 +122,7 @@
                 [text]="true"
                 size="small"
                 pTooltip="Accept this course"
+                (click)= "acceptCourse(candidate, selectedCourseId)"
               ></p-button>
               <p-button
                 icon="pi pi-times"
@@ -284,4 +293,6 @@
       </div>
     </ng-template>
   </p-dialog>
+  <p-toast></p-toast>
+  <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog> 
 </div>

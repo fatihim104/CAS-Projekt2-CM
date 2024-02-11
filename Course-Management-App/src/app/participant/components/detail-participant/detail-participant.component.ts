@@ -26,6 +26,7 @@ export class DetailParticipantComponent {
   ngOnInit(): void {
     this.selectedStudentId =
       this.activatedRoute.snapshot.paramMap.get('id') || '';
+      
     this.participantService
       .getParticipant(this.selectedStudentId)
       .subscribe((student) => {
@@ -35,9 +36,10 @@ export class DetailParticipantComponent {
     this.courseService
       .getCoursesByStudent(this.selectedStudentId)
       .subscribe((data: Course[]) => {
-        this.courses = data;
+        this.courses = data;        
       });
   }
+
 
   getDate(course:Course){
     const timestamp = course?.date;

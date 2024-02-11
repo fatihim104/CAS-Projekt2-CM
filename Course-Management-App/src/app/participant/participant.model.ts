@@ -9,7 +9,7 @@ export interface Participant {
     email?: string;
     birthDay?: string | Timestamp;
     nationality?: string;
-    candidates?:Participant[];
+    candidates?: Participant[];
     activeCourses?: Course[];
     completedCourses?: Course[];
 }

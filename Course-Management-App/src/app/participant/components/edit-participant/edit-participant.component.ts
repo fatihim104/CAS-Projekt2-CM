@@ -45,8 +45,8 @@ export class EditParticipantComponent implements OnInit {
     this.selectedStudentId = this.activatedRoute.snapshot.paramMap.get('id')!
     this.participantService.getParticipant(this.selectedStudentId).subscribe((participant:any) => {
       this.selectedStudent = participant;
-      this.form.setValue(this.selectedStudent)
-      this.form.controls['birthDay'].patchValue(this.selectedStudent.birthDay.toDate())
+      this.form.patchValue(this.selectedStudent)
+      this.form.controls['birthDay'].patchValue(this.selectedStudent.birthDay?.toDate())
     })
 
   }
