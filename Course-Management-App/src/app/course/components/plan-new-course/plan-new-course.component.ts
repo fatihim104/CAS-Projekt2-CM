@@ -53,13 +53,12 @@ export class PlanNewCourseComponent implements OnInit {
     private router: Router,
     private messageService: MessageService
   ) {
-
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));
 
     this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
-    
+
     this.statusOptions = Object.keys(Status).map((key) => ({
       label: key.toLowerCase(),
     }));
@@ -68,10 +67,10 @@ export class PlanNewCourseComponent implements OnInit {
   ngOnInit(): void {
     this.getForm();
     this.getParticipants();
-    this.getTeachers()
+    this.getTeachers();
   }
 
-  getForm(){
+  getForm() {
     this.form = this.formBuilder.group({
       language: [
         '',
@@ -93,7 +92,6 @@ export class PlanNewCourseComponent implements OnInit {
   }
 
   onSubmit(): void {
-     
     if (this.form.invalid) {
       return;
     }
@@ -107,7 +105,7 @@ export class PlanNewCourseComponent implements OnInit {
             severity: 'success',
             summary: 'New Course created',
           });
-          
+
           setTimeout(() => {
             this.router.navigate(['/courses']);
           }, 1500);
@@ -124,54 +122,25 @@ export class PlanNewCourseComponent implements OnInit {
   }
 
   getParticipants() {
-    this.participantService
-      .getParticipants()
-      .snapshotChanges()
-      .pipe(
-        map((changes) =>
-          changes.map((c) => {
-            const studentData = c.payload.doc.data();
-            return {
-              id: c.payload.doc.id,
-              ...studentData,
-              name: `${studentData.firstName} ${studentData.lastName}`,
-            };
-          })
-        )
-      )
-      .subscribe(
-        (data) => {
-          this.students = data;
-        },
-        (error) => {
-          console.error('Error fetching participants', error);
-          this.students = [];
-        }
-      );
+    this.participantService.getParticipants().subscribe({
+      next: (data) => (this.students = data),
+      error: (error) => {
+        console.error('Error fetching participants', error);
+        this.students = [];
+      },
+    });
   }
 
-  getTeachers(){
+  getTeachers() {
     this.teamService
-    .getTeachers()
-    .snapshotChanges()
-    .pipe(
-      map((changes) =>
-        changes.map((c) => ({
-          id: c.payload.doc.id,
-          ...c.payload.doc.data(),
-        }))
-      )
-    )
-    .subscribe(
-      (data) => {
-        this.teachers = data;
-      },
-      (error) => {
-        console.error('Error fetching participants', error);
-        this.teachers = [];
-      }
-    );
-
+      .getTeachers()
+      .subscribe({
+        next: (data) => (this.teachers = data),
+        error: (error) => {
+          console.error('Error fetching teachers', error);
+          this.students = [];
+        },
+      });
   }
 
   onReset(): void {

@@ -29,29 +29,17 @@ export class TeachersComponent {
   ngOnInit(): void {
     this.getTeachers();
   }
-
+  
   getTeachers() {
     this.teamService
       .getTeachers()
-      .snapshotChanges()
-      .pipe(
-        map((changes) =>
-          changes.map((c) => ({
-            id: c.payload.doc.id,
-            ...c.payload.doc.data(),
-          }))
-        )
-      )
-      .subscribe(
-        (data) => {
-          this.teachers = data;
-          console.log(this.teachers);
-        },
-        (error) => {
-          console.error('Error fetching participants', error);
+      .subscribe({
+        next: (data) => (this.teachers = data),
+        error: (error) => {
+          console.error('Error fetching teachers', error);
           this.teachers = [];
-        }
-      );
+        },
+      });
   }
 
   deleteTeacher(teacher: Team) {

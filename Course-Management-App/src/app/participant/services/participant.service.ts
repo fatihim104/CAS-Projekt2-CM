@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Participant } from '../participant.model';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +20,20 @@ export class ParticipantService {
     return this.participantsRef.doc(id).valueChanges();
   }
 
-  getParticipants(): AngularFirestoreCollection<Participant> {
-    return this.participantsRef;
+  getParticipants(): Observable<Participant[]> {
+    return this.participantsRef.snapshotChanges().pipe(
+      map(changes => changes.map((c) => {
+        const studentData = c.payload.doc.data();
+        return({
+          id: c.payload.doc.id,
+          name: `${studentData.firstName} ${studentData.lastName}`,
+          ...(c.payload.doc.data() as Participant),
+        });
+       
+        
+      })
+      )
+    );;
   }
 
   create(participant: Participant) {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { map } from 'rxjs/operators';
 import { Participant } from 'src/app/participant/participant.model';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 
@@ -24,26 +23,13 @@ export class ParticipantsComponent implements OnInit {
   }
 
   getParticipants() {
-    this.participantService
-      .getParticipants()
-      .snapshotChanges()
-      .pipe(
-        map((changes) =>
-          changes.map((c) => ({
-            id: c.payload.doc.id,
-            ...c.payload.doc.data(),
-          }))
-        )
-      )
-      .subscribe(
-        (data) => {
-          this.students = data;          
-        },
-        (error) => {
-          console.error('Error fetching participants', error);
-          this.students = [];
-        }
-      );
+    this.participantService.getParticipants().subscribe({
+      next: (data) => (this.students = data),
+      error: (error) => {
+        console.error('Error fetching participants', error);
+        this.students = [];
+      },
+    });
   }
 
   deleteStudent(student: Participant) {

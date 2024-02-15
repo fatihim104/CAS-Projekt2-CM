@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Team } from '../team.model';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +20,14 @@ export class TeamService {
     return this.teamRef.doc(id).valueChanges();
   }
 
-  getTeachers(): AngularFirestoreCollection<Team> {
-    return this.teamRef;
+  getTeachers(): Observable<Team[]> {
+    return this.teamRef.snapshotChanges().pipe(
+      map(changes => changes.map((c) => ({
+        id: c.payload.doc.id,
+        ...(c.payload.doc.data() as Team),
+      }))
+      )
+    );;
   }
 
   create(participant: Team) {

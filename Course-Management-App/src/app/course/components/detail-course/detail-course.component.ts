@@ -15,7 +15,7 @@ import { CourseRegistrationService } from 'src/app/course/services/services/cour
 import { CourseService } from 'src/app/course/services/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
-import { DocumentReference } from 'firebase/firestore';
+import { error } from 'cypress/types/jquery';
 
 @Component({
   selector: 'app-detail-course',
@@ -55,12 +55,16 @@ export class DetailCourseComponent implements OnInit {
   ngOnInit(): void {
     this.selectedCourseId =
       this.activatedRoute.snapshot.paramMap.get('id') || '';
-    this.courseService.getCourse(this.selectedCourseId).subscribe((course) => {
-      this.selectedCourse = course;
-      this.participants = this.selectedCourse.students;
+      
+    this.courseService.getCourse(this.selectedCourseId).subscribe({
+      next:(course) => {
+        this.selectedCourse = course;
+        this.participants = this.selectedCourse.students;
+      },
+      error: (error) => console.error('Error getting selected course', error)      
     });
 
-    this.getCandidates(this.selectedCourseId);
+    this.getCandidates();
 
     this.getForm();
   }
@@ -73,7 +77,7 @@ export class DetailCourseComponent implements OnInit {
       })
   }
 
-  getCandidates(courseId: string) {
+  getCandidates() {
     return this.registrationService
       .getCandidatesByCourseId(this.selectedCourseId)
       .subscribe((data) => {
@@ -98,10 +102,8 @@ export class DetailCourseComponent implements OnInit {
       .subscribe({
         next: () => {
           this.showMessage('success', 'Successful', 'Candidate added to course')
-     
           this.registrationService.delete(candidate.id)
           this.showMessage('success', 'Successful', 'Candidate added Participants list.')
-
           
         },
         error: (error) => console.error(error),

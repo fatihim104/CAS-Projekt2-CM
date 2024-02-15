@@ -130,53 +130,25 @@ export class EditCourseComponent implements OnInit {
   }
 
   getParticipants() {
-    this.participantService
-      .getParticipants()
-      .snapshotChanges()
-      .pipe(
-        map((changes) =>
-          changes.map((c) => {
-            const studentData = c.payload.doc.data();
-            return {
-              id: c.payload.doc.id,
-              ...studentData,
-              name: `${studentData.firstName} ${studentData.lastName}`,
-            };
-          })
-        )
-      )
-      .subscribe(
-        (data) => {
-          this.students = data;
-        },
-        (error) => {
-          console.error('Error fetching participants', error);
-          this.students = [];
-        }
-      );
+    return this.participantService.getParticipants().subscribe({
+      next: (data) => (this.students = data),
+      error: (error) => {
+        console.error('Error fetching participants', error);
+        this.students = [];
+      },
+    });
   }
 
-  getTeachers(){
-    this.teamService
-    .getTeachers()
-    .snapshotChanges()
-    .pipe(
-      map((changes) =>
-        changes.map((c) => ({
-          id: c.payload.doc.id,
-          ...c.payload.doc.data(),
-        }))
-      )
-    )
-    .subscribe(
-      (data) => {
-        this.teachers = data;
-      },
-      (error) => {
-        console.error('Error fetching participants', error);
-        this.teachers = [];
-      }
-    );
+  getTeachers() {
+    return this.teamService
+      .getTeachers()
+      .subscribe({
+        next: (data) => (this.teachers = data),
+        error: (error) => {
+          console.error('Error fetching teachers', error);
+          this.teachers = [];
+        },
+      });
   }
 
   goBack(): void {

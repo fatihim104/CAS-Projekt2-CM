@@ -40,14 +40,13 @@ export class CourseRegistrationService {
       map(action => {
         const data = action.payload.data() as Participant;
         const id = action.payload.id;
-        return { id, ...data }; // Verilere ID'yi ekleyin
+        return { id, ...data }; 
       })
     );
   
     return participant$.pipe(
       switchMap((participant) => {
         const courseRef = this.db.collection('courses').doc(courseId);
-        // participant objesine ID eklenmiş halde, arrayUnion ile students array'ine ekle
         return from(courseRef.update({ students: arrayUnion(participant) }));
       })
     );

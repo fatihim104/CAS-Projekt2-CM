@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { Course } from 'src/app/course/course.model';
 import { User } from 'src/app/shared/user/user.model';
 import { CourseService } from 'src/app/course/services/services/course.service';
@@ -19,9 +18,10 @@ interface Column {
   providers: [CourseService, ConfirmationService, MessageService],
 })
 
-export class CoursesComponent implements OnInit {
-  courses?: Course[] | any;
+export class CoursesComponent implements OnInit, OnDestroy {
+  courses: Course[] = [];
   currentUser$:Observable<User | undefined> ;
+  private subscription: Subscription = new Subscription();
 
   cols!: Column[];
 
@@ -35,30 +35,20 @@ export class CoursesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCourses();
+    this.subscription = this.getCourses();
   }
 
   getCourses() {
-    this.courseService
+   return this.courseService
       .getCourses()
-      .snapshotChanges()
-      .pipe(
-        map((changes) =>
-          changes.map((c) => ({
-            id: c.payload.doc.id,
-            ...c.payload.doc.data(),
-          })) 
-        )
-      )
-      .subscribe( (data) => {
-          this.courses = data;
-        }, 
-        (error) => {
+      .subscribe( {
+        next: data => this.courses = data, 
+        error: (error) => {
           console.error('Error fetching courses', error);
           this.courses = [];
         }
+      }
       );
-
   }
 
   deleteCourse(course: Course) {    
@@ -71,7 +61,7 @@ export class CoursesComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
-          detail: 'Product Deleted',
+          detail: 'Course Deleted',
           life: 2000,
         });
       },
@@ -93,5 +83,8 @@ export class CoursesComponent implements OnInit {
       default:
         return 'info';
     }
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

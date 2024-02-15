@@ -19,12 +19,18 @@ export class CourseService {
     this.coursesRef = db.collection(this.dbPath);
   }
 
-  getCourse(id:string){
-    return this.coursesRef.doc(id).valueChanges();
+  getCourse(id:string): Observable<Course | undefined>{
+    return this.coursesRef.doc(id).valueChanges() as Observable<Course>;
   }
 
-  getCourses(): AngularFirestoreCollection<Course> {
-    return this.coursesRef;
+  getCourses(): Observable<Course[]> {
+    return this.coursesRef.snapshotChanges().pipe(
+      map(changes => changes.map((c) => ({
+        id: c.payload.doc.id,
+        ...(c.payload.doc.data() as Course),
+      }))
+      )
+    );
   }
 
   getCoursesByTeacher(id: string): Observable<Course[]> {
