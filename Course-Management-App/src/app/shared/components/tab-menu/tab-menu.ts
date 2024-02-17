@@ -74,6 +74,10 @@ export class TabMenuComponent implements OnInit {
         label: 'Contact',
         routerLink: 'contact',
       },
+      {
+        label: 'Users',
+        routerLink: 'user',
+      },
     ];
   }
 }

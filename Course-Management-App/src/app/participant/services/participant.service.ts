@@ -28,9 +28,7 @@ export class ParticipantService {
           id: c.payload.doc.id,
           name: `${studentData.firstName} ${studentData.lastName}`,
           ...(c.payload.doc.data() as Participant),
-        });
-       
-        
+        });        
       })
       )
     );;

@@ -16,6 +16,7 @@ import { CourseService } from 'src/app/course/services/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { error } from 'cypress/types/jquery';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
   selector: 'app-detail-course',
@@ -42,8 +43,8 @@ export class DetailCourseComponent implements OnInit {
     private courseService: CourseService,
     private registrationService: CourseRegistrationService,
     private participantService: ParticipantService,
+    private authService:AuthService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private userService: UserService,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
@@ -86,6 +87,9 @@ export class DetailCourseComponent implements OnInit {
   }
 
   acceptCourse(candidate: Participant, courseId: string) {
+    const generatedPassword = this.generateRandomPassword(8)
+    console.log(generatedPassword);
+
     let participantId : string = "";
     this.participantService.create({
       firstName: candidate.firstName,
@@ -101,16 +105,18 @@ export class DetailCourseComponent implements OnInit {
       .addCandidateToCourse(courseId, participantId)
       .subscribe({
         next: () => {
-          this.showMessage('success', 'Successful', 'Candidate added to course')
           this.registrationService.delete(candidate.id)
-          this.showMessage('success', 'Successful', 'Candidate added Participants list.')
           
+          this.showMessage('success', 'Successful', 'Candidate added Course and Participant list.')
         },
         error: (error) => console.error(error),
     });
-    })
-    
-    
+    }) 
+
+    this.authService.signUp(candidate.email as string, generatedPassword).then(() =>
+      this.showMessage('success', 'Successful', 'Candidate added to User list.')
+    )
+     
   }
 
   deleteCandidate(candidate: Participant) {
@@ -170,7 +176,7 @@ export class DetailCourseComponent implements OnInit {
       severity: severity,
       summary: summary,
       detail: detail,
-      life: life ? life : 2000 ,
+      life: life ? life : 3000 ,
     });
   }
 
@@ -181,4 +187,18 @@ export class DetailCourseComponent implements OnInit {
   closeDialog() {
     this.visible = false;
   }
+
+  generateRandomPassword(passlength:number) {
+    return Array(passlength)
+      .fill(
+        "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+      )
+      .map(function (x) {
+        const pwd = Math.floor(Math.random() * x.length);
+        return x.substring(pwd, pwd + 1);
+      })
+      .join("");
+  };
+
+
 }

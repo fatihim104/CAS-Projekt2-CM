@@ -49,7 +49,7 @@ export class AuthService {
       });
   }
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string , password: string) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
@@ -65,9 +65,7 @@ export class AuthService {
   async sendVerificationMail() {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
-      .then(() => {
-        this.router.navigate(['/auth/verify-email-address']);
-      });
+      
   }
 
   async forgotPassword(passwordResetEmail: string) {
