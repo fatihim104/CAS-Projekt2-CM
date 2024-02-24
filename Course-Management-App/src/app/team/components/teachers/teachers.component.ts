@@ -3,7 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Team } from 'src/app/team/team.model';
-import { User } from 'src/app/shared/user/user.model';
+import { User, UserRole } from 'src/app/shared/user/user.model';
 import { TeamService } from 'src/app/team/services/team.service';
 import { UserService } from 'src/app/shared/user/user.service';
 
@@ -16,6 +16,7 @@ import { UserService } from 'src/app/shared/user/user.service';
 export class TeachersComponent {
   teachers?: Team[] | any;
   currentUser$: Observable<User | undefined>;
+  UserRole = UserRole;
 
   constructor(
     private teamService: TeamService,

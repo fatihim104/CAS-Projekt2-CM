@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit{
   }
 
   onSubmit(){
-    this.authService.signUp(this.f['email'].value, this.f['password'].value)
+    this.authService.signUp(this.f['email'].value, this.f['password'].value, true)
       .then(() => {
         this.router.navigate(['/auth/verify-email-address']);
       });

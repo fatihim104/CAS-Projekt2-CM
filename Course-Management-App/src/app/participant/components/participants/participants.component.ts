@@ -42,7 +42,7 @@ export class ParticipantsComponent implements OnInit {
         this.messageService.add({
           severity: 'success',
           summary: 'Successful',
-          detail: 'Product Deleted',
+          detail: 'Participant Deleted',
           life: 2000,
         });
       },
