@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { Observable, Subscription } from 'rxjs';
 import { Course } from 'src/app/course/course.model';
-import { User } from 'src/app/shared/user/user.model';
-import { CourseService } from 'src/app/course/services/services/course.service';
+import { User, UserRole } from 'src/app/shared/user/user.model';
+import { CourseService } from 'src/app/course/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
 
 interface Column {
@@ -20,6 +20,7 @@ interface Column {
 
 export class CoursesComponent implements OnInit, OnDestroy {
   courses: Course[] = [];
+  UserRole = UserRole;
   currentUser$:Observable<User | undefined> ;
   private subscription: Subscription = new Subscription();
 

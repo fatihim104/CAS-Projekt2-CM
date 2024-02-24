@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Course } from 'src/app/course/course.model';
-import { User } from 'src/app/shared/user/user.model';
-import { CourseService } from 'src/app/course/services/services/course.service';
+import { User, UserRole } from 'src/app/shared/user/user.model';
+import { CourseService } from 'src/app/course/services/course.service';
 import { TeamService } from 'src/app/team/services/team.service';
 import { UserService } from 'src/app/shared/user/user.service';
 
@@ -17,6 +17,7 @@ export class DetailTeacherComponent {
   selectedTeacher: any;
   selectedTeacherId: string = '';
   courses: Course[] = [];
+  UserRole = UserRole;
   currentUser$: Observable<User | undefined>;
 
   constructor(

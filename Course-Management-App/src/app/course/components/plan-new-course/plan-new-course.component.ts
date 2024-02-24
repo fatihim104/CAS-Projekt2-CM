@@ -8,7 +8,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { CourseService } from 'src/app/course/services/services/course.service';
+import { CourseService } from 'src/app/course/services/course.service';
 import { TeamService } from 'src/app/team/services/team.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { LevelEnum, Status } from 'src/app/course/course.model';

@@ -10,7 +10,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { CourseService } from 'src/app/course/services/services/course.service';
+import { CourseService } from 'src/app/course/services/course.service';
 import { ActivatedRoute} from '@angular/router';
 import { LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
 import { Location } from '@angular/common';

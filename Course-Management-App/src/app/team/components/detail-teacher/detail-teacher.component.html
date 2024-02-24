@@ -66,7 +66,7 @@
     </ul>
   </div>
 
-  <div  *ngIf="(currentUser$ | async)?.role === 'admin'" class="col">
+  <div  *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN" class="col">
     <div class="text-500 w-8 md:w-2 font-medium mb-2">Courses</div>
     <ul *ngFor="let course of courses" class="list-none p-0 m-0 text-900 flex">
       <li class="mr-3 mb-1" class="grid">
@@ -88,7 +88,7 @@
       class="p-button-text text-blue-900 ml-2 border-1 min-width-2 border-teal-600 hover:border-orange-700"
     ></button>
     <button
-      *ngIf="(currentUser$ | async)?.role === 'admin'"
+      *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
       pButton
       pRipple
       label="Edit"

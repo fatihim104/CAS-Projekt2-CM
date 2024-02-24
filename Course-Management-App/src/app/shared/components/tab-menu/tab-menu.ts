@@ -6,7 +6,7 @@ import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable} from 'rxjs';
-import { User } from 'src/app/shared/user/user.model';
+import { User, UserRole } from 'src/app/shared/user/user.model';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UserService } from 'src/app/shared/user/user.service';
 
@@ -20,7 +20,7 @@ export class TabMenuComponent implements OnInit {
 
   hasToken: Observable<boolean>;
   currentUser$: Observable<User | undefined>;
-  role: string | undefined = '';
+  role: UserRole | undefined ;
 
   constructor(
     private router: Router,
@@ -36,14 +36,16 @@ export class TabMenuComponent implements OnInit {
   ngOnInit() {
     this.currentUser$.subscribe((user) => {
       this.role = user?.role;
-      this.getActiveRoute(this.role == 'admin');
+      console.log(this.role);
+      
+      this.getActiveRoute(this.role);
     });
-    this.getActiveRoute(this.role == 'admin');
+    this.getActiveRoute();
   }
 
   logout() {
     this.authService.signOut();
-    this.getActiveRoute(false);
+    this.getActiveRoute();
     this.router.navigate(['/auth']);
   }
 
@@ -51,7 +53,7 @@ export class TabMenuComponent implements OnInit {
     this.activeItem = event;
   }
 
-  getActiveRoute(visible: boolean) {
+  getActiveRoute(role?:UserRole | undefined) {
     this.items = [
       {
         label: 'Home',
@@ -68,16 +70,22 @@ export class TabMenuComponent implements OnInit {
       {
         label: 'Participants',
         routerLink: 'participants',
-        visible: visible,
-      },
-      {
-        label: 'Contact',
-        routerLink: 'contact',
+        visible: role===UserRole.ADMIN,
       },
       {
         label: 'Users',
         routerLink: 'user',
+        visible: role===UserRole.ADMIN,
       },
+      {
+        label: 'MyCourses',
+        routerLink: '/courses/mycourse',
+        visible:  role===UserRole.TEACHER,
+      },
+      {
+        label: 'Contact',
+        routerLink: 'contact',
+      }
     ];
   }
 }

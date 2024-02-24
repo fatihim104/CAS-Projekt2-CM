@@ -2,7 +2,7 @@
   <div class="flex flex-column md:flex-row justify-content-between mb-4">
     <h3>Active Courses</h3>
     <p-button
-      *ngIf="(currentUser$ | async)?.role === 'admin'"
+      *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
       label="Plan New Course"
       routerLink="/courses/plan"
       [outlined]="true" 
@@ -127,7 +127,7 @@
             icon="pi pi-pencil"
             [outlined]="true" 
             styleClass="text-teal-500 mr-2"
-            *ngIf="(currentUser$ | async)?.role === 'admin'"
+            *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
             routerLink="/courses/edit/{{ course.id }}"
             size="small"
           ></p-button>
@@ -136,7 +136,7 @@
             icon="pi pi-trash"
             [outlined]="true" 
             styleClass="text-pink-500"
-            *ngIf="(currentUser$ | async)?.role === 'admin'"
+            *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
             (click)="deleteCourse(course)"
             size="small"
           ></p-button>

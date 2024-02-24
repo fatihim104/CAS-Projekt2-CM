@@ -10,9 +10,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, catchError, of } from 'rxjs';
 import { Participant } from 'src/app/participant/participant.model';
-import { User } from 'src/app/shared/user/user.model';
-import { CourseRegistrationService } from 'src/app/course/services/services/course-registration.service';
-import { CourseService } from 'src/app/course/services/services/course.service';
+import { User, UserRole } from 'src/app/shared/user/user.model';
+import { CourseRegistrationService } from 'src/app/course/services/course-registration.service';
+import { CourseService } from 'src/app/course/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { error } from 'cypress/types/jquery';
@@ -28,6 +28,7 @@ export class DetailCourseComponent implements OnInit {
   selectedCourse: any;
   selectedCourseId: string = '';
   participants: any[] = [];
+  UserRole = UserRole;
   currentUser$: Observable<User | undefined>;
   candidates: Participant[] = [];
   visible: boolean = false;
@@ -88,17 +89,17 @@ export class DetailCourseComponent implements OnInit {
 
   acceptCourse(candidate: Participant, courseId: string) {
     const generatedPassword = this.generateRandomPassword(8)
-    console.log(generatedPassword);
 
     let participantId : string = "";
-    this.participantService.create({
+    const newUser = {
       firstName: candidate.firstName,
       lastName: candidate.lastName,
       phone: candidate.phone,
       email: candidate.email,
-      birthDay:"",
+      birthDay: "",
     }
-    ).then((documentReference) => {
+    this.participantService.create(newUser)
+    .then((documentReference) => {
       participantId = documentReference.id
 
       this.registrationService
@@ -113,8 +114,15 @@ export class DetailCourseComponent implements OnInit {
     });
     }) 
 
-    this.authService.signUp(candidate.email as string, generatedPassword).then(() =>
-      this.showMessage('success', 'Successful', 'Candidate added to User list.')
+    this.authService.createUser(candidate.email as string, generatedPassword, candidate.firstName).subscribe({
+      next: (data) => {
+        console.log(data.userId);
+        
+        this.showMessage('success', 'Successful', 'Candidate added to User list.')
+        // this.userService.addUserForMailTrigger(newUser)
+      },
+      error: (error) => console.error(error),
+    }
     )
      
   }

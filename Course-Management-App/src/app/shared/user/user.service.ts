@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { switchMap } from 'rxjs/operators';
 import { User } from './user.model';
@@ -11,11 +11,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
+  acceptMailRef: AngularFirestoreCollection<User>;
   constructor(
     public authService: AuthService,
     public afAuth: AngularFireAuth,
-    private firestore: AngularFirestore
-  ) {}
+    private firestore: AngularFirestore,
+    
+  ) {
+    this.acceptMailRef = firestore.collection('/acceptMails');
+  }
 
   getCurrentUser():Observable<User | undefined> {
     return this.afAuth.authState.pipe(
@@ -29,4 +33,9 @@ export class UserService {
       })
     );
   }
+
+  addUserForMailTrigger(user:User){
+    return this.acceptMailRef.add({...user})
+  }
+
 }

@@ -82,7 +82,7 @@
       </ul>
     </div>
 
-    <div *ngIf="(currentUser$ | async)?.role === 'admin'" class="col-6">
+    <div *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN" class="col-6">
       <p-fieldset
         legend="Participants ({{ participants.length }})"
         [toggleable]="true"
@@ -159,7 +159,7 @@
         class="w-full md:w-4 p-button-text text-blue-900 mb-2 border-1 border-teal-600 hover:border-orange-700"
       ></button>
       <button
-        *ngIf="(currentUser$ | async)?.role === 'admin'"
+        *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
         pButton
         pRipple
         label="Edit"

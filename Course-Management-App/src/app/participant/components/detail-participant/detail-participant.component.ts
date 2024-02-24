@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Course } from 'src/app/course/course.model';
-import { CourseService } from 'src/app/course/services/services/course.service';
+import { CourseService } from 'src/app/course/services/course.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 
 @Component({

@@ -3,7 +3,7 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Participant } from '../../../participant/participant.model';
+import { Participant } from '../../participant/participant.model';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { Observable, from } from 'rxjs';
 import { arrayRemove, arrayUnion } from 'firebase/firestore';

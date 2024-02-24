@@ -1,15 +1,19 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreDocument,
+} from '@angular/fire/compat/firestore';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { User } from 'src/app/shared/user/user.model';
+import { error } from 'cypress/types/jquery';
+import { BehaviorSubject, Subject, catchError, map, of } from 'rxjs';
+import { User, UserRole } from 'src/app/shared/user/user.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   userData: any;
   userSubject = new BehaviorSubject<User | null>(null);
   hasToken = new BehaviorSubject<boolean>(false);
@@ -17,9 +21,11 @@ export class AuthService {
   constructor(
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
-    public router: Router
+    public router: Router,
+    private functions: AngularFireFunctions
   ) {
-  
+    const currenUser = localStorage.getItem('user');
+
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
@@ -49,13 +55,18 @@ export class AuthService {
       });
   }
 
-  async signUp(email: string , password: string) {
+  async signUp(
+    email: string,
+    password: string,
+    sendMail: boolean,
+    name?: string
+  ) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         console.log(result.user);
-        this.setUserData(result.user);
-        this.sendVerificationMail();
+        this.setUserData(result.user, name);
+        sendMail ? this.sendVerificationMail() : null;
       })
       .catch((error) => {
         window.alert(error.message);
@@ -63,9 +74,7 @@ export class AuthService {
   }
 
   async sendVerificationMail() {
-    return this.afAuth.currentUser
-      .then((u: any) => u.sendEmailVerification())
-      
+    return this.afAuth.currentUser.then((u: any) => u.sendEmailVerification());
   }
 
   async forgotPassword(passwordResetEmail: string) {
@@ -79,17 +88,18 @@ export class AuthService {
       });
   }
 
-  setUserData(user: any) {
+  setUserData(user: any, name?: string) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
     const userData: User = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-      role: 'user',
+      firstName: name,
+      displayName: name,
+      photoURL: "",
+      emailVerified: false,
+      role: UserRole.USER,
     };
     return userRef.set(userData, {
       merge: true,
@@ -102,5 +112,31 @@ export class AuthService {
       this.userSubject.next(null);
       this.router.navigate(['/auth/sign-in']);
     });
+  }
+
+  createUser(email: string, password: string, name?: string) {
+    const data = { email, password };
+    const callable = this.functions.httpsCallable('createUser');
+
+    return (
+      callable(data).pipe(
+        map((userRecord) => {
+          console.log(userRecord);
+          const user = {
+            uid : userRecord.userId,
+            email: email,
+            firstName: name,
+            displayName: name,
+          }
+          
+          this.setUserData(user, name);
+          return userRecord;
+        }),
+        catchError((error) => {
+          console.error('error by user creation', error);
+          return of(null);
+        })
+      )    
+    );
   }
 }
