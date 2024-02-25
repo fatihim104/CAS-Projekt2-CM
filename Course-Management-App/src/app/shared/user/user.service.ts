@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { User } from './user.model';
 import { Observable } from 'rxjs';
 
@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   acceptMailRef: AngularFirestoreCollection<User>;
+  
   constructor(
     public authService: AuthService,
     public afAuth: AngularFireAuth,
@@ -32,6 +33,20 @@ export class UserService {
           : [];
       })
     );
+  }
+
+  getUsers():Observable<User[] >{
+    return this.firestore.collection('users').valueChanges().pipe(
+      map(users => users.map(user => (
+        {
+          ...user as User
+        }
+      )))
+    )
+  }
+
+  update(id:string | undefined, data:User){
+    return this.firestore.collection('users').doc('/'+id).update(data)
   }
 
   addUserForMailTrigger(user:User){
