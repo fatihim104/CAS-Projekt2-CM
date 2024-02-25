@@ -36,8 +36,6 @@ export class TabMenuComponent implements OnInit {
   ngOnInit() {
     this.currentUser$.subscribe((user) => {
       this.role = user?.role;
-      console.log(this.role);
-      
       this.getActiveRoute(this.role);
     });
     this.getActiveRoute();
@@ -80,7 +78,7 @@ export class TabMenuComponent implements OnInit {
       {
         label: 'MyCourses',
         routerLink: '/courses/mycourse',
-        visible:  role===UserRole.TEACHER,
+        visible:  role===UserRole.TEACHER || role===UserRole.USER,
       },
       {
         label: 'Contact',
