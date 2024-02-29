@@ -8,6 +8,8 @@ import { Observable, combineLatest, from, map } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { Participant } from '../domain/participant.model';
 import { ParticipantService } from './participant.service';
+import { CollectionReference } from 'firebase/firestore';
+import firebase from 'firebase/compat/app';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
@@ -52,24 +54,36 @@ export class CourseService {
   }
 
 
-
-  filterCourses(language: string | null, level: string | null): Observable<Course[] | any> {
-    return combineLatest([
-      this.db.collection<Course>('courses', ref => {
-        let query: firebase.firestore.Query = ref;
+  // filterCourses(language: string | null, level: string | null): Observable<Course[] | any> {
+  //   return combineLatest([
+  //     this.db.collection<Course>('courses', ref => {
+  //       let query: any = ref;
         
-        if (language) {
-          query = query.where('language', '==', language);
-        }
+  //       if (language) {
+  //         query = query.where('language', '==', language);
+  //       }
 
-        if (level) {
-          query = query.where('level', '==', level);
-        }
+  //       if (level) {
+  //         query = query.where('level', '==', level);
+  //       }
 
-        return query;
-      }).valueChanges()
-    ]);
+  //       return query;
+  //     }).valueChanges()
+  //   ]);
+  // }
+
+  filterCourses(language: string | null, level: string | null): Observable<Course[]> {
+    // Firestore'dan kursları filtreleyerek getiren sorgu
+    let query = this.db.collection<Course>('courses', ref => {
+      let q: firebase.firestore.Query | firebase.firestore.CollectionReference = ref;
+      if (language) q = q.where('language.label', '==', language);
+      if (level) q = q.where('level.label', '==', level);
+      return q;
+    });
+  
+    return query.valueChanges();
   }
+  
 
   filterByLanguage(language:any):Observable<Course[]>{
     return from(
@@ -83,12 +97,12 @@ export class CourseService {
 
   }
 
-  filterByLevel(level:LevelEnum){
+  filterByLevel(level:any){
     return from(
       this.coursesRef.ref.where("level.label", "==", level).get()
     ).pipe(
       map(querySnapshot => {
-        console.log("language filtered:",querySnapshot);
+        console.log("level filtered:",querySnapshot);
         return querySnapshot.docs.map(doc => doc.data() as Course);
       })
     );
