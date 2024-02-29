@@ -9,7 +9,6 @@
       <p-dropdown
         id="language"
         [options]="languageOptions"
-        [(ngModel)]="languageFilter$" 
         (onChange)="filterByLanguage($event)"
         placeholder="Select Language"
         optionLabel="label"
@@ -25,9 +24,9 @@
       <p-dropdown
         id="level"
         [options]="levelOptions"
-        [(ngModel)]="levelFilter$" 
         placeholder="Select Level"
         (onChange)="filterByLevel($event)"
+        optionLabel="label"
         [showClear]="true"
       ></p-dropdown>
       <label for="level">Filter Level</label>
@@ -41,7 +40,7 @@
 
   <p-table
     #dt
-    [value]="courses"
+    [value]="filteredCourses$ | async"
     [rows]="6"
     [paginator]="true"
     [scrollable]="true"
@@ -91,13 +90,13 @@
     </ng-template>
     <ng-template pTemplate="body" let-course>
       <tr>
-        <td>{{ course.language.label }}</td>
-        <td>{{ course.level.label }}</td>
+        <td>{{ course.language?.label }}</td>
+        <td>{{ course.level?.label }}</td>
         <td>{{ course.place }}</td>
         <td>
           <p-tag
-            [value]="course.status.label"
-            [severity]="getSeverity(course.status.label)"
+            [value]="course?.status?.label"
+            [severity]="getSeverity(course?.status?.label)"
           ></p-tag>
         </td>
         <td>{{ course.price }} fr</td>

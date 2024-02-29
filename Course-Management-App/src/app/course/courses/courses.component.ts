@@ -2,16 +2,14 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { BehaviorSubject} from 'rxjs';
+import { BehaviorSubject, of} from 'rxjs';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
-import { Course, LanguageEnum, LevelEnum } from 'src/app/domain/course.model';
+import { map, startWith, switchMap, tap } from 'rxjs/operators';
 import { User } from 'src/app/domain/user.model';
 import { CourseService } from 'src/app/services/course.service';
 import { UserService } from 'src/app/services/user.service';
 import { combineLatest } from 'rxjs';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/combineLatest';
+import { Course, LanguageEnum, LevelEnum } from 'src/app/domain/course.model';
 
 interface Column {
   field: string;
@@ -31,9 +29,9 @@ export class CoursesComponent implements OnInit {
   languageOptions: { label: string }[] = [];
   levelOptions: { label: string }[] = [];
 
-  languageFilter$ = new BehaviorSubject<string|null>(null);
-  levelFilter$ = new BehaviorSubject<string|null>(null);
-  filteredCourses$ : Observable<Course[] | any> ;
+  languageFilter$ = new BehaviorSubject<string | null>(null);
+  levelFilter$ = new BehaviorSubject<string | null>(null);
+  filteredCourses$ : Observable<Course[] | any> = of([])  ;
 
   cols!: Column[];
 
@@ -53,24 +51,17 @@ export class CoursesComponent implements OnInit {
     this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
 
     this.currentUser$ =  this.userService.getCurrentUser()
-
-    this.filteredCourses$ = combineLatest(
-     [ this.languageFilter$,
-      this.levelFilter$]
-    ).pipe(
-      switchMap(([language, level]:[string | null, string | null] ) => 
-
-      this.courseService.filterCourses(language,level) as Observable<Course[]>
-     
-    )
-
-    );
     
-   
   }
 
   ngOnInit(): void {
+    
     this.getCourses();
+    this.initializeFilteredCourses();
+    this.filteredCourses$.subscribe(courses => {
+        
+      this.courses = courses; // courses, filtrelenmiş kursların yeni listesidir
+    });
    
   }
 
@@ -120,38 +111,29 @@ export class CoursesComponent implements OnInit {
     });
   }
 
-  // filterByLanguage(event:any){
-  //   if(event.value){
-  //     this.languageFilter$.next(event.value?.label)
-  //     console.log("event",event);
-      
-  //     // this.courseService.filterByLanguage(this.languageFilter$).subscribe((data: Course[])  => {
-  //     //   this.courses =  data;
-  //     // })
-  //   }
-  //   this.getCourses()
-  // }
+  initializeFilteredCourses() {
+    this.filteredCourses$ = combineLatest([
+      this.languageFilter$.pipe(startWith(null)),
+      this.levelFilter$.pipe(startWith(null)),      
+    ]).pipe(
+      switchMap(([language, level]) => 
+        this.courseService.filterCourses(language, level)
+      ),
+      startWith([]) // Başlangıç değeri olarak boş bir dizi atayabilirsiniz.
+    );
+  }
 
-  // filterByLevel(event:any){
+  filterByLanguage(event:any){     
+    this.languageFilter$.next(event.value ? event.value.label : null);
+  }
 
-  //   if(event.value){
-  //     this.levelFilter$.next(event.value?.label)
-  //     console.log("event",event);
-      
-  //     // this.courseService.filterByLevel(this.selectedLevel).subscribe((data: Course[])  => {
-  //     //   this.courses =  data;
-  //     })
-  //   }
-  //   this.getCourses()
-
-  // }
-
-  
-  
+  filterByLevel(event:any){
+    this.levelFilter$.next(event.value ? event.value.label : null);
+  }
 
 
   getSeverity(status: string) {
-    switch (status.toUpperCase()) {
+    switch (status?.toUpperCase()) {
       case 'ONGOING':
         return 'success';
       case 'PLANNING':
