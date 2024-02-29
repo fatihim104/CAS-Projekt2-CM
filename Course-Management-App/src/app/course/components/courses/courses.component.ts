@@ -89,3 +89,4 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 }
+
