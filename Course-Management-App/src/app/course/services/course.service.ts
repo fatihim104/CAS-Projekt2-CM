@@ -77,4 +77,15 @@ export class CourseService {
   delete(id?: string ): Promise<void> {
     return this.coursesRef.doc(id).delete();
   }
+
+  filterCourses(language: string | null, level: string | null): Observable<Course[]> {
+    let query = this.db.collection<Course>('courses', ref => {
+      let q : any = ref;
+      if (language) q = q.where('language.label', '==', language);
+      if (level) q = q.where('level.label', '==', level);
+      return q;
+    });
+  
+    return query.valueChanges();
+  }
 }

@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { Observable, Subscription } from 'rxjs';
-import { Course } from 'src/app/course/course.model';
+import { BehaviorSubject, Observable, Subscription, combineLatest, of, startWith, switchMap } from 'rxjs';
+import { Course, LanguageEnum, LevelEnum } from 'src/app/course/course.model';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { CourseService } from 'src/app/course/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
+import { TitleCasePipe } from '@angular/common';
 
 interface Column {
   field: string;
@@ -15,13 +16,18 @@ interface Column {
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.scss'],
-  providers: [CourseService, ConfirmationService, MessageService],
+  providers: [CourseService, ConfirmationService, MessageService, TitleCasePipe],
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
   courses: Course[] = [];
   UserRole = UserRole;
   currentUser$:Observable<User | undefined> ;
+  languageOptions: { label: string }[] = [];
+  levelOptions: { label: string }[] = [];
+  languageFilter$ = new BehaviorSubject<string | null>(null);
+  levelFilter$ = new BehaviorSubject<string | null>(null);
+  filteredCourses$ : Observable<Course[] | any> = of([])  ;
   private subscription: Subscription = new Subscription();
 
   cols!: Column[];
@@ -30,13 +36,25 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private courseService: CourseService,
     private userService: UserService,
     private confirmationService: ConfirmationService,
+    private titlecasePipe: TitleCasePipe,
     private messageService: MessageService
   ) {
     this.currentUser$ =  this.userService.getCurrentUser()
+    this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
+      label: this.titlecasePipe.transform(key),
+    }));
+
+    this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
+
   }
 
   ngOnInit(): void {
     this.subscription = this.getCourses();
+    this.initializeFilteredCourses();
+    this.filteredCourses$.subscribe(courses => {
+        
+      this.courses = courses; 
+    });
   }
 
   getCourses() {
@@ -67,6 +85,26 @@ export class CoursesComponent implements OnInit, OnDestroy {
         });
       },
     });
+  }
+
+  initializeFilteredCourses() {
+    this.filteredCourses$ = combineLatest([
+      this.languageFilter$.pipe(startWith(null)),
+      this.levelFilter$.pipe(startWith(null)),      
+    ]).pipe(
+      switchMap(([language, level]) => 
+        this.courseService.filterCourses(language, level)
+      ),
+      startWith([]) // Başlangıç değeri olarak boş bir dizi atayabilirsiniz.
+    );
+  }
+
+  filterByLanguage(event:any){     
+    this.languageFilter$.next(event.value ? event.value.label : null);
+  }
+
+  filterByLevel(event:any){
+    this.levelFilter$.next(event.value ? event.value.label : null);
   }
 
   getSeverity(status: string) {
