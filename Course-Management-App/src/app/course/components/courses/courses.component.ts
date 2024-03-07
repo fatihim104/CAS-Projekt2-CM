@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { BehaviorSubject, Observable, Subscription, combineLatest, of, startWith, switchMap } from 'rxjs';
-import { Course, LanguageEnum, LevelEnum } from 'src/app/course/course.model';
+import { BehaviorSubject, Observable, Subject, Subscription, combineLatest, map, of, startWith, switchMap } from 'rxjs';
+import { Course, LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { CourseService } from 'src/app/course/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
 import { TitleCasePipe } from '@angular/common';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 interface Column {
   field: string;
@@ -25,9 +26,13 @@ export class CoursesComponent implements OnInit, OnDestroy {
   currentUser$:Observable<User | undefined> ;
   languageOptions: { label: string }[] = [];
   levelOptions: { label: string }[] = [];
+  statusOptions: { label: string }[] = [];
   languageFilter$ = new BehaviorSubject<string | null>(null);
   levelFilter$ = new BehaviorSubject<string | null>(null);
-  filteredCourses$ : Observable<Course[] | any> = of([])  ;
+  statusFilter$ = new BehaviorSubject<string | null>(null);
+  filteredCourses$ : Observable<Course[] | any> = of([]);
+  searchedCourses$ : Observable<Course[] | any> = of([]);
+  searchValue = new Subject<string>();
   private subscription: Subscription = new Subscription();
 
   cols!: Column[];
@@ -37,7 +42,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private confirmationService: ConfirmationService,
     private titlecasePipe: TitleCasePipe,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private db: AngularFirestore
   ) {
     this.currentUser$ =  this.userService.getCurrentUser()
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
@@ -46,13 +52,24 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
     this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
 
+    this.statusOptions = Object.keys(Status).map((key) => ({
+      label: key.toLowerCase(),
+    }));
+
+    this.searchedCourses$ = this.searchValue.pipe(
+      startWith(''),
+      switchMap(term => this.courseService.searchCourses(term))
+    );
+
   }
 
   ngOnInit(): void {
     this.subscription = this.getCourses();
     this.initializeFilteredCourses();
-    this.filteredCourses$.subscribe(courses => {
-        
+    this.filteredCourses$.subscribe(courses => {  
+      this.courses = courses; 
+    });
+    this.searchedCourses$.subscribe(courses => {  
       this.courses = courses; 
     });
   }
@@ -91,11 +108,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.filteredCourses$ = combineLatest([
       this.languageFilter$.pipe(startWith(null)),
       this.levelFilter$.pipe(startWith(null)),      
+      this.statusFilter$.pipe(startWith(null)),      
     ]).pipe(
-      switchMap(([language, level]) => 
-        this.courseService.filterCourses(language, level)
+      switchMap(([language, level, status]) => 
+        this.courseService.filterCourses(language, level, status)
       ),
-      startWith([]) // Başlangıç değeri olarak boş bir dizi atayabilirsiniz.
+      startWith([])
     );
   }
 
@@ -105,6 +123,10 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   filterByLevel(event:any){
     this.levelFilter$.next(event.value ? event.value.label : null);
+  }
+
+  filterByStatus(event:any){
+    this.statusFilter$.next(event.value ? event.value.label :  null);
   }
 
   getSeverity(status: string) {
@@ -123,8 +145,17 @@ export class CoursesComponent implements OnInit, OnDestroy {
         return 'info';
     }
   }
+
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  search(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    console.log(value);
+    
+    this.searchValue.next(value);
   }
 }
 
