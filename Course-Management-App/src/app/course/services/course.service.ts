@@ -102,7 +102,7 @@ export class CourseService {
     if (!term.trim()) {
       return of([]);
     }
-    const fields = ["language.label", "level.label", "status.label", "price"];
+    const fields = ["language.label", "level.label", "status.label"];
     const queries = fields.map(field =>
       this.db.collection<Course>('/courses', ref => ref.where(field, '==', term)).valueChanges()
     );
