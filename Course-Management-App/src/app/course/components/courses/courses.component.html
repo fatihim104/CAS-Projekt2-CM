@@ -11,8 +11,9 @@
     ></p-button>
   </div>
 
-  <div class="flex justify-content-center">
-    <div class="field col-12 md:col-4">
+  <div class="flex flex-column md:flex-row justify-content-start">
+
+    <div class="field col-12 md:col-3">
       <span class="p-float-label">
         <p-dropdown
           id="language"
@@ -25,9 +26,8 @@
         <label for="language">Filter Language</label>
       </span>
     </div>
-  
-    
-    <div class="field col-12 md:col-4">
+      
+    <div class="field col-12 md:col-3">
       <span class="p-float-label">
         <p-dropdown
           id="level"
@@ -40,6 +40,28 @@
         <label for="level">Filter Level</label>
       </span>
     </div>
+
+    <div class="field col-12 md:col-3">
+      <span class="p-float-label">
+        <p-dropdown
+          id="level"
+          [options]="statusOptions"
+          placeholder="Select Status"
+          (onChange)="filterByStatus($event)"
+          optionLabel="label"
+          [showClear]="true"
+        ></p-dropdown>
+        <label for="level">Filter Status</label>
+      </span>
+    </div>
+
+    <div class="field col-12 md:col-3 m-0">
+      <span class="p-float-label p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText (input)="search($event)" />      
+        <label for="level">Search</label>
+      </span>
+    </div>
   
    </div>
  
@@ -50,82 +72,44 @@
     [value]="courses"
     [rows]="6"
     [paginator]="true"
-    [globalFilterFields]="[
-      'language.label',
-      'level.label',
-      'price',
-      'status.label'
-    ]"
     [rowHover]="true"
     dataKey="id"
     [ngClass]="{ 'custom-table': true }"
     class="custom-table"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true"
-    [filterDelay]="0"
     responsiveLayout="stack" 
     [breakpoint]="'960px'"
-   
   >
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="language.label" style="min-width: 15%">
           <div class="flex justify-content-start align-items-center">
             Language <p-sortIcon field="language.label"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="language.label"
-              display="menu"
-              class="ml-auto"
-            ></p-columnFilter>
           </div>
         </th>
 
         <th pSortableColumn="level.label" style="min-width: 15%">
           <div class="flex justify-content-start align-items-center">
             Level <p-sortIcon field="level.label"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="level.label"
-              display="menu"
-              class="ml-auto"
-            ></p-columnFilter>
           </div>
         </th>
 
         <th pSortableColumn="place" style="min-width: 15%">
           <div class="flex justify-content-start align-items-center">
             Place <p-sortIcon field="place"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="place"
-              display="menu"
-              class="ml-auto"
-            ></p-columnFilter>
           </div>
         </th>
 
         <th pSortableColumn="status.label" style="min-width: 15%">
           <div class="flex justify-content-start align-items-center">
             Status <p-sortIcon field="status"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="status"
-              display="menu"
-              class="ml-auto"
-            ></p-columnFilter>
           </div>
         </th>
 
         <th pSortableColumn="price" style="min-width: 15%">
           <div class="flex justify-content-start align-items-center">
             Price <p-sortIcon field="price"></p-sortIcon>
-            <p-columnFilter
-              type="text"
-              field="price"
-              display="menu"
-              class="ml-auto"
-            ></p-columnFilter>
           </div>
         </th>
 
@@ -143,7 +127,7 @@
             [severity]="getSeverity(course.status.label)"
           ></p-tag>
         </td>
-        <td><span class="p-column-title">Price</span>{{ course.price }} fr</td>
+        <td><span class="p-column-title">Price</span>{{course.price}} fr</td>
 
         <td class="">
           <p-button
@@ -151,7 +135,7 @@
             icon="pi pi-eye"
             [outlined]="true" 
             styleClass="text-cyan-700 mr-2"
-            routerLink="/courses/detail/{{ course.id }}"
+            routerLink="/courses/detail/{{course.id}}"
             size="small"
           ></p-button>
           <p-button
@@ -160,7 +144,7 @@
             [outlined]="true" 
             styleClass="text-teal-500 mr-2"
             *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
-            routerLink="/courses/edit/{{ course.id }}"
+            routerLink="/courses/edit/{{course.id}}"
             size="small"
           ></p-button>
           <p-button

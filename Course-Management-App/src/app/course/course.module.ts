@@ -37,6 +37,7 @@ const routes: Routes = [
     }
 ]   
 @NgModule({
+    declarations: [CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent,],
     imports: [ 
         CommonModule,
         ButtonModule,
@@ -56,8 +57,7 @@ const routes: Routes = [
         FieldsetModule,      
         RouterModule.forChild(routes)
     ],
-    exports: [],
-    declarations: [CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent],
+    exports: [],    
     providers: [MessageService, ConfirmationService],
 })
 export class CourseModule { }
