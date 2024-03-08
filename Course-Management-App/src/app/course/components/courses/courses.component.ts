@@ -31,8 +31,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
   levelFilter$ = new BehaviorSubject<string | null>(null);
   statusFilter$ = new BehaviorSubject<string | null>(null);
   filteredCourses$ : Observable<Course[] | any> = of([]);
-  searchedCourses$ : Observable<Course[] | any> = of([]);
-  searchValue = new Subject<string>();
   private subscription: Subscription = new Subscription();
 
   cols!: Column[];
@@ -55,21 +53,12 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.statusOptions = Object.keys(Status).map((key) => ({
       label: key.toLowerCase(),
     }));
-
-    this.searchedCourses$ = this.searchValue.pipe(
-      startWith(''),
-      switchMap(term => this.courseService.searchCourses(term))
-    );
-
   }
 
   ngOnInit(): void {
     this.subscription = this.getCourses();
     this.initializeFilteredCourses();
     this.filteredCourses$.subscribe(courses => {  
-      this.courses = courses; 
-    });
-    this.searchedCourses$.subscribe(courses => {  
       this.courses = courses; 
     });
   }
@@ -151,11 +140,5 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  search(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    console.log(value);
-    
-    this.searchValue.next(value);
-  }
 }
 

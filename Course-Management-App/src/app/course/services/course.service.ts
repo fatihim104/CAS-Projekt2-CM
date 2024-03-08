@@ -5,8 +5,6 @@ import {
 import { Injectable } from '@angular/core';
 import { Course } from '../course.model';
 import { Observable, combineLatest, from, map, of } from 'rxjs';
-import { ParticipantService } from '../../participant/services/participant.service';
-import { Participant } from 'src/app/participant/participant.model';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
@@ -94,29 +92,7 @@ export class CourseService {
         ...(c.payload.doc.data() as Course),
       }))
       ),
-      
     );
   }
 
-  searchCourses(term: string): Observable<Course[]> {
-    if (!term.trim()) {
-      return of([]);
-    }
-    const fields = ["language.label", "level.label", "status.label"];
-    const queries = fields.map(field =>
-      this.db.collection<Course>('/courses', ref => ref.where(field, '==', term)).valueChanges()
-    );
-  
-    return combineLatest(queries).pipe(
-      map(arrays => arrays.flat()),
-      map((courses: Course[]) => courses.reduce((acc: Course[], current: Course) => {
-        const x = acc.find(item => item.id === current.id);
-        if (!x) {
-          return acc.concat([current]);
-        } else {
-          return acc;
-        }
-      }, [] as Course[]))
-    );
-  }
 }
