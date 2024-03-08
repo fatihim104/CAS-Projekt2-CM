@@ -11,9 +11,9 @@
     ></p-button>
   </div>
 
-  <div class="flex flex-column md:flex-row justify-content-start">
+  <div class="formgrid grid w-10">
 
-    <div class="field col-12 md:col-3">
+    <div class="field col-12 md:col-6 lg:col-3">
       <span class="p-float-label">
         <p-dropdown
           id="language"
@@ -27,7 +27,7 @@
       </span>
     </div>
       
-    <div class="field col-12 md:col-3">
+    <div class="field col-12 md:col-6 lg:col-3">
       <span class="p-float-label">
         <p-dropdown
           id="level"
@@ -41,7 +41,7 @@
       </span>
     </div>
 
-    <div class="field col-12 md:col-3">
+    <div class="field col-12 md:col-6 lg:col-3">
       <span class="p-float-label">
         <p-dropdown
           id="level"
@@ -55,10 +55,10 @@
       </span>
     </div>
 
-    <div class="field col-12 md:col-3 m-0">
+    <div class="field col-12 md:col-6 lg:col-3">
       <span class="p-float-label p-input-icon-left">
         <i class="pi pi-search"></i>
-        <input type="text" pInputText (input)="search($event)" />      
+        <input type="text" pInputText (input)="search($event)" class="w-10"/>      
         <label for="level">Search</label>
       </span>
     </div>
