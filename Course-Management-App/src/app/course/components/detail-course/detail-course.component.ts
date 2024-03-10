@@ -118,7 +118,7 @@ export class DetailCourseComponent implements OnInit {
         console.log(data.userId);
         
         this.showMessage('success', 'Successful', 'Candidate added to User list.')
-        // this.userService.addUserForMailTrigger(newUser)
+        this.userService.addUserForMailTrigger(newUser)
       },
       error: (error) => console.error(error),
     }
