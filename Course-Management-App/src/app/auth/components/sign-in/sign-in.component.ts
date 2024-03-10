@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class SignInComponent {
     password: new FormControl(''),
   });
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService){}
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private messageService: MessageService){}
 
   ngOnInit():void {
     this.getForm();
@@ -38,6 +39,13 @@ export class SignInComponent {
   onSubmit(){
     this.authService.signIn(this.f['email'].value, this.f['password'].value).then(() => {
       this.router.navigate(['/courses'])
+    }).catch((error) => {
+      this.messageService.add({
+        key: 'tl',
+        severity: 'error',
+        summary: 'There is an error',
+        detail: error.message,
+      });
     });
 
   }

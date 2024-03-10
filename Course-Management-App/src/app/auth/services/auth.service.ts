@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
@@ -6,8 +6,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { AngularFireFunctions } from '@angular/fire/compat/functions';
 import { Router } from '@angular/router';
-import { error } from 'cypress/types/jquery';
-import { BehaviorSubject, Subject, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, catchError, map, of } from 'rxjs';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 
 @Injectable({
@@ -51,7 +50,7 @@ export class AuthService {
         });
       })
       .catch((error) => {
-        window.alert(error.message);
+        throw error;
       });
   }
 
@@ -69,7 +68,7 @@ export class AuthService {
         sendMail ? this.sendVerificationMail() : null;
       })
       .catch((error) => {
-        window.alert(error.message);
+        throw error;
       });
   }
 
@@ -78,14 +77,7 @@ export class AuthService {
   }
 
   async forgotPassword(passwordResetEmail: string) {
-    return this.afAuth
-      .sendPasswordResetEmail(passwordResetEmail)
-      .then(() => {
-        window.alert('Password reset email sent, check your inbox.');
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
+    return this.afAuth.sendPasswordResetEmail(passwordResetEmail);
   }
 
   setUserData(user: any, name?: string) {
@@ -97,7 +89,7 @@ export class AuthService {
       email: user.email,
       firstName: name,
       displayName: name,
-      photoURL: "",
+      photoURL: '',
       emailVerified: false,
       role: UserRole.USER,
     };
@@ -118,25 +110,23 @@ export class AuthService {
     const data = { email, password };
     const callable = this.functions.httpsCallable('createUser');
 
-    return (
-      callable(data).pipe(
-        map((userRecord) => {
-          console.log(userRecord);
-          const user = {
-            uid : userRecord.userId,
-            email: email,
-            firstName: name,
-            displayName: name,
-          }
-          
-          this.setUserData(user, name);
-          return userRecord;
-        }),
-        catchError((error) => {
-          console.error('error by user creation', error);
-          return of(null);
-        })
-      )    
+    return callable(data).pipe(
+      map((userRecord) => {
+        console.log(userRecord);
+        const user = {
+          uid: userRecord.userId,
+          email: email,
+          firstName: name,
+          displayName: name,
+        };
+
+        this.setUserData(user, name);
+        return userRecord;
+      }),
+      catchError((error) => {
+        console.error('error by user creation', error);
+        return of(null);
+      })
     );
   }
 }

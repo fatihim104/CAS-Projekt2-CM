@@ -17,7 +17,6 @@ import { TitleCasePipe, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-plan-new-course',
