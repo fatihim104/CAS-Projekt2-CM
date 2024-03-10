@@ -15,7 +15,6 @@ import { CourseRegistrationService } from 'src/app/course/services/course-regist
 import { CourseService } from 'src/app/course/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
-import { error } from 'cypress/types/jquery';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({

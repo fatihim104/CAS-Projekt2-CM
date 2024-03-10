@@ -16,11 +16,13 @@ import { UserService } from 'src/app/shared/user/user.service';
 })
 export class TabMenuComponent implements OnInit {
   items: MenuItem[] | undefined;
+  profileItems: MenuItem[] = [];
   activeItem: MenuItem | undefined;
 
   hasToken: Observable<boolean>;
   currentUser$: Observable<User | undefined>;
   role: UserRole | undefined ;
+  profileText:string | undefined = "";
 
   constructor(
     private router: Router,
@@ -31,14 +33,18 @@ export class TabMenuComponent implements OnInit {
     this.hasToken = this.authService.hasToken;
 
     this.currentUser$ = this.userService.getCurrentUser();
+
   }
 
   ngOnInit() {
     this.currentUser$.subscribe((user) => {
       this.role = user?.role;
+      this.profileText = user?.email?.slice(0,2)
       this.getActiveRoute(this.role);
     });
     this.getActiveRoute();
+    this.getProfileItems()
+  
   }
 
   logout() {
@@ -85,5 +91,14 @@ export class TabMenuComponent implements OnInit {
         routerLink: 'contact',
       }
     ];
+  }
+
+  getProfileItems(){
+    this.profileItems = [
+      {
+        label : "Logout",
+        command : () => this.logout(),
+      }
+    ]
   }
 }

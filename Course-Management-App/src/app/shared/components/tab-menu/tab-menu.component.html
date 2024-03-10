@@ -1,17 +1,49 @@
-<div class="card flex flex-column  md:flex-row justify-content-between">
-    <p-menubar class="flex flex-column  md:flex-row justify-content-between"  [model]="items" styleClass="custom-menu">
-        <ng-template pTemplate="start">
-            <img src="../../../../assets/logo-2/png/logo-no-background.png"  class="mr-2 h-3rem md:h-4rem lg:h-7rem" />
-        </ng-template>
-        
-        <ng-template pTemplate="end">
+<div class="card flex flex-column md:flex-row justify-content-between">
+  <p-menubar
+    class="flex flex-column md:flex-row justify-content-between"
+    id="menu"
+    [model]="items"
+  >
+    <ng-template pTemplate="start">
+      <img
+        src="../../../../assets/logo-2/png/logo-no-background.png"
+        class="mr-2 h-3rem md:h-4rem lg:h-7rem"
+      />
+    </ng-template>
+
+    <ng-template pTemplate="end">
+      <div>
+        <p-button
+          *ngIf="!(hasToken | async)"
+          routerLink="/auth"
+          [text]="true"
+          severity="help"
+          class="font-bold"
+        >
+          LOGIN</p-button
+        >
+        <p-avatar
+          class="mr-2 pointer"
+          *ngIf="hasToken | async"
+          label="{{ profileText }}"
+          styleClass="mr-2"
+          size="large"
+          (click)="avatarMenu.toggle($event)"
           
-            <div>
-                <p-button *ngIf="!(hasToken | async)" routerLink="/auth" [text]="true" severity="help" class="font-bold"> LOGIN</p-button>
-                <p-button *ngIf="hasToken | async"  (click)="logout()" [text]="true" severity="help" class="font-bold"> LOGOUT</p-button>
-            </div>
-           
-        </ng-template>
-    
-    </p-menubar>
+          [style]="{ 'background-image': 'radial-gradient(
+            circle at left top,
+            violet,
+            blue
+          )', 'color': '#ffffff' }"
+          shape="circle"
+        ></p-avatar>
+        <p-tieredMenu
+          id="profile"
+          #avatarMenu
+          [model]="profileItems"
+          [popup]="true"
+        ></p-tieredMenu>
+      </div>
+    </ng-template>
+  </p-menubar>
 </div>

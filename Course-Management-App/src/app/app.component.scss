@@ -1,10 +1,21 @@
-:host ::ng-deep .p-menuitem-text {
+:host ::ng-deep #menu .p-menuitem-text {
   color: white;
   font-size: x-large;
   font-weight: 800;
 }
 
-:host ::ng-deep .p-menubar{
+:host ::ng-deep #profile .p-menuitem-text {
+  color: rgb(207, 29, 230);
+  font-size: medium;
+  font-weight: 700;
+}
+
+:host ::ng-deep #profile .p-tieredmenu{
+  margin-top: 15px;
+  width: 100px;
+}
+
+:host ::ng-deep #menu .p-menubar{
   background: none;
   border: none;
   border-radius: 0;
@@ -19,11 +30,17 @@
 
 
 @media (max-width: 960px) {
-  :host ::ng-deep .p-menuitem-text {
+  :host ::ng-deep #menu .p-menuitem-text {
     font-size: medium;
     font-weight: 600;
     color: #0c85a78b
-  } 
+  }
+  
+  :host ::ng-deep #profile .p-menuitem-text {
+    color: rgb(207, 29, 230);
+    font-size: medium;
+    font-weight: 700;
+  }
 }
 
 body {
