@@ -87,9 +87,7 @@ export class DetailCourseComponent implements OnInit {
   }
 
   acceptCourse(candidate: Participant, courseId: string) {
-    const generatedPassword = this.generateRandomPassword(8)
-
-    let participantId : string = "";
+    
     const newUser = {
       firstName: candidate.firstName,
       lastName: candidate.lastName,
@@ -97,6 +95,17 @@ export class DetailCourseComponent implements OnInit {
       email: candidate.email,
       birthDay: "",
     }
+
+    this.addCandidateToParticipants(candidate, courseId,newUser)
+
+    this.createNewUser(candidate)
+
+    this.userService.addUserForMailTrigger(newUser)
+     
+  }
+
+  addCandidateToParticipants(candidate: Participant, courseId: string, newUser:any){
+    let participantId : string = "";
     this.participantService.create(newUser)
     .then((documentReference) => {
       participantId = documentReference.id
@@ -112,18 +121,21 @@ export class DetailCourseComponent implements OnInit {
         error: (error) => console.error(error),
     });
     }) 
+  }
 
+  createNewUser(candidate:Participant){
+    const generatedPassword = this.generateRandomPassword(8)
+    
     this.authService.createUser(candidate.email as string, generatedPassword, candidate.firstName).subscribe({
       next: (data) => {
         console.log(data.userId);
         
         this.showMessage('success', 'Successful', 'Candidate added to User list.')
-        this.userService.addUserForMailTrigger(newUser)
       },
       error: (error) => console.error(error),
     }
     )
-     
+
   }
 
   deleteCandidate(candidate: Participant) {
