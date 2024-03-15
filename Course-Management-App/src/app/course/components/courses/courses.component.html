@@ -1,18 +1,27 @@
 <div class="flex flex-column justify-content-between w-10 m-auto">
-  <div class="flex flex-column md:flex-row justify-content-between mb-4">
+  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
     <h2 class="text-0">Active Courses</h2>
     <p-button
       *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
-      label="Plan New Course"
+      pTooltip="Plan New Course"
+      tooltipPosition="bottom"
+      icon="pi pi-plus font-bold"
+      class="mb-2 md:m-0"
       routerLink="/courses/plan"
-      [outlined]="true" 
-      styleClass="text-purple-500"
-      size="small"
+      [outlined]="true"
+      [style]="{
+        'background-image':
+          'radial-gradient(
+            circle at left top,
+            #A437DB,
+            #43ecf9
+          )',
+        'color': '#ffffff'
+      }"
     ></p-button>
   </div>
 
   <div class="formgrid grid w-10">
-
     <div class="field col-12 md:col-6 lg:col-3 mr-4">
       <span class="p-float-label">
         <p-dropdown
@@ -26,7 +35,7 @@
         <label for="language">Filter Language</label>
       </span>
     </div>
-      
+
     <div class="field col-12 md:col-6 lg:col-3">
       <span class="p-float-label">
         <p-dropdown
@@ -54,9 +63,8 @@
         <label for="level">Filter Status</label>
       </span>
     </div>
-  
-   </div>
- 
+  </div>
+
   <p-toast></p-toast>
   <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
   <p-table
@@ -70,7 +78,7 @@
     class="custom-table"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     [showCurrentPageReport]="true"
-    responsiveLayout="stack" 
+    responsiveLayout="stack"
     [breakpoint]="'960px'"
   >
     <ng-template pTemplate="header">
@@ -110,40 +118,52 @@
     </ng-template>
     <ng-template pTemplate="body" let-course>
       <tr>
-        <td><span class="p-column-title">Language</span>{{ course.language.label }}</td>
-        <td><span class="p-column-title">Level</span>{{ course.level.label }}</td>
+        <td>
+          <span class="p-column-title">Language</span
+          >{{ course.language.label }}
+        </td>
+        <td>
+          <span class="p-column-title">Level</span>{{ course.level.label }}
+        </td>
         <td><span class="p-column-title">Place</span>{{ course.place }}</td>
-        <td><span class="p-column-title">Status</span>
+        <td>
+          <span class="p-column-title">Status</span>
           <p-tag
             [value]="course.status.label"
             [severity]="getSeverity(course.status.label)"
           ></p-tag>
         </td>
-        <td><span class="p-column-title">Price</span>{{course.price}} fr</td>
+        <td><span class="p-column-title">Price</span>{{ course.price }} fr</td>
 
         <td class="">
           <p-button
             pRipple
+            pTooltip="Detail"
+            tooltipPosition="bottom"
             icon="pi pi-eye"
-            [outlined]="true" 
-            styleClass="text-cyan-700 mr-2"
-            routerLink="/courses/detail/{{course.id}}"
+            [outlined]="true"
+            styleClass="p-button-warning mr-1"
+            routerLink="/courses/detail/{{ course.id }}"
             size="small"
           ></p-button>
           <p-button
             pRipple
             icon="pi pi-pencil"
-            [outlined]="true" 
+            pTooltip="Edit"
+            tooltipPosition="bottom"
+            [outlined]="true"
             styleClass="text-teal-500 mr-2"
             *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
-            routerLink="/courses/edit/{{course.id}}"
+            routerLink="/courses/edit/{{ course.id }}"
             size="small"
           ></p-button>
           <p-button
             pRipple
+            pTooltip="Delete"
+            tooltipPosition="bottom"
             icon="pi pi-trash"
-            [outlined]="true" 
-            styleClass="text-pink-500"
+            [outlined]="true"
+            styleClass="text-red-500"
             *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
             (click)="deleteCourse(course)"
             size="small"
