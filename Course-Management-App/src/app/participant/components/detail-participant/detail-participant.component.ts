@@ -1,10 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Course } from 'src/app/course/course.model';
 import { CourseService } from 'src/app/course/services/course.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
+import { User, UserRole } from 'src/app/shared/user/user.model';
+import { UserService } from 'src/app/shared/user/user.service';
 
 @Component({
   selector: 'app-detail-participant',
@@ -15,15 +17,20 @@ export class DetailParticipantComponent implements OnInit, OnDestroy {
   selectedStudent: any;
   selectedStudentId: string = '';
   courses: Course[] = [];
+  currentUser$: Observable<User | undefined>;
+  UserRole = UserRole;
   private subscriptions: Subscription[] = [];
 
   constructor(
     private participantService: ParticipantService,
     private courseService: CourseService,
+    private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private datepipe: DatePipe
-  ) {}
+  ) {
+    this.currentUser$ = this.userService.getCurrentUser();
+  }
 
   ngOnInit(): void {
     this.selectedStudentId =

@@ -1,12 +1,11 @@
 <div class="flex flex-column justify-content-between w-10 m-auto">
-
   <app-header-page
-  [routerLink]="'/courses/plan'"
-  [header]="'Active Courses'"
-  [showButton]="true"
-  [tooltip]="'Plan New Course'"
-  [buttonIcon]="'pi pi-plus font-bold'"
-></app-header-page>
+    [currentUser$]="currentUser$"
+    [routerLink]="'/courses/plan'"
+    [header]="'Active Courses'"
+    [addButton]="true"
+    [tooltip]="'Plan New Course'"
+  ></app-header-page>
 
   <div class="formgrid grid w-10">
     <div class="field col-12 md:col-6 lg:col-3 mr-4">
@@ -122,14 +121,14 @@
         </td>
         <td><span class="p-column-title">Price</span>{{ course.price }} fr</td>
 
-        <td class="">
+        <td>
           <p-button
             pRipple
             pTooltip="Detail"
             tooltipPosition="bottom"
             icon="pi pi-eye"
             [outlined]="true"
-            styleClass="p-button-warning mr-1"
+            styleClass="p-button-warning mr-2"
             routerLink="/courses/detail/{{ course.id }}"
             size="small"
           ></p-button>

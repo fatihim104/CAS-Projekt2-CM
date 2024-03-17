@@ -3,9 +3,8 @@
   <app-header-page
   [routerLink]="'/courses'"
   [header]="'Plan New Course'"
-  [showButton]="true"
+  [backButton]="true"
   [tooltip]="'Back to Courses'"
-  [buttonIcon]="'pi pi-chevron-left font-bold'"
 ></app-header-page>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="grid p-fluid mt-5">

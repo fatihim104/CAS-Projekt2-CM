@@ -10,11 +10,14 @@ import { User, UserRole } from '../../user/user.model';
 export class HeaderPageComponent implements OnInit {
 
   @Input() currentUser$?: Observable<User | undefined> ;
-  @Input() routerLink: string = "";
+  @Input() routerLinkEdit: string = "";
+  @Input() routerLinkBack: string = "";
+  @Input() routerLinkAdd: string = "";
   @Input() header: string = "";
   @Input() tooltip: string = "";
-  @Input() showButton: boolean = false;
-  @Input() buttonIcon: string = "";
+  @Input() backButton: boolean = false;
+  @Input() editButton: boolean = false;
+  @Input() addButton: boolean = false;
 
   UserRole = UserRole;
 

@@ -1,12 +1,13 @@
 <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-2">
     <h2 class="text-0">{{header}}</h2>
-    <p-button
-      *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN || showButton"
-      [pTooltip]="tooltip"
+    <div>
+      <p-button
+      *ngIf="editButton"
+      pTooltip="Edit"
       tooltipPosition="bottom"
-      [icon]="buttonIcon"
-      class="mb-2 md:m-0"
-      [routerLink]="routerLink"
+      icon="pi pi-pencil"
+      class="mb-2 "
+      [routerLink]="routerLinkEdit"
       [outlined]="true"
       [style]="{
         'background-image':
@@ -18,4 +19,44 @@
         'color': '#ffffff'
       }"
     ></p-button>
+      <p-button
+        *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN && addButton"
+        [pTooltip]="tooltip"
+        tooltipPosition="bottom"
+        icon="pi pi-plus"
+        class="mb-2 ml-2"
+        [routerLink]="routerLinkAdd"
+        [outlined]="true"
+        [style]="{
+          'background-image':
+            'radial-gradient(
+              circle at left top,
+              #A437DB,
+              #43ecf9
+            )',
+          'color': '#ffffff'
+        }"
+      ></p-button>
+      <p-button
+        *ngIf="backButton"
+        [pTooltip]="tooltip"
+        tooltipPosition="bottom"
+        icon="pi pi-chevron-left font-bold"
+        class="mb-2 ml-2"
+        [routerLink]="routerLinkBack"
+        [outlined]="true"
+        [style]="{
+          'background-image':
+            'radial-gradient(
+              circle at left top,
+              #A437DB,
+              #43ecf9
+            )',
+          'color': '#ffffff'
+        }"
+      ></p-button>
+
+    </div>
+
+
   </div>

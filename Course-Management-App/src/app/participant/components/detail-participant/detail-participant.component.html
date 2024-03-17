@@ -1,7 +1,13 @@
 <div class="w-8 m-auto">
-  <div class="font-bold text-3xl text-900 p-2 mb-3">
-    Participant Information
-  </div>
+  <app-header-page
+  [currentUser$]="currentUser$"
+  [routerLinkEdit]="'/participants/edit/' + selectedStudentId"
+  [routerLinkBack]="'/participants'"
+  [header]="'Participant Information'"
+  [backButton]="true"
+  [editButton]="(currentUser$ | async)?.role === UserRole.ADMIN"
+  [tooltip]="'Back to Teachers'"
+></app-header-page>
   <div class="grid w-full">
     <div class="col mr-8">
       <ul class="list-none p-0 m-0">
@@ -77,25 +83,6 @@
         </li>
         <p-divider></p-divider>
       </ul>
-    </div>
-
-    <div class="w-full my-4 flex flex-row justify-content-around">
-      <button
-        pButton
-        pRipple
-        label="Participants"
-        icon="pi pi-angle-left"
-        routerLink="/participants"
-        class="p-button-text text-blue-900 ml-2 border-1 border-teal-600 hover:border-orange-700"
-      ></button>
-      <button
-        pButton
-        pRipple
-        label="Edit"
-        icon="pi pi-pencil"
-        routerLink="/participants/edit/{{ selectedStudentId }}"
-        class="p-button-text text-green-900 border-1 border-teal-600 hover:border-orange-700"
-      ></button>
     </div>
   </div>
 </div>

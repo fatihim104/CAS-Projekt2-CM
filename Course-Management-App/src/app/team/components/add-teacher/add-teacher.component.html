@@ -1,10 +1,9 @@
 <div class="card px-5 col-8 m-auto">
   <app-header-page
-  [routerLink]="'/team'"
+  [routerLinkBack]="'/team'"
   [header]="'Add New Teacher'"
-  [showButton]="true"
+  [backButton]="true"
   [tooltip]="'Back to Teachers'"
-  [buttonIcon]="'pi pi-chevron-left font-bold'"
 ></app-header-page>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="grid p-fluid mt-5">

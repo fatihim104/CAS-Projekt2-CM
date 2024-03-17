@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Observable } from 'rxjs';
 import { Participant } from 'src/app/participant/participant.model';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
+import { User, UserRole } from 'src/app/shared/user/user.model';
+import { UserService } from 'src/app/shared/user/user.service';
 
 @Component({
   selector: 'app-participants',
@@ -11,12 +14,17 @@ import { ParticipantService } from 'src/app/participant/services/participant.ser
 })
 export class ParticipantsComponent implements OnInit {
   students?: Participant[] | any;
+  currentUser$: Observable<User | undefined>;
+  UserRole = UserRole;
 
   constructor(
     private participantService: ParticipantService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private userService: UserService
+  ) {
+    this.currentUser$ = this.userService.getCurrentUser();
+  }
 
   ngOnInit(): void {
     this.getParticipants();
