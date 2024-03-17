@@ -1,25 +1,12 @@
 <div class="flex flex-column justify-content-between w-10 m-auto">
-  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-    <h2 class="text-0">Active Courses</h2>
-    <p-button
-      *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN"
-      pTooltip="Plan New Course"
-      tooltipPosition="bottom"
-      icon="pi pi-plus font-bold"
-      class="mb-2 md:m-0"
-      routerLink="/courses/plan"
-      [outlined]="true"
-      [style]="{
-        'background-image':
-          'radial-gradient(
-            circle at left top,
-            #A437DB,
-            #43ecf9
-          )',
-        'color': '#ffffff'
-      }"
-    ></p-button>
-  </div>
+
+  <app-header-page
+  [routerLink]="'/courses/plan'"
+  [header]="'Active Courses'"
+  [showButton]="true"
+  [tooltip]="'Plan New Course'"
+  [buttonIcon]="'pi pi-plus font-bold'"
+></app-header-page>
 
   <div class="formgrid grid w-10">
     <div class="field col-12 md:col-6 lg:col-3 mr-4">

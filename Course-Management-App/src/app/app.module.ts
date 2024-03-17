@@ -39,7 +39,7 @@ import { UserComponent } from './shared/user/user.component';
     TabMenuComponent,
     HomeComponent,
     ContactComponent,
-    UserComponent
+    UserComponent,
   ],
   imports: [
     BrowserModule,

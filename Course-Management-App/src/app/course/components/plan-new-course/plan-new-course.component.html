@@ -1,5 +1,12 @@
 <div class="card px-5 col-8 m-auto">
-  <h2>PLAN NEW COURSE</h2>
+
+  <app-header-page
+  [routerLink]="'/courses'"
+  [header]="'Plan New Course'"
+  [showButton]="true"
+  [tooltip]="'Back to Courses'"
+  [buttonIcon]="'pi pi-chevron-left font-bold'"
+></app-header-page>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="grid p-fluid mt-5">
       <div class="field col-12 md:col-6 p-2">
