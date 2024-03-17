@@ -23,6 +23,7 @@ import { AddParticipantComponent } from './components/add-participant/add-partic
 import { DetailParticipantComponent } from './components/detail-participant/detail-participant.component';
 import { EditParticipantComponent } from './components/edit-participant/edit-participant.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -59,6 +60,7 @@ const routes: Routes = [
     TooltipModule,
     DividerModule,
     ConfirmDialogModule,
+    SharedModule,
     RouterModule.forChild(routes),
   ],
   exports:[],

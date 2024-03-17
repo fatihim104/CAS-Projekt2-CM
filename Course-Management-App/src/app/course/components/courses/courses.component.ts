@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { BehaviorSubject, Observable, Subject, Subscription, combineLatest, map, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, combineLatest, of, startWith, switchMap } from 'rxjs';
 import { Course, LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { CourseService } from 'src/app/course/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
 import { TitleCasePipe } from '@angular/common';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 interface Column {
   field: string;
@@ -41,7 +40,6 @@ export class CoursesComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private titlecasePipe: TitleCasePipe,
     private messageService: MessageService,
-    private db: AngularFirestore
   ) {
     this.currentUser$ =  this.userService.getCurrentUser()
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({

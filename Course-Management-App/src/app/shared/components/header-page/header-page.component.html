@@ -1,0 +1,21 @@
+<div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-2">
+    <h2 class="text-0">{{header}}</h2>
+    <p-button
+      *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN || showButton"
+      [pTooltip]="tooltip"
+      tooltipPosition="bottom"
+      [icon]="buttonIcon"
+      class="mb-2 md:m-0"
+      [routerLink]="routerLink"
+      [outlined]="true"
+      [style]="{
+        'background-image':
+          'radial-gradient(
+            circle at left top,
+            #A437DB,
+            #43ecf9
+          )',
+        'color': '#ffffff'
+      }"
+    ></p-button>
+  </div>

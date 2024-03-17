@@ -13,7 +13,7 @@ import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ChipModule } from 'primeng/chip';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService} from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
 import { DividerModule } from 'primeng/divider';
@@ -23,6 +23,7 @@ import { AddTeacherComponent } from './components/add-teacher/add-teacher.compon
 import { EditTeacherComponent } from './components/edit-teacher/edit-teacher.component';
 import { DetailTeacherComponent } from './components/detail-teacher/detail-teacher.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -41,7 +42,7 @@ const routes: Routes = [
     TeachersComponent,
     AddTeacherComponent,
     EditTeacherComponent,
-    DetailTeacherComponent
+    DetailTeacherComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +60,7 @@ const routes: Routes = [
     TooltipModule,
     DividerModule,
     ConfirmDialogModule,
+    SharedModule,
     RouterModule.forChild(routes),
   ],
   exports:[],
