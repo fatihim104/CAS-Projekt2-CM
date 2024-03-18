@@ -12,7 +12,8 @@
   <p-confirmDialog [style]="{ width: '40vw' }"></p-confirmDialog>
 
   <div
-    class="card flex flex-column md:flex-row justify-content-between flex-wrap"
+  class="card flex flex-column md:flex-row justify-content-between flex-wrap"
+  [ngClass]="students.length < 5 ? 'justify-content-start' : 'justify-content-between'"
   >
     <p-card
       *ngFor="let student of students"
@@ -20,6 +21,7 @@
       subheader="actif kurs"
       [style]="{ width: '250px' }"
       class="mb-4"
+      [ngClass]="students.length < 5 ? 'with-margin' : 'without-margin'"
     >
       <ng-template pTemplate="header">
         <img

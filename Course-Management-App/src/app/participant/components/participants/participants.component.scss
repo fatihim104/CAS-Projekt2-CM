@@ -1,3 +1,17 @@
 :host ::ng-deep .p-card-content{
     padding: 0;
 }
+
+.justify-content-between {
+    justify-content: space-between !important;
+   
+  }
+  
+  .justify-content-start {
+    justify-content: flex-start !important;
+    
+  }
+
+  .with-margin{
+    margin-right: 1rem ;
+  }

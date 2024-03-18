@@ -96,7 +96,7 @@ export class DetailCourseComponent implements OnInit {
       birthDay: "",
     }
 
-    this.addCandidateToParticipants(candidate, courseId,newUser)
+    this.addCandidateToParticipants(candidate, courseId, newUser)
 
     this.createNewUser(candidate)
 

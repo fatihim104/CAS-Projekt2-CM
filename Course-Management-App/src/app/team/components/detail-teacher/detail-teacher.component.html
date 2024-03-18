@@ -1,4 +1,4 @@
-<div class="w-8 m-auto">
+<div class="w-6 m-auto">
   <app-header-page
     [currentUser$]="currentUser$"
     [routerLinkEdit]="'/team/edit/' + selectedTeacherId"
@@ -8,47 +8,47 @@
     [editButton]="(currentUser$ | async)?.role === UserRole.ADMIN"
     [tooltip]="'Back to Teachers'"
   ></app-header-page>
-  <div class="grid">
-    <div class="col mr-8">
+  <div class="grid w-full">
+    <div class="col mr-6">
       <ul class="list-none p-0 m-0">
-        <li class="flex align-items-center py-3 px-2 flex-wrap">
-          <div class="text-500 w-6 md:w-3 font-medium">First Name</div>
+        <li class="flex align-items-center justify-content-between py-3 px-2 flex-wrap">
+          <div class="text-500 font-medium">First Name</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedTeacher?.firstName }}
           </div>
         </li>
 
         <li
-          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+          class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Last Name</div>
+          <div class="text-500 font-medium">Last Name</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedTeacher?.lastName }}
           </div>
         </li>
 
         <li
-          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+          class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Phone Number</div>
+          <div class="text-500 font-medium">Phone Number</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedTeacher?.phone }}
           </div>
         </li>
 
         <li
-          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+          class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">E-Mail</div>
+          <div class="text-500 font-medium">E-Mail</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedTeacher?.email }}
           </div>
         </li>
 
         <li
-          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+          class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Birthday</div>
+          <div class="text-500 font-medium">Birthday</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{
               selectedTeacher?.birthDay?.seconds * 1000 | date : "dd-MM-yyyy"
@@ -57,9 +57,9 @@
         </li>
 
         <li
-          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+          class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Start Day</div>
+          <div class="text-500 font-medium">Start Day</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{
               selectedTeacher?.startDay?.seconds * 1000 | date : "dd-MM-yyyy"
@@ -68,9 +68,9 @@
         </li>
 
         <li
-          class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap"
+          class="flex align-items-center justify-content-between py-3 px-2 border-top-1 surface-border flex-wrap"
         >
-          <div class="text-500 w-6 md:w-3 font-medium">Nationality</div>
+          <div class="text-500 font-medium">Nationality</div>
           <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
             {{ selectedTeacher?.nationality }}
           </div>
@@ -79,18 +79,23 @@
     </div>
 
     <div *ngIf="(currentUser$ | async)?.role === UserRole.ADMIN" class="col">
-      <div class="text-500 w-8 md:w-2 font-medium mb-2">Courses</div>
+      <p-fieldset
+      legend="Courses ({{ courses.length }})"
+      [toggleable]="true"
+      class="m-2"
+    >
       <ul
         *ngFor="let course of courses"
-        class="list-none p-0 m-0 text-900 flex"
+        class="list-none p-0 m-0 "
       >
-        <li class="mr-3 mb-1" class="grid">
+        <li class="mr-3 mb-1" >
           <span class="col">{{ course.language.label }}</span>
           <span class="col">{{ course.level.label }}</span>
           <span class="col">{{ getDate(course) }} </span>
         </li>
         <p-divider></p-divider>
       </ul>
+    </p-fieldset>
     </div>
   </div>
 </div>

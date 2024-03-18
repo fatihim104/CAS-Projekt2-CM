@@ -24,6 +24,7 @@ import { DetailParticipantComponent } from './components/detail-participant/deta
 import { EditParticipantComponent } from './components/edit-participant/edit-participant.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
 import { SharedModule } from '../shared/shared.module';
+import { FieldsetModule } from 'primeng/fieldset';
 
 const routes: Routes = [
   {
@@ -60,6 +61,7 @@ const routes: Routes = [
     TooltipModule,
     DividerModule,
     ConfirmDialogModule,
+    FieldsetModule,
     SharedModule,
     RouterModule.forChild(routes),
   ],

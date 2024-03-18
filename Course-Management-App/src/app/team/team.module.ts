@@ -24,6 +24,7 @@ import { EditTeacherComponent } from './components/edit-teacher/edit-teacher.com
 import { DetailTeacherComponent } from './components/detail-teacher/detail-teacher.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
 import { SharedModule } from '../shared/shared.module';
+import { FieldsetModule } from 'primeng/fieldset';
 
 const routes: Routes = [
   {
@@ -59,6 +60,7 @@ const routes: Routes = [
     CardModule,
     TooltipModule,
     DividerModule,
+    FieldsetModule,
     ConfirmDialogModule,
     SharedModule,
     RouterModule.forChild(routes),
