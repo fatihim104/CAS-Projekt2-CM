@@ -15,7 +15,6 @@ import { ActivatedRoute} from '@angular/router';
 import { LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
 import { Location } from '@angular/common';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
-import { map } from 'rxjs/operators';
 import { TeamService } from 'src/app/team/services/team.service';
 
 @Component({
@@ -25,7 +24,8 @@ import { TeamService } from 'src/app/team/services/team.service';
   providers: [TitleCasePipe, MessageService],
 })
 export class EditCourseComponent implements OnInit {
-  students!: Participant[];
+  students!: Participant[] ;
+  // students$!: Observable<Participant[] | undefined>;
   teachers!: Team[];
   statusOptions: { label: string }[] = [];
   languageOptions: { label: string }[] = [];
@@ -131,7 +131,7 @@ export class EditCourseComponent implements OnInit {
 
   getParticipants() {
     return this.participantService.getParticipants().subscribe({
-      next: (data) => (this.students = data),
+      next: (data) => (this.students = data ),
       error: (error) => {
         console.error('Error fetching participants', error);
         this.students = [];
