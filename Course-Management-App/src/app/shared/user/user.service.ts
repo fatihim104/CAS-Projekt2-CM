@@ -5,7 +5,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { map, switchMap } from 'rxjs/operators';
 import { User } from './user.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +30,7 @@ export class UserService {
               .collection('users')
               .doc<User>(user.uid)
               .valueChanges()
-          : [];
+          : of(undefined);
       })
     );
   }

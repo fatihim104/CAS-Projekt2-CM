@@ -14,12 +14,13 @@ import { ToastModule } from 'primeng/toast';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth/auth.module';
-import { ContactComponent } from './components/contact/contact.component';
-import { HomeComponent } from './components/home/home.component';
 import { CourseModule } from './course/course.module';
 import { ParticipantModule } from './participant/participant.module';
-import { TabMenuComponent } from './tab-menu/tab-menu';
 import { TeamModule } from './team/team.module';
+import { TabMenuComponent } from './shared/components/tab-menu/tab-menu';
+import { ContactComponent } from './shared/components/contact/contact.component';
+import { HomeComponent } from './shared/components/home/home.component';
+import { MenubarModule } from 'primeng/menubar';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -44,7 +45,9 @@ describe('AppComponent', () => {
       TeamModule,
       AppRoutingModule,
       ToastModule,
-      ButtonModule
+      ButtonModule,
+      TabMenuModule,
+      MenubarModule
     ],
     providers: [MessageService],
   }).compileComponents()
