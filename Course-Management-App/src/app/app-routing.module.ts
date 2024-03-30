@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './shared/components/home/home.component';
-import { ContactComponent } from './shared/components/contact/contact.component';
 import { UserComponent } from './shared/user/user.component';
 
 const routes: Routes = [
@@ -25,9 +24,6 @@ const routes: Routes = [
   },
   {
     path:"user", component:UserComponent,
-  },
-  {
-    path:"contact", component:ContactComponent,
   }
 ];
 

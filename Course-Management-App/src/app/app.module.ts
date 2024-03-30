@@ -26,7 +26,6 @@ import { TeamModule } from './team/team.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenubarModule } from 'primeng/menubar';
-import { ContactComponent } from './shared/components/contact/contact.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { TabMenuComponent } from './shared/components/tab-menu/tab-menu';
 import { AuthModule } from './auth/auth.module';
@@ -38,7 +37,6 @@ import { UserComponent } from './shared/user/user.component';
     AppComponent,
     TabMenuComponent,
     HomeComponent,
-    ContactComponent,
     UserComponent,
   ],
   imports: [
