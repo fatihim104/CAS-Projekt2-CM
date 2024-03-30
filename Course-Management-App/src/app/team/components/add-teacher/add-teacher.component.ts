@@ -22,7 +22,6 @@ import { TeamService } from 'src/app/team/services/team.service';
 export class AddTeacherComponent {
   teachers!: Team[];
   languageOptions: { label: string }[] = [];
-  levelOptions: { label: string }[] = [];
 
   form: FormGroup = new FormGroup({
     firstName: new FormControl(''),
@@ -30,7 +29,8 @@ export class AddTeacherComponent {
     phone: new FormControl(''),
     email: new FormControl(''),
     birthDay: new FormControl(''),
-    startDay: new FormControl(''),
+    startDay: new FormControl(''),  
+    branch: new FormControl(''),
     nationality: new FormControl(''),
     activeCourses: new FormControl([]),
     completedCourses: new FormControl([]),
@@ -46,7 +46,6 @@ export class AddTeacherComponent {
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));
-    this.levelOptions = Object.keys(LevelEnum).map((key) => ({ label: key }));
   }
 
   ngOnInit(): void {
@@ -64,6 +63,7 @@ export class AddTeacherComponent {
       email: ['', Validators.required],
       birthDay: [''],
       startDay: [''],
+      branch: ['', Validators.required],
       nationality: [''],
       activeCourses: [''],
       completedCourses: [''],

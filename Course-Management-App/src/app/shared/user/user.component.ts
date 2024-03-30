@@ -33,13 +33,8 @@ export class UserComponent implements OnInit {
     this.selectedUser = user;
   }
 
-  save(userName: string, role: any) {
-console.log(userName);
-console.log(role);
-console.log(this.selectedUser);
-
+  save( role: any) {
     const editedUser = {
-      displayName: userName,
       role: role.value,
     };
 
