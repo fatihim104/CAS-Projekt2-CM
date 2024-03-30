@@ -18,7 +18,7 @@
     <p-card
       *ngFor="let teacher of teachers"
       header="{{ teacher.firstName + ' ' + teacher.lastName }}"
-      subheader="actif kurs"
+      subheader="{{teacher?.branch?.label}}"
       [style]="{ width: '250px' }"
       class="mb-4"
       [ngClass]="teachers.length < 5 ? 'with-margin' : 'without-margin'"

@@ -18,7 +18,6 @@
     <p-card
       *ngFor="let student of students"
       header="{{ student.firstName + ' ' + student.lastName }}"
-      subheader="actif kurs"
       [style]="{ width: '250px' }"
       class="mb-4"
       [ngClass]="students.length < 5 ? 'with-margin' : 'without-margin'"

@@ -105,6 +105,25 @@
             <label for="birthDay">Start Date</label>
           </span>
         </div>
+
+        <div class="field col-12 md:col-6 p-2">
+          <span class="p-float-label">
+            <p-dropdown
+              id="branch"
+              [options]="languageOptions"
+              formControlName="branch"
+              placeholder="Select Branch"
+              optionLabel="label"
+              [showClear]="true"
+            ></p-dropdown>
+            <label for="branch">Select Branch</label>
+          </span>
+          <div *ngIf="f['branch'].touched && f['branch'].errors">
+            <small *ngIf="f['branch'].errors['required']" class="text-pink-600"
+              >Branch is required</small
+            >
+          </div>
+        </div>
   
         <div class="field col-12 md:col-6 p-2">
           <span class="p-float-label">
