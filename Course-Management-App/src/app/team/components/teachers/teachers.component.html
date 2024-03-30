@@ -34,6 +34,7 @@
         <p-button
           pTooltip="Detail"
           icon="pi pi-eye"
+          [outlined]="true"
           [attr.data-test-id]="'detail-button-'+ teacher.id"
           routerLink="/team/detail/{{ teacher.id }}"
           styleClass="p-button-warning"
