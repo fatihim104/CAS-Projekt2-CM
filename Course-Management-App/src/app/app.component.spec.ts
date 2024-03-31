@@ -18,7 +18,6 @@ import { CourseModule } from './course/course.module';
 import { ParticipantModule } from './participant/participant.module';
 import { TeamModule } from './team/team.module';
 import { TabMenuComponent } from './shared/components/tab-menu/tab-menu';
-import { ContactComponent } from './shared/components/contact/contact.component';
 import { HomeComponent } from './shared/components/home/home.component';
 import { MenubarModule } from 'primeng/menubar';
 
@@ -28,7 +27,6 @@ describe('AppComponent', () => {
       AppComponent,
       TabMenuComponent,
       HomeComponent,
-      ContactComponent
     ],
     imports: [
       RouterTestingModule,
