@@ -35,10 +35,6 @@ export class ParticipantService {
     );
   }
 
-  getParticipantsByIds(ids: string[]): Observable<any[]> {
-    return this.db.collection('participants', ref => ref.where('__name__', 'in', ids)).valueChanges();
-  }
-
   create(participant: Participant) {
     return this.participantsRef.add({ ...participant });
   }

@@ -1,7 +1,9 @@
 describe('Course page Test', () => {
   beforeEach(() => {
+
+    cy.wait(2000);
     cy.visit('/');
-    cy.wait(1000);
+    cy.wait(2000);
   });
 
   it('it should  visit the courses page', () => {
@@ -11,6 +13,7 @@ describe('Course page Test', () => {
   it('it should filter courses by German language', () => {
     cy.get('#language').click();
     cy.get('.p-dropdown-items').contains('German').click();
+    cy.wait(2000);
     cy.get('table').as('courseTable');
     cy.get('@courseTable')
       .find('tr')

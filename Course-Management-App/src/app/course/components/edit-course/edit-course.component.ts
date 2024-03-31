@@ -131,7 +131,12 @@ export class EditCourseComponent implements OnInit {
 
   getParticipants() {
     return this.participantService.getParticipants().subscribe({
-      next: (data) => (this.students = data),
+      next: (data) => {
+        this.students = data.map(participant => ({
+          ...participant,
+          name: participant.firstName + ' ' + participant.lastName // firstname ve lastname birleştiriliyor
+        }));
+      },
       error: (error) => {
         console.error('Error fetching participants', error);
         this.students = [];

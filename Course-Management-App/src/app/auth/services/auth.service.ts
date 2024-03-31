@@ -112,7 +112,6 @@ export class AuthService {
 
     return callable(data).pipe(
       map((userRecord) => {
-        console.log(userRecord);
         const user = {
           uid: userRecord.userId,
           email: email,
