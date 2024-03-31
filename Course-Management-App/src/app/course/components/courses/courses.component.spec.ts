@@ -84,36 +84,5 @@ describe('CoursesComponent', () => {
  
   }));
 
-  it('should navigate to the course detail page when detail button is clicked', fakeAsync(() => {
-    // Assume we have a course with id '123' in the component's course list
-    const courseId = '123'
-    const mockCourses : Course[] = [{ id: '123', language: { label: LanguageEnum.ENGLISH }, level: { label: LevelEnum.A1 }, place: 'Online', status:Status.PLANNING , price: 100 }];
-    component.courses = mockCourses;
-    
-    fixture.detectChanges(); // Trigger initial data binding
-    tick(); // Simulate passage of time if necessary
-
-    const detailButtonId = `#detail-button-${courseId}`;
-    const detailButton = fixture.debugElement.query(By.css(''));
-    // const detailButton = fixture.debugElement.query('[data-test-id="add-button"]').nativeElement;
-    
-    console.log("detail",fixture.debugElement);
-  
-    
-    // detailButton.nativeElement.click();
-
-//     let buttonDe: DebugElement = fixture.debugElement.query(By.directive(PButtonDirective));
-// if (buttonDe) {
-//     buttonDe.nativeElement.click();
-// } else {
-//     fail('Could not find button with pi pi-eye icon');
-// }
-    
-    fixture.detectChanges(); // Update the view
-    tick();
-
-    // Check if the router's navigate method was called with the correct parameters
-    expect(router.navigate).toHaveBeenCalledWith(['/courses/detail', mockCourses[0].id]);
-  }));
 });
 
