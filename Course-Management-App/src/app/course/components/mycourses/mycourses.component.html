@@ -1,15 +1,11 @@
-<p>uid:     {{user?.uid}}</p>
-<p>email:   {{user?.email}}</p>
-<p>firstName:   {{user?.firstName}}</p>
-
+<h2 class="text-0 mb-2">My Courses</h2>
 <div class="col">
-    <div class="text-500 md:w-3 font-medium mb-2">Courses</div>
 
     <ul
       *ngFor="let course of courses"
       class="list-none p-0 m-0 text-900 flex flex-row flex-wrap"
     >
-      <li class="mr-3 mb-1">
+      <li class="mr-3 mb-4">
         {{
           course.language.label +
             " " +
@@ -18,6 +14,5 @@
             getDate(course)
         }}
       </li>
-      <!-- <p-divider></p-divider> -->
     </ul>
   </div>
