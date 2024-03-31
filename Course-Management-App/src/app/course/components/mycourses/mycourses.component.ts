@@ -5,16 +5,13 @@ import { UserService } from 'src/app/shared/user/user.service';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../course.model';
 import { DatePipe } from '@angular/common';
-import { error } from 'cypress/types/jquery';
 
 @Component({
   selector: 'app-mycourses',
   templateUrl: './mycourses.component.html',
-  styleUrls: ['./mycourses.component.css'],
 })
 export class MycoursesComponent implements OnInit {
   currentUser$: Observable<User | undefined>;
-  // todo user role enum
   role: UserRole | undefined ;
   user: User | undefined;
   courses: Course[] = [];
