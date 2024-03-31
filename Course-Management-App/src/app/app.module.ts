@@ -16,6 +16,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { AvatarModule } from 'primeng/avatar';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { DividerModule } from 'primeng/divider';
 
 import { environment } from 'src/environments/environment.development';
 import { MessageService } from 'primeng/api';
@@ -59,7 +60,8 @@ import { UserComponent } from './shared/user/user.component';
     DialogModule,
     DropdownModule,
     AvatarModule,
-    TieredMenuModule
+    TieredMenuModule,
+    DividerModule
   ],
   exports:[
    
