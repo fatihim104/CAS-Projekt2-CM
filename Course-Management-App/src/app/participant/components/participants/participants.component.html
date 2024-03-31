@@ -13,12 +13,11 @@
 
   <div
   class="card flex flex-column md:flex-row justify-content-between flex-wrap"
-  [ngClass]="students.length < 5 ? 'justify-content-start' : 'justify-content-between'"
+  [ngClass]="students?.length < 5 ? 'justify-content-start' : 'justify-content-between'"
   >
     <p-card
       *ngFor="let student of students"
       header="{{ student.firstName + ' ' + student.lastName }}"
-      subheader="actif kurs"
       [style]="{ width: '250px' }"
       class="mb-4"
       [ngClass]="students.length < 5 ? 'with-margin' : 'without-margin'"

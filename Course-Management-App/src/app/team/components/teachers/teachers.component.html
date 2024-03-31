@@ -18,7 +18,7 @@
     <p-card
       *ngFor="let teacher of teachers"
       header="{{ teacher.firstName + ' ' + teacher.lastName }}"
-      subheader="actif kurs"
+      subheader="{{teacher?.branch?.label}}"
       [style]="{ width: '250px' }"
       class="mb-4"
       [ngClass]="teachers.length < 5 ? 'with-margin' : 'without-margin'"
@@ -33,8 +33,9 @@
       <ng-template pTemplate="footer" class="absolute bottom-0">
         <p-button
           pTooltip="Detail"
-          [outlined]="true"
           icon="pi pi-eye"
+          [outlined]="true"
+          [attr.data-test-id]="'detail-button-'+ teacher.id"
           routerLink="/team/detail/{{ teacher.id }}"
           styleClass="p-button-warning"
         ></p-button>

@@ -93,12 +93,13 @@
         class="m-2"
       >
         <ul *ngFor="let participant of participants" class="list-none p-0 m-0">
-            <li class="flex align-items-center w-8 border-bottom-1 surface-border">
+            <li class="relative flex align-items-center border-bottom-1 surface-border mb-2 pb-1">
               {{ participant.firstName }} {{ participant.lastName }}
               <p-button
               icon="pi pi-trash"
               [rounded]="true"
               severity="danger"
+              class="absolute right-0"
               [text]="true"
               size="small"
               pTooltip="Delete"
@@ -124,7 +125,7 @@
                 severity="secondary"
                 [text]="true"
                 size="small"
-                pTooltip="Accept this course"
+                pTooltip="Confirm this course"
                 (click)="acceptCourse(candidate, selectedCourseId)"
               ></p-button>
               <p-button
@@ -136,14 +137,6 @@
                 pTooltip="Delete"
                 (click)="deleteCandidate(candidate)"
               ></p-button>
-              <p-button
-                icon="pi pi-user"
-                [rounded]="true"
-                [text]="true"
-                severity="info"
-                pTooltip="Add Participant List for other Course"
-                size="small"
-              ></p-button>
             </div>
           </div>
         </ul>
@@ -153,7 +146,7 @@
     <div
       class="w-full my-4 flex flex-column md:flex-row justify-content-around"
     >
-      <p-button (click)="showDialog()" label="Register" class="m-2"></p-button>
+      <p-button (click)="showDialog()" id="register-button" label="Register" class="m-2"></p-button>
     </div>
   </div>
 
@@ -262,6 +255,7 @@
             <p-button
               type="submit"
               [disabled]="!form.valid"
+              data-test-id="submit"
               label="Register"
               [text]="true"
               styleClass="w-full text-primary-50 border-1 border-white-alpha-30 hover:bg-white-alpha-10"

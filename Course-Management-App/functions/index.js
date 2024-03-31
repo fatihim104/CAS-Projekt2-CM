@@ -40,10 +40,6 @@ exports.sendWelcomeEmail = functions.firestore
 
 
 exports.createUser = functions.https.onCall((data, context) => {
-  // Yönetici kontrolü
-  // if (!context.auth.token.admin) {
-  //   throw new functions.https.HttpsError('unauthenticated', 'Yalnızca yöneticiler kullanıcı oluşturabilir.');
-  // }
 
   return admin
     .auth()
@@ -56,20 +52,3 @@ exports.createUser = functions.https.onCall((data, context) => {
       throw new functions.https.HttpsError("internal", error.message);
     });
 });
-
-//todo : admin atamasini firebase admin sdk ile yap
-//   exports.addAdminRole = functions.https.onCall((data, context) => {
-//     // context.auth kontrol ederek güvenliği sağlayın
-//     if (context.auth.token.admin !== true) {
-//       return { error: 'Yalnızca yöneticiler yeni yönetici atayabilir' };
-//     }
-
-//     // kullanıcıya yönetici rolü atama
-//     return admin.auth().setCustomUserClaims(data.uid, { admin: true })
-//       .then(() => {
-//         return { message: `Başarıyla ${data.uid} kullanıcısına yönetici rolü atandı` };
-//       })
-//       .catch(error => {
-//         return { error: error.message };
-//       });
-//   });

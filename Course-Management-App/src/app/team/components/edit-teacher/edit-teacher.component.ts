@@ -1,24 +1,21 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, TitleCasePipe } from '@angular/common';
 import { Team } from 'src/app/team/team.model';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { TeamService } from 'src/app/team/services/team.service';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/shared/user/user.model';
-import { UserService } from 'src/app/shared/user/user.service';
+import { LanguageEnum } from 'src/app/course/course.model';
 
 @Component({
   selector: 'app-edit-teacher',
   templateUrl: './edit-teacher.component.html',
   styleUrls: ['./edit-teacher.component.scss'],
-  providers: [ MessageService],
+  providers: [ TitleCasePipe, MessageService],
 })
 export class EditTeacherComponent {
   teachers!: Team[];
   languageOptions: { label: string }[] = [];
-  levelOptions: { label: string }[] = [];
 
   selectedTeacher:any;
   selectedTeacherId:string="";
@@ -30,6 +27,7 @@ export class EditTeacherComponent {
     email: new FormControl(''),
     birthDay: new FormControl(''),
     startDay: new FormControl(''),
+    branch: new FormControl(''),
     nationality: new FormControl(''),
     activeCourses: new FormControl([]),
     completedCourses: new FormControl([]),
@@ -39,9 +37,13 @@ export class EditTeacherComponent {
     private formBuilder: FormBuilder,
     private teamService: TeamService,
     private activatedRoute: ActivatedRoute,
+    private titlecasePipe: TitleCasePipe,
     private location: Location,
     private messageService: MessageService
   ) {
+    this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
+      label: this.titlecasePipe.transform(key),
+    }));
   }  
 
   ngOnInit(): void {
@@ -67,6 +69,7 @@ export class EditTeacherComponent {
       email: ['', Validators.required],
       birthDay: [''],
       startDay: [''],
+      branch: ['', Validators.required],
       nationality: [''],
       activeCourses: [''],
       completedCourses: [''],

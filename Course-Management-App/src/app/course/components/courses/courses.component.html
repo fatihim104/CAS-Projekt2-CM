@@ -1,4 +1,4 @@
-<div class="flex flex-column justify-content-between w-10 m-auto">
+<div class="flex flex-column justify-content-between w-11 m-auto">
   <app-header-page
     [currentUser$]="currentUser$"
     [routerLink]="'/courses/plan'"
@@ -14,6 +14,7 @@
           id="language"
           [options]="languageOptions"
           (onChange)="filterByLanguage($event)"
+          data-set-id="filter-language"
           placeholder="Select Language"
           optionLabel="label"
           [showClear]="true"
@@ -128,6 +129,7 @@
             tooltipPosition="bottom"
             icon="pi pi-eye"
             [outlined]="true"
+            class="detail-button"
             styleClass="p-button-warning mr-2"
             routerLink="/courses/detail/{{ course.id }}"
             size="small"

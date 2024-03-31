@@ -24,9 +24,10 @@
         [pTooltip]="tooltip"
         tooltipPosition="bottom"
         icon="pi pi-plus"
-        class="mb-2 ml-2"
+        class="mb-2 ml-2 test-button"
         [routerLink]="routerLinkAdd"
         [outlined]="true"
+        data-test-id="add-button"
         [style]="{
           'background-image':
             'radial-gradient(
@@ -55,8 +56,5 @@
           'color': '#ffffff'
         }"
       ></p-button>
-
     </div>
-
-
   </div>

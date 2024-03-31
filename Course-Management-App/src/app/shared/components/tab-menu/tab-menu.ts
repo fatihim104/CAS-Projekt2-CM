@@ -85,10 +85,6 @@ export class TabMenuComponent implements OnInit {
         label: 'MyCourses',
         routerLink: '/courses/mycourse',
         visible:  role===UserRole.TEACHER || role===UserRole.USER,
-      },
-      {
-        label: 'Contact',
-        routerLink: 'contact',
       }
     ];
   }
