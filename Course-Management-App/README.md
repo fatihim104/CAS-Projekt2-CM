@@ -11,11 +11,11 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+## Running e2e tests
+
+Run `npm run cypress:open` to execute e2e test.
 
 ## Figma Design
 https://www.figma.com/file/jNLmxAN5IwVTQScTBf4eMk/CAS-P2-CM?type=design&node-id=67-1798&mode=design&t=zDMTDu9FUBR5ysVA-
 
-## Admin Role
-For admin authorization;
-1 - change admin email in enviroments file to your email and sign up with the same mail.
-2 - contact me to be assigned the admin role on the firebase authentication service.
+
