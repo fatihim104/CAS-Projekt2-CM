@@ -3,6 +3,7 @@ import { Participant } from '../participant.model';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import * as firebase from 'firebase/compat';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,11 @@ export class ParticipantService {
         });        
       })
       )
-    );;
+    );
+  }
+
+  getParticipantsByIds(ids: string[]): Observable<any[]> {
+    return this.db.collection('participants', ref => ref.where('__name__', 'in', ids)).valueChanges();
   }
 
   create(participant: Participant) {

@@ -125,7 +125,7 @@
                 severity="secondary"
                 [text]="true"
                 size="small"
-                pTooltip="Accept this course"
+                pTooltip="Confirm this course"
                 (click)="acceptCourse(candidate, selectedCourseId)"
               ></p-button>
               <p-button
@@ -136,14 +136,6 @@
                 size="small"
                 pTooltip="Delete"
                 (click)="deleteCandidate(candidate)"
-              ></p-button>
-              <p-button
-                icon="pi pi-user"
-                [rounded]="true"
-                [text]="true"
-                severity="info"
-                pTooltip="Add Participant List for other Course"
-                size="small"
               ></p-button>
             </div>
           </div>

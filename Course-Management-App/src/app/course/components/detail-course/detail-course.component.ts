@@ -61,6 +61,7 @@ export class DetailCourseComponent implements OnInit {
       next:(course) => {
         this.selectedCourse = course;
         this.participants = this.selectedCourse.students;
+        //this.getUpdatedParticipants();
       },
       error: (error) => console.error('Error getting selected course', error)      
     });
@@ -69,6 +70,17 @@ export class DetailCourseComponent implements OnInit {
 
     this.getForm();
   }
+
+  // getUpdatedParticipants() {
+  //   const studentIds = this.selectedCourse.students.map((student: { id: any; }) => student.id);
+  
+  //   this.participantService.getParticipantsByIds(studentIds).subscribe({
+  //     next: (participants) => {
+  //       this.participants = participants;
+  //     },
+  //     error: (error) => console.error('Error getting updated participants', error)
+  //   });
+  // }
 
   removeParticipant(participant: Participant, selectedCourseId: string){
     this.registrationService.removeParticipantFromCourse(participant, selectedCourseId)
@@ -91,6 +103,7 @@ export class DetailCourseComponent implements OnInit {
     const newUser = {
       firstName: candidate.firstName,
       lastName: candidate.lastName,
+      name:`${candidate.firstName} ${candidate.lastName}`,
       phone: candidate.phone,
       email: candidate.email,
       birthDay: "",
