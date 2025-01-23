@@ -23,7 +23,7 @@ import { AddParticipantComponent } from './components/add-participant/add-partic
 import { DetailParticipantComponent } from './components/detail-participant/detail-participant.component';
 import { EditParticipantComponent } from './components/edit-participant/edit-participant.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
-import { SharedModule } from '../shared/shared.module';
+
 import { FieldsetModule } from 'primeng/fieldset';
 
 const routes: Routes = [
@@ -40,29 +40,28 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        ButtonModule,
-        TableModule,
-        CalendarModule,
-        MultiSelectModule,
-        DropdownModule,
-        InputTextModule,
-        ReactiveFormsModule,
-        ToastModule,
-        TagModule,
-        ChipModule,
-        CardModule,
-        TooltipModule,
-        DividerModule,
-        ConfirmDialogModule,
-        FieldsetModule,
-        SharedModule,
-        RouterModule.forChild(routes),
-        ParticipantsComponent,
-        AddParticipantComponent,
-        DetailParticipantComponent,
-        EditParticipantComponent,
-    ],
+    CommonModule,
+    ButtonModule,
+    TableModule,
+    CalendarModule,
+    MultiSelectModule,
+    DropdownModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    ToastModule,
+    TagModule,
+    ChipModule,
+    CardModule,
+    TooltipModule,
+    DividerModule,
+    ConfirmDialogModule,
+    FieldsetModule,
+    RouterModule.forChild(routes),
+    ParticipantsComponent,
+    AddParticipantComponent,
+    DetailParticipantComponent,
+    EditParticipantComponent,
+],
     exports: [],
     providers: [MessageService, ConfirmationService]
 })

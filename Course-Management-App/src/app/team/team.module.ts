@@ -23,7 +23,7 @@ import { AddTeacherComponent } from './components/add-teacher/add-teacher.compon
 import { EditTeacherComponent } from './components/edit-teacher/edit-teacher.component';
 import { DetailTeacherComponent } from './components/detail-teacher/detail-teacher.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
-import { SharedModule } from '../shared/shared.module';
+
 import { FieldsetModule } from 'primeng/fieldset';
 
 const routes: Routes = [
@@ -40,29 +40,28 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        ButtonModule,
-        TableModule,
-        CalendarModule,
-        MultiSelectModule,
-        DropdownModule,
-        InputTextModule,
-        ReactiveFormsModule,
-        ToastModule,
-        TagModule,
-        ChipModule,
-        CardModule,
-        TooltipModule,
-        DividerModule,
-        FieldsetModule,
-        ConfirmDialogModule,
-        SharedModule,
-        RouterModule.forChild(routes),
-        TeachersComponent,
-        AddTeacherComponent,
-        EditTeacherComponent,
-        DetailTeacherComponent,
-    ],
+    CommonModule,
+    ButtonModule,
+    TableModule,
+    CalendarModule,
+    MultiSelectModule,
+    DropdownModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    ToastModule,
+    TagModule,
+    ChipModule,
+    CardModule,
+    TooltipModule,
+    DividerModule,
+    FieldsetModule,
+    ConfirmDialogModule,
+    RouterModule.forChild(routes),
+    TeachersComponent,
+    AddTeacherComponent,
+    EditTeacherComponent,
+    DetailTeacherComponent,
+],
     exports: [],
     providers: [MessageService, ConfirmationService, DatePipe]
 })
