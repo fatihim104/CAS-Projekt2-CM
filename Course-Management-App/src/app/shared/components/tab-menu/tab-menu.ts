@@ -3,7 +3,7 @@ import {
   OnInit  
 } from '@angular/core';
 import { MenuItem, SharedModule } from 'primeng/api';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable} from 'rxjs';
 import { User, UserRole } from 'src/app/shared/user/user.model';
@@ -28,6 +28,7 @@ import { MenubarModule } from 'primeng/menubar';
         AvatarModule,
         TieredMenuModule,
         AsyncPipe,
+        RouterModule
     ],
 })
 export class TabMenuComponent implements OnInit {

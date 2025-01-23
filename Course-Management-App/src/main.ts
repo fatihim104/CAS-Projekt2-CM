@@ -1,6 +1,5 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-
 import { importProvidersFrom } from '@angular/core';
 import { AppComponent } from './app/app.component';
 import { DividerModule } from 'primeng/divider';
@@ -18,22 +17,18 @@ import { ParticipantModule } from './app/participant/participant.module';
 import { AuthModule } from './app/auth/auth.module';
 import { CourseModule } from './app/course/course.module';
 import { TabMenuModule } from 'primeng/tabmenu';
-import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
+import {
+  withInterceptorsFromDi,
+  provideHttpClient,
+} from '@angular/common/http';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment.development';
 import { AngularFireModule } from '@angular/fire/compat';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { appConfig } from './app/app.config';
 
-
-bootstrapApplication(AppComponent, {
-    providers: [
-        importProvidersFrom(BrowserModule, AngularFireModule.initializeApp(environment.firebaseConfig), AngularFirestoreModule, AngularFireAuthModule, TabMenuModule, CourseModule, AuthModule, ParticipantModule, TeamModule, AppRoutingModule, ToastModule, ButtonModule, MenubarModule, TableModule, DialogModule, DropdownModule, AvatarModule, TieredMenuModule, DividerModule),
-        MessageService,
-        provideAnimations(),
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-})
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));

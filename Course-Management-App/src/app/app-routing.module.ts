@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './shared/components/home/home.component';
 import { UserComponent } from './shared/user/user.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path:"", redirectTo: '/home', pathMatch: 'full',
   }, 

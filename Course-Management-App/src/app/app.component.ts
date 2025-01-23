@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { TabMenuComponent } from './shared/components/tab-menu/tab-menu';
 
 @Component({
@@ -9,7 +9,7 @@ import { TabMenuComponent } from './shared/components/tab-menu/tab-menu';
     styleUrls: ['./app.component.scss'],
     providers: [MessageService],
     standalone: true,
-    imports: [TabMenuComponent, RouterOutlet]
+    imports: [TabMenuComponent, RouterOutlet, RouterModule]
 })
 export class AppComponent {
 

@@ -38,26 +38,7 @@ const routes: Routes = [
     }
 ]   
 @NgModule({
-    imports: [
-    CommonModule,
-    ButtonModule,
-    TableModule,
-    CalendarModule,
-    MultiSelectModule,
-    DropdownModule,
-    InputTextModule,
-    ReactiveFormsModule,
-    ToastModule,
-    TagModule,
-    ChipModule,
-    FormsModule,
-    DialogModule,
-    ConfirmDialogModule,
-    SpeedDialModule,
-    FieldsetModule,
-    RouterModule.forChild(routes),
-    CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent
-],
+    imports: [],
     exports: [],
     providers: [MessageService, ConfirmationService],
 })

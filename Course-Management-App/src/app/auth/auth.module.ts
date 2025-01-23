@@ -28,18 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        ButtonModule,
-        InputTextModule,
-        ReactiveFormsModule,
-        ToastModule,
-        SignUpComponent,
-        SignInComponent,
-        ForgotPasswordComponent,
-        VerifyEmailComponent,
-    ],
+    imports: [],
     providers: [MessageService, ConfirmationService],
 })
 export class AuthModule {}

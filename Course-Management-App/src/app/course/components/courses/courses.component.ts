@@ -146,13 +146,13 @@ export class CoursesComponent implements OnInit, OnDestroy {
       case 'ONGOING':
         return 'success';
       case 'PLANNING':
-        return 'warning';
+        return 'warn';
       case 'READY':
         return 'info';
       case 'CANCELLED':
         return 'danger';
       case 'FINISHED':
-        return 'primary';
+        return 'secondary';
       default:
         return 'info';
     }

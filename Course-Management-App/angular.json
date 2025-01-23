@@ -71,10 +71,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Course-Management-App:build:production"
+              "buildTarget": "Course-Management-App:build:production"
             },
             "development": {
-              "browserTarget": "Course-Management-App:build:development"
+              "buildTarget": "Course-Management-App:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -82,7 +82,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Course-Management-App:build"
+            "buildTarget": "Course-Management-App:build"
           }
         },
         "test": {
@@ -153,10 +153,6 @@
     }
   },
   "cli": {
-    "analytics": false,
-    "schematicCollections": [
-      "@cypress/schematic",
-      "@schematics/angular"
-    ]
+    "analytics": false
   }
 }
