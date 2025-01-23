@@ -2,17 +2,33 @@ import {
   Component,
   OnInit  
 } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Router } from '@angular/router';
+import { MenuItem, SharedModule } from 'primeng/api';
+import { Router, RouterLink } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable} from 'rxjs';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UserService } from 'src/app/shared/user/user.service';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { AvatarModule } from 'primeng/avatar';
+import { ButtonModule } from 'primeng/button';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { MenubarModule } from 'primeng/menubar';
 
 @Component({
-  selector: 'tab-menu',
-  templateUrl: './tab-menu.component.html',
+    selector: 'tab-menu',
+    templateUrl: './tab-menu.component.html',
+    standalone: true,
+    imports: [
+        MenubarModule,
+        SharedModule,
+        NgIf,
+        ButtonModule,
+        RouterLink,
+        AvatarModule,
+        TieredMenuModule,
+        AsyncPipe,
+    ],
 })
 export class TabMenuComponent implements OnInit {
   items: MenuItem[] | undefined;

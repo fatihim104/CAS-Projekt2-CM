@@ -34,39 +34,35 @@ import { UserComponent } from './shared/user/user.component';
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TabMenuComponent,
-    HomeComponent,
-    UserComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    HttpClientModule,   
-    TabMenuModule,  
-    CourseModule,
-    AuthModule,
-    ParticipantModule,
-    TeamModule,
-    AppRoutingModule,
-    ToastModule,
-    ButtonModule,
-    MenubarModule,
-    TableModule,
-    DialogModule,
-    DropdownModule,
-    AvatarModule,
-    TieredMenuModule,
-    DividerModule
-  ],
-  exports:[
-   
-  ],
-  providers: [MessageService],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFirestoreModule,
+        AngularFireAuthModule,
+        HttpClientModule,
+        TabMenuModule,
+        CourseModule,
+        AuthModule,
+        ParticipantModule,
+        TeamModule,
+        AppRoutingModule,
+        ToastModule,
+        ButtonModule,
+        MenubarModule,
+        TableModule,
+        DialogModule,
+        DropdownModule,
+        AvatarModule,
+        TieredMenuModule,
+        DividerModule,
+        TabMenuComponent,
+        HomeComponent,
+        UserComponent
+    ],
+    exports: [],
+    providers: [MessageService],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

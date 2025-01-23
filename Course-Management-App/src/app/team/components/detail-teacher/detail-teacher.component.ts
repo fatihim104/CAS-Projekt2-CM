@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf, NgFor, AsyncPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,11 +7,24 @@ import { User, UserRole } from 'src/app/shared/user/user.model';
 import { CourseService } from 'src/app/course/services/course.service';
 import { TeamService } from 'src/app/team/services/team.service';
 import { UserService } from 'src/app/shared/user/user.service';
+import { DividerModule } from 'primeng/divider';
+import { FieldsetModule } from 'primeng/fieldset';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
-  selector: 'app-detail-teacher',
-  templateUrl: './detail-teacher.component.html',
-  styleUrls: ['./detail-teacher.component.scss'],
+    selector: 'app-detail-teacher',
+    templateUrl: './detail-teacher.component.html',
+    styleUrls: ['./detail-teacher.component.scss'],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        NgIf,
+        FieldsetModule,
+        NgFor,
+        DividerModule,
+        AsyncPipe,
+        DatePipe,
+    ],
 })
 export class DetailTeacherComponent {
   selectedTeacher: any;

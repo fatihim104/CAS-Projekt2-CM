@@ -1,16 +1,39 @@
 import { Component } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SharedModule } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Team } from 'src/app/team/team.model';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { TeamService } from 'src/app/team/services/team.service';
 import { UserService } from 'src/app/shared/user/user.service';
+import { RouterLink } from '@angular/router';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { NgClass, NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
-  selector: 'app-teachers',
-  templateUrl: './teachers.component.html',
-  styleUrls: ['./teachers.component.scss'],
-  providers: [TeamService, ConfirmationService, MessageService],
+    selector: 'app-teachers',
+    templateUrl: './teachers.component.html',
+    styleUrls: ['./teachers.component.scss'],
+    providers: [TeamService, ConfirmationService, MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ToastModule,
+        ConfirmDialogModule,
+        NgClass,
+        NgFor,
+        CardModule,
+        SharedModule,
+        ButtonModule,
+        TooltipModule,
+        RouterLink,
+        NgIf,
+        AsyncPipe,
+    ],
 })
 export class TeachersComponent {
   teachers?: Team[] | any;

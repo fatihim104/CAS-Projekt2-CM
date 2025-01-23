@@ -1,23 +1,32 @@
-import { TitleCasePipe } from '@angular/common';
+import { TitleCasePipe, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LanguageEnum, Level, LevelEnum } from 'src/app/course/course.model';
 import { Participant } from 'src/app/participant/participant.model';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
-  selector: 'app-add-participant',
-  templateUrl: './add-participant.component.html',
-  styleUrls: ['./add-participant.component.scss'],
-  providers: [TitleCasePipe, MessageService],
+    selector: 'app-add-participant',
+    templateUrl: './add-participant.component.html',
+    styleUrls: ['./add-participant.component.scss'],
+    providers: [TitleCasePipe, MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ReactiveFormsModule,
+        InputTextModule,
+        NgIf,
+        CalendarModule,
+        ButtonModule,
+        ToastModule,
+    ],
 })
 
 export class AddParticipantComponent {

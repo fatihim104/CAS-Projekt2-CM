@@ -4,11 +4,13 @@ import { User, UserRole } from 'src/app/shared/user/user.model';
 import { UserService } from 'src/app/shared/user/user.service';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../course.model';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-mycourses',
-  templateUrl: './mycourses.component.html',
+    selector: 'app-mycourses',
+    templateUrl: './mycourses.component.html',
+    standalone: true,
+    imports: [NgFor],
 })
 export class MycoursesComponent implements OnInit {
   currentUser$: Observable<User | undefined>;

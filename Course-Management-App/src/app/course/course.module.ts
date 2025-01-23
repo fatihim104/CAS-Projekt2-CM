@@ -38,8 +38,7 @@ const routes: Routes = [
     }
 ]   
 @NgModule({
-    declarations: [CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent,],
-    imports: [ 
+    imports: [
         CommonModule,
         ButtonModule,
         TableModule,
@@ -54,12 +53,13 @@ const routes: Routes = [
         FormsModule,
         DialogModule,
         ConfirmDialogModule,
-        SpeedDialModule,   
-        FieldsetModule, 
-        SharedModule,     
-        RouterModule.forChild(routes)
+        SpeedDialModule,
+        FieldsetModule,
+        SharedModule,
+        RouterModule.forChild(routes),
+        CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent
     ],
-    exports: [],    
+    exports: [],
     providers: [MessageService, ConfirmationService],
 })
 export class CourseModule { }

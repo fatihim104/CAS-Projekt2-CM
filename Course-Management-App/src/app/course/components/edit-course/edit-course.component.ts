@@ -1,27 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { Participant } from 'src/app/participant/participant.model';
 import { Team } from 'src/app/team/team.model';
-import { TitleCasePipe } from '@angular/common';
+import { TitleCasePipe, NgIf } from '@angular/common';
 import { MessageService } from 'primeng/api';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CourseService } from 'src/app/course/services/course.service';
 import { ActivatedRoute} from '@angular/router';
 import { LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
 import { Location } from '@angular/common';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { TeamService } from 'src/app/team/services/team.service';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
-  selector: 'app-edit-course',
-  templateUrl: './edit-course.component.html',
-  styleUrls: ['./edit-course.component.scss'],
-  providers: [TitleCasePipe, MessageService],
+    selector: 'app-edit-course',
+    templateUrl: './edit-course.component.html',
+    styleUrls: ['./edit-course.component.scss'],
+    providers: [TitleCasePipe, MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ReactiveFormsModule,
+        DropdownModule,
+        NgIf,
+        InputTextModule,
+        CalendarModule,
+        MultiSelectModule,
+        ButtonModule,
+        ToastModule,
+    ],
 })
 export class EditCourseComponent implements OnInit {
   students!: Participant[] ;

@@ -9,13 +9,13 @@ import { TooltipModule } from 'primeng/tooltip';
 
 
 @NgModule({
-  declarations: [HeaderPageComponent],
-  imports: [
-    CommonModule,
-    ButtonModule,
-    RouterModule,
-    TooltipModule
-  ],
-  exports:[HeaderPageComponent]
+    imports: [
+        CommonModule,
+        ButtonModule,
+        RouterModule,
+        TooltipModule,
+        HeaderPageComponent
+    ],
+    exports: [HeaderPageComponent]
 })
 export class SharedModule { }

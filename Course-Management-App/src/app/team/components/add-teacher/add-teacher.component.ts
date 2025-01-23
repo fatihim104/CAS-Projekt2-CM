@@ -1,23 +1,34 @@
 import { Component } from '@angular/core';
-import { TitleCasePipe } from '@angular/common';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { TitleCasePipe, NgIf } from '@angular/common';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Language, LanguageEnum, Level, LevelEnum } from 'src/app/course/course.model';
 import { Team } from 'src/app/team/team.model';
 import { TeamService } from 'src/app/team/services/team.service';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
-  selector: 'app-add-teacher',
-  templateUrl: './add-teacher.component.html',
-  styleUrls: ['./add-teacher.component.scss'],
-  providers: [TitleCasePipe, MessageService],
+    selector: 'app-add-teacher',
+    templateUrl: './add-teacher.component.html',
+    styleUrls: ['./add-teacher.component.scss'],
+    providers: [TitleCasePipe, MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ReactiveFormsModule,
+        InputTextModule,
+        NgIf,
+        CalendarModule,
+        DropdownModule,
+        ButtonModule,
+        ToastModule,
+    ],
 })
 export class AddTeacherComponent {
   teachers!: Team[];

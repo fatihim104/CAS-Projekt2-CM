@@ -1,16 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Participant } from 'src/app/participant/participant.model';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
-  selector: 'app-edit-participant',
-  templateUrl: './edit-participant.component.html',
-  styleUrls: ['./edit-participant.component.scss'],
-  providers: [ MessageService],
+    selector: 'app-edit-participant',
+    templateUrl: './edit-participant.component.html',
+    styleUrls: ['./edit-participant.component.scss'],
+    providers: [MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ReactiveFormsModule,
+        InputTextModule,
+        NgIf,
+        CalendarModule,
+        ButtonModule,
+        ToastModule,
+    ],
 })
 export class EditParticipantComponent implements OnInit {
   students!: Participant[];

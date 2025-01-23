@@ -1,11 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User, UserRole } from '../../user/user.model';
+import { RouterLink } from '@angular/router';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-header-page',
-  templateUrl: './header-page.component.html',
-  styleUrls: ['./header-page.component.css']
+    selector: 'app-header-page',
+    templateUrl: './header-page.component.html',
+    styleUrls: ['./header-page.component.css'],
+    standalone: true,
+    imports: [NgIf, ButtonModule, TooltipModule, RouterLink, AsyncPipe]
 })
 export class HeaderPageComponent implements OnInit {
 

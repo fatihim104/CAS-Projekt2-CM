@@ -23,32 +23,30 @@ import { MenubarModule } from 'primeng/menubar';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    declarations: [
-      AppComponent,
-      TabMenuComponent,
-      HomeComponent,
-    ],
+    declarations: [AppComponent],
     imports: [
-      RouterTestingModule,
-      BrowserModule,
-      BrowserAnimationsModule,
-      AngularFireModule.initializeApp(environment.firebaseConfig),
-      AngularFirestoreModule,
-      AngularFireAuthModule,
-      HttpClientModule,   
-      TabMenuModule,  
-      CourseModule,
-      AuthModule,
-      ParticipantModule,
-      TeamModule,
-      AppRoutingModule,
-      ToastModule,
-      ButtonModule,
-      TabMenuModule,
-      MenubarModule
+        RouterTestingModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFirestoreModule,
+        AngularFireAuthModule,
+        HttpClientModule,
+        TabMenuModule,
+        CourseModule,
+        AuthModule,
+        ParticipantModule,
+        TeamModule,
+        AppRoutingModule,
+        ToastModule,
+        ButtonModule,
+        TabMenuModule,
+        MenubarModule,
+        TabMenuComponent,
+        HomeComponent
     ],
     providers: [MessageService],
-  }).compileComponents()
+}).compileComponents()
   );
 
   it('should create the app', () => {

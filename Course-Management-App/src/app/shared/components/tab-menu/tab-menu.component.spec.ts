@@ -30,16 +30,15 @@ describe('TabMenuComponent', () => {
     beforeEach(waitForAsync( () => {
 
         TestBed.configureTestingModule({
-            declarations: [TabMenuComponent],
-            providers: [
-                { provide: UserService, useValue: jasmine.createSpyObj('UserService', { getCurrentUser: of({}) }) },
-                { provide: AuthService, useClass: MockAuthService },
-                { provide: UserService, useClass: MockUserService },
-                { provide: AngularFireAuth, useClass: MockAngularFireAuth },
-            ],
-            imports: [RouterTestingModule,],
-            schemas: [NO_ERRORS_SCHEMA] 
-        }).compileComponents();
+    providers: [
+        { provide: UserService, useValue: jasmine.createSpyObj('UserService', { getCurrentUser: of({}) }) },
+        { provide: AuthService, useClass: MockAuthService },
+        { provide: UserService, useClass: MockUserService },
+        { provide: AngularFireAuth, useClass: MockAngularFireAuth },
+    ],
+    imports: [RouterTestingModule, TabMenuComponent,],
+    schemas: [NO_ERRORS_SCHEMA]
+}).compileComponents();
 
 
     }));

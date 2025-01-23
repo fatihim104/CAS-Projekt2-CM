@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgFor, AsyncPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -7,11 +7,23 @@ import { CourseService } from 'src/app/course/services/course.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { UserService } from 'src/app/shared/user/user.service';
+import { DividerModule } from 'primeng/divider';
+import { FieldsetModule } from 'primeng/fieldset';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
-  selector: 'app-detail-participant',
-  templateUrl: './detail-participant.component.html',
-  styleUrls: ['./detail-participant.component.scss'],
+    selector: 'app-detail-participant',
+    templateUrl: './detail-participant.component.html',
+    styleUrls: ['./detail-participant.component.scss'],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        FieldsetModule,
+        NgFor,
+        DividerModule,
+        AsyncPipe,
+        DatePipe,
+    ],
 })
 export class DetailParticipantComponent implements OnInit, OnDestroy {
   selectedStudent: any;

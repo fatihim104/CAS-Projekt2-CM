@@ -39,34 +39,31 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    TeachersComponent,
-    AddTeacherComponent,
-    EditTeacherComponent,
-    DetailTeacherComponent,
-  ],
-  imports: [
-    CommonModule,
-    ButtonModule,
-    TableModule,
-    CalendarModule,
-    MultiSelectModule,
-    DropdownModule,
-    InputTextModule,
-    ReactiveFormsModule,
-    ToastModule,
-    TagModule,
-    ChipModule,
-    CardModule,
-    TooltipModule,
-    DividerModule,
-    FieldsetModule,
-    ConfirmDialogModule,
-    SharedModule,
-    RouterModule.forChild(routes),
-  ],
-  exports:[],
-  providers:[MessageService, ConfirmationService, DatePipe]
-
+    imports: [
+        CommonModule,
+        ButtonModule,
+        TableModule,
+        CalendarModule,
+        MultiSelectModule,
+        DropdownModule,
+        InputTextModule,
+        ReactiveFormsModule,
+        ToastModule,
+        TagModule,
+        ChipModule,
+        CardModule,
+        TooltipModule,
+        DividerModule,
+        FieldsetModule,
+        ConfirmDialogModule,
+        SharedModule,
+        RouterModule.forChild(routes),
+        TeachersComponent,
+        AddTeacherComponent,
+        EditTeacherComponent,
+        DetailTeacherComponent,
+    ],
+    exports: [],
+    providers: [MessageService, ConfirmationService, DatePipe]
 })
 export class TeamModule { }

@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SharedModule } from 'primeng/api';
 import { Observable, catchError, of } from 'rxjs';
 import { Participant } from 'src/app/participant/participant.model';
 import { User, UserRole } from 'src/app/shared/user/user.model';
@@ -16,12 +10,38 @@ import { CourseService } from 'src/app/course/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from 'primeng/button';
+import { FieldsetModule } from 'primeng/fieldset';
+import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
-  selector: 'app-detail-course',
-  templateUrl: './detail-course.component.html',
-  styleUrls: ['./detail-course.component.scss'],
-  providers: [ConfirmationService, MessageService],
+    selector: 'app-detail-course',
+    templateUrl: './detail-course.component.html',
+    styleUrls: ['./detail-course.component.scss'],
+    providers: [ConfirmationService, MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        NgIf,
+        FieldsetModule,
+        NgFor,
+        ButtonModule,
+        TooltipModule,
+        DialogModule,
+        SharedModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        ToastModule,
+        ConfirmDialogModule,
+        AsyncPipe,
+        DatePipe,
+    ],
 })
 export class DetailCourseComponent implements OnInit {
   selectedCourse: any;

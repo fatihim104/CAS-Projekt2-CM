@@ -1,10 +1,23 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { User, UserRole } from './user.model';
 import { UserService } from './user.service';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { SharedModule } from 'primeng/api';
+import { TableModule } from 'primeng/table';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
+    selector: 'app-user',
+    templateUrl: './user.component.html',
+    standalone: true,
+    imports: [
+        TableModule,
+        SharedModule,
+        ButtonModule,
+        DialogModule,
+        DropdownModule,
+    ],
 })
 export class UserComponent implements OnInit {
   users: User[] = [];
