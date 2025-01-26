@@ -1,4 +1,4 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, inject, Injectable } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -27,26 +27,25 @@ class FormBuilderService extends FormBuilder {}
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    CommonModule,
     RouterModule,
-    InputTextModule,
-    ButtonModule,
     ToastModule,
+    ButtonModule,
+    CommonModule,
+    InputTextModule
   ],
   providers: [MessageService],
 })
 export class SignInComponent {
+  private router = inject(Router);
+  private formBuilder = inject(FormBuilderService);
+  private authService = inject(AuthService);
+  private messageService = inject(MessageService);
   form: FormGroup = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
   });
 
-  constructor(
-    private formBuilder: FormBuilderService,
-    private router: Router,
-    private authService: AuthService,
-    private messageService: MessageService
-  ) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.getForm();

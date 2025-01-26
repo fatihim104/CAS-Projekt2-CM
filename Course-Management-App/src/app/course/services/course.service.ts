@@ -2,19 +2,20 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Course } from '../course.model';
 import { Observable, combineLatest, from, map, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CourseService {
+  private db = inject(AngularFirestore);
   private dbPath = '/courses';
   selectedStudent:any;
 
   coursesRef: AngularFirestoreCollection<Course>;
 
-  constructor(private db: AngularFirestore) {
-    this.coursesRef = db.collection(this.dbPath);
+  constructor() {
+    this.coursesRef = this.db.collection(this.dbPath);
   }
 
   getCourse(id:string): Observable<Course | undefined>{

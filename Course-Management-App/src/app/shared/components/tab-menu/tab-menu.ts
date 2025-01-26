@@ -1,6 +1,7 @@
 import {
   Component,
-  OnInit  
+  OnInit, 
+  inject 
 } from '@angular/core';
 import { MenuItem, SharedModule } from 'primeng/api';
 import { Router, RouterLink, RouterModule } from '@angular/router';
@@ -32,6 +33,10 @@ import { MenubarModule } from 'primeng/menubar';
     ],
 })
 export class TabMenuComponent implements OnInit {
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private afAuth = inject(AngularFireAuth);
+  private userService = inject(UserService)
   items: MenuItem[] | undefined;
   profileItems: MenuItem[] = [];
   activeItem: MenuItem | undefined;
@@ -41,12 +46,7 @@ export class TabMenuComponent implements OnInit {
   role: UserRole | undefined ;
   profileText:string | undefined = "";
 
-  constructor(
-    private router: Router,
-    public authService: AuthService,
-    public afAuth: AngularFireAuth,
-    private userService: UserService
-  ) {
+  constructor() {
     this.hasToken = this.authService.hasToken;
 
     this.currentUser$ = this.userService.getCurrentUser();
@@ -75,6 +75,7 @@ export class TabMenuComponent implements OnInit {
   }
 
   getActiveRoute(role?:UserRole | undefined) {
+    console.log(role)
     this.items = [
       {
         label: 'Home',
@@ -96,7 +97,7 @@ export class TabMenuComponent implements OnInit {
       {
         label: 'Users',
         routerLink: 'user',
-        visible: role===UserRole.ADMIN,
+        // visible: role===UserRole.ADMIN,
       },
       {
         label: 'MyCourses',
