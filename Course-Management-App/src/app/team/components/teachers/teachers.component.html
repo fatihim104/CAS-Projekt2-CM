@@ -13,7 +13,7 @@
 
   <div
     class="card flex flex-column md:flex-row justify-content-between flex-wrap"
-    [ngClass]="teachers.length < 5 ? 'justify-content-start' : 'justify-content-between'"
+    [ngClass]="teachers?.length < 5 ? 'justify-content-start' : 'justify-content-between'"
   >
     <p-card
       *ngFor="let teacher of teachers"
