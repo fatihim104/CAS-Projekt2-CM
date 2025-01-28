@@ -1,5 +1,5 @@
 import { DatePipe, NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Course } from 'src/app/course/course.model';
@@ -27,20 +27,19 @@ import { HeaderPageComponent } from '../../../shared/components/header-page/head
     ],
 })
 export class DetailTeacherComponent {
+  private teamService = inject(TeamService);
+  private courseService = inject(CourseService);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private datepipe = inject(DatePipe);
+  private userService = inject(UserService);
   selectedTeacher: any;
   selectedTeacherId: string = '';
   courses: Course[] = [];
   UserRole = UserRole;
   currentUser$: Observable<User | undefined>;
 
-  constructor(
-    private teamService: TeamService,
-    private courseService: CourseService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private datepipe: DatePipe,
-    private userService: UserService
-  ) {
+  constructor() {
     this.currentUser$ = this.userService.getCurrentUser();
   }
 

@@ -7,17 +7,18 @@ import { DetailCourseComponent } from './components/detail-course/detail-course.
 import { AdminGuard } from '../shared/guard/admin.guard';
 import { MycoursesComponent } from './components/mycourses/mycourses.component';
 
-
 export const courseRoutes: Routes = [
-    {
-        path:"",
-        component: CoursesComponent,
-        children:[
-            {path:"courses/plan", component:PlanNewCourseComponent, canActivate: [AdminGuard]},
-            {path:"courses/edit/:id", component:EditCourseComponent, canActivate: [AdminGuard]},
-            {path:"courses/detail/:id", component:DetailCourseComponent},
-            {path:"courses/mycourse", component:MycoursesComponent},
-        ]
-    }
+  { path: '', component: CoursesComponent },
+  {
+    path: 'plan',
+    component: PlanNewCourseComponent,
+    canActivate: [AdminGuard],
+  },
+  {
+    path: 'edit/:id',
+    component: EditCourseComponent,
+    canActivate: [AdminGuard],
+  },
+  { path: 'detail/:id', component: DetailCourseComponent },
+  { path: 'mycourse', component: MycoursesComponent },
 ];
-

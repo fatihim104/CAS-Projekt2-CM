@@ -5,7 +5,7 @@ import { Team } from 'src/app/team/team.model';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { TeamService } from 'src/app/team/services/team.service';
 import { UserService } from 'src/app/shared/user/user.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { TooltipModule } from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -30,7 +30,7 @@ import { HeaderPageComponent } from '../../../shared/components/header-page/head
         SharedModule,
         ButtonModule,
         TooltipModule,
-        RouterLink,
+        RouterModule,
         NgIf,
         AsyncPipe,
     ],

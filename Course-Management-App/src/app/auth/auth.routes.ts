@@ -4,16 +4,10 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
-
 export const authRoutes: Routes = [
-  {
-    path: '',
-    component: SignInComponent,
-    children: [
-      { path: 'auth/sign-in', component: SignInComponent },
-      { path: 'auth/register-user', component: SignUpComponent },
-      { path: 'auth/forgot-password', component: ForgotPasswordComponent },
-      { path: 'auth/verify-email-address', component: VerifyEmailComponent },
-    ],
-  },
+  { path: 'sign-in', component: SignInComponent },
+  { path: 'register-user', component: SignUpComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'verify-email-address', component: VerifyEmailComponent },
+  { path: '', redirectTo: 'sign-in', pathMatch: 'full' },
 ];

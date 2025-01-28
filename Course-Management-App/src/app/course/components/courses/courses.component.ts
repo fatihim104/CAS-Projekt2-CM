@@ -13,7 +13,7 @@ import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { DropdownModule } from 'primeng/dropdown';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 interface Column {
@@ -29,7 +29,7 @@ interface Column {
     standalone: true,
     imports: [
         HeaderPageComponent,
-        RouterLink,
+        RouterModule,
         DropdownModule,
         ToastModule,
         ConfirmDialogModule,
