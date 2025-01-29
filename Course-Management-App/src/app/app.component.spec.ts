@@ -23,7 +23,6 @@ import { MenubarModule } from 'primeng/menubar';
 
 describe('AppComponent', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    declarations: [AppComponent],
     imports: [RouterTestingModule,
         BrowserModule,
         BrowserAnimationsModule,
@@ -40,7 +39,7 @@ describe('AppComponent', () => {
         ButtonModule,
         TabMenuModule,
         MenubarModule, TabMenuComponent,
-        HomeComponent],
+        HomeComponent, AppComponent],
     providers: [MessageService, provideHttpClient(withInterceptorsFromDi())]
 }).compileComponents()
   );
