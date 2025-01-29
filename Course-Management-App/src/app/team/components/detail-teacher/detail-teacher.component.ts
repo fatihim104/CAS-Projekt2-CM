@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,11 +7,22 @@ import { User, UserRole } from 'src/app/shared/user/user.model';
 import { CourseService } from 'src/app/course/services/course.service';
 import { TeamService } from 'src/app/team/services/team.service';
 import { UserService } from 'src/app/shared/user/user.service';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { FieldsetModule } from 'primeng/fieldset';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
-  selector: 'app-detail-teacher',
-  templateUrl: './detail-teacher.component.html',
-  styleUrls: ['./detail-teacher.component.scss'],
+    selector: 'app-detail-teacher',
+    templateUrl: './detail-teacher.component.html',
+    styleUrls: ['./detail-teacher.component.scss'],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        FieldsetModule,
+        DividerModule,
+        AsyncPipe,
+        DatePipe,
+    ],
 })
 export class DetailTeacherComponent {
   private teamService = inject(TeamService);

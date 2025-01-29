@@ -28,20 +28,18 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    SignUpComponent,
-    SignInComponent,
-    ForgotPasswordComponent,
-    VerifyEmailComponent,
-  ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ButtonModule,
-    InputTextModule,
-    ReactiveFormsModule,
-    ToastModule,
-  ],
-  providers: [MessageService, ConfirmationService],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        ButtonModule,
+        InputTextModule,
+        ReactiveFormsModule,
+        ToastModule,
+        SignUpComponent,
+        SignInComponent,
+        ForgotPasswordComponent,
+        VerifyEmailComponent,
+    ],
+    providers: [MessageService, ConfirmationService],
 })
 export class AuthModule {}

@@ -1,11 +1,20 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, SharedModule } from 'primeng/api';
 import { BehaviorSubject, Observable, Subscription, combineLatest, of, startWith, switchMap } from 'rxjs';
 import { Course, LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { CourseService } from 'src/app/course/services/course.service';
 import { UserService } from 'src/app/shared/user/user.service';
-import { TitleCasePipe } from '@angular/common';
+import { TitleCasePipe, NgClass, AsyncPipe } from '@angular/common';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { RouterLink } from '@angular/router';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 
 interface Column {
   field: string;
@@ -13,10 +22,25 @@ interface Column {
 }
 
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss'],
-  providers: [CourseService, ConfirmationService, MessageService, TitleCasePipe],
+    selector: 'app-courses',
+    templateUrl: './courses.component.html',
+    styleUrls: ['./courses.component.scss'],
+    providers: [CourseService, ConfirmationService, MessageService, TitleCasePipe],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        RouterLink,
+        DropdownModule,
+        ToastModule,
+        ConfirmDialogModule,
+        TableModule,
+        NgClass,
+        SharedModule,
+        TagModule,
+        ButtonModule,
+        TooltipModule,
+        AsyncPipe,
+    ],
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {

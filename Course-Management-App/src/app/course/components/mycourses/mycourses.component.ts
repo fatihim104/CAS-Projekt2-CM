@@ -7,8 +7,9 @@ import { Course } from '../../course.model';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-mycourses',
-  templateUrl: './mycourses.component.html',
+    selector: 'app-mycourses',
+    templateUrl: './mycourses.component.html',
+    standalone: true,
 })
 export class MycoursesComponent implements OnInit {
   private userService = inject(UserService);

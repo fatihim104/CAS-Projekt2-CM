@@ -1,16 +1,30 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Participant } from 'src/app/participant/participant.model';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { Location } from '@angular/common';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
-  selector: 'app-edit-participant',
-  templateUrl: './edit-participant.component.html',
-  styleUrls: ['./edit-participant.component.scss'],
-  providers: [ MessageService],
+    selector: 'app-edit-participant',
+    templateUrl: './edit-participant.component.html',
+    styleUrls: ['./edit-participant.component.scss'],
+    providers: [MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ReactiveFormsModule,
+        InputTextModule,
+        CalendarModule,
+        ButtonModule,
+        ToastModule,
+    ],
 })
 export class EditParticipantComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

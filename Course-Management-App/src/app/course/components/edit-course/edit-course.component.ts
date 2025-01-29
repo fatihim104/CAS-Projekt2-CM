@@ -3,25 +3,37 @@ import { Participant } from 'src/app/participant/participant.model';
 import { Team } from 'src/app/team/team.model';
 import { TitleCasePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CourseService } from 'src/app/course/services/course.service';
 import { ActivatedRoute} from '@angular/router';
 import { LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
 import { Location } from '@angular/common';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { TeamService } from 'src/app/team/services/team.service';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
-  selector: 'app-edit-course',
-  templateUrl: './edit-course.component.html',
-  styleUrls: ['./edit-course.component.scss'],
-  providers: [TitleCasePipe, MessageService],
+    selector: 'app-edit-course',
+    templateUrl: './edit-course.component.html',
+    styleUrls: ['./edit-course.component.scss'],
+    providers: [TitleCasePipe, MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ReactiveFormsModule,
+        DropdownModule,
+        InputTextModule,
+        CalendarModule,
+        MultiSelectModule,
+        ButtonModule,
+        ToastModule,
+    ],
 })
 export class EditCourseComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

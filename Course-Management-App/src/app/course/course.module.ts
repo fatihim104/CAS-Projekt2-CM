@@ -23,7 +23,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { DetailCourseComponent } from './components/detail-course/detail-course.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
 import { MycoursesComponent } from './components/mycourses/mycourses.component';
-import { SharedModule } from '../shared/shared.module';
+
 
 const routes: Routes = [
     {
@@ -38,28 +38,27 @@ const routes: Routes = [
     }
 ]   
 @NgModule({
-    declarations: [CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent,],
-    imports: [ 
-        CommonModule,
-        ButtonModule,
-        TableModule,
-        CalendarModule,
-        MultiSelectModule,
-        DropdownModule,
-        InputTextModule,
-        ReactiveFormsModule,
-        ToastModule,
-        TagModule,
-        ChipModule,
-        FormsModule,
-        DialogModule,
-        ConfirmDialogModule,
-        SpeedDialModule,   
-        FieldsetModule, 
-        SharedModule,     
-        RouterModule.forChild(routes)
-    ],
-    exports: [],    
+    imports: [
+    CommonModule,
+    ButtonModule,
+    TableModule,
+    CalendarModule,
+    MultiSelectModule,
+    DropdownModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    ToastModule,
+    TagModule,
+    ChipModule,
+    FormsModule,
+    DialogModule,
+    ConfirmDialogModule,
+    SpeedDialModule,
+    FieldsetModule,
+    RouterModule.forChild(routes),
+    CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent
+],
+    exports: [],
     providers: [MessageService, ConfirmationService],
 })
 export class CourseModule { }

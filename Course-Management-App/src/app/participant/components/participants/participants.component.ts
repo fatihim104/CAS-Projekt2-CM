@@ -1,16 +1,36 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SharedModule } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Participant } from 'src/app/participant/participant.model';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { UserService } from 'src/app/shared/user/user.service';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { NgClass } from '@angular/common';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-participants',
-  templateUrl: './participants.component.html',
-  styleUrls: ['./participants.component.scss'],
-  providers: [ParticipantService, ConfirmationService, MessageService],
+    selector: 'app-participants',
+    templateUrl: './participants.component.html',
+    styleUrls: ['./participants.component.scss'],
+    providers: [ParticipantService, ConfirmationService, MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ToastModule,
+        ConfirmDialogModule,
+        NgClass,
+        CardModule,
+        SharedModule,
+        ButtonModule,
+        TooltipModule,
+        RouterLink,
+    ],
 })
 export class ParticipantsComponent implements OnInit {
   private participantService = inject(ParticipantService);

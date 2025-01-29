@@ -34,16 +34,15 @@ describe('CoursesComponent', () => {
   beforeEach(async () => {
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ButtonModule,],
-      declarations: [ CoursesComponent, HeaderPageComponent ],
-      providers: [
+    imports: [RouterTestingModule, ButtonModule, CoursesComponent, HeaderPageComponent,],
+    providers: [
         { provide: CourseService, useValue: jasmine.createSpyObj('CourseService', ['getCourses', 'filterCourses']) },
         { provide: UserService, useValue: jasmine.createSpyObj('UserService', { getCurrentUser: of({}) }) },
         { provide: AngularFireAuth, useValue: MockAngularFireAuth },
         { provide: AngularFirestore, useValue: MockAngularFirestore },
-      ],
-      schemas: [NO_ERRORS_SCHEMA] 
-    })
+    ],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
 
     userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>

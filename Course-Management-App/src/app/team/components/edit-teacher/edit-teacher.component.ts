@@ -1,17 +1,33 @@
 import { Component, inject } from '@angular/core';
 import { Location, TitleCasePipe } from '@angular/common';
 import { Team } from 'src/app/team/team.model';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute} from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { TeamService } from 'src/app/team/services/team.service';
 import { LanguageEnum } from 'src/app/course/course.model';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
-  selector: 'app-edit-teacher',
-  templateUrl: './edit-teacher.component.html',
-  styleUrls: ['./edit-teacher.component.scss'],
-  providers: [ TitleCasePipe, MessageService],
+    selector: 'app-edit-teacher',
+    templateUrl: './edit-teacher.component.html',
+    styleUrls: ['./edit-teacher.component.scss'],
+    providers: [TitleCasePipe, MessageService],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        ReactiveFormsModule,
+        InputTextModule,
+        CalendarModule,
+        DropdownModule,
+        ButtonModule,
+        ToastModule,
+    ],
 })
 export class EditTeacherComponent {
   private formBuilder = inject(FormBuilder);

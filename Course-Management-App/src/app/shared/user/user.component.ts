@@ -1,10 +1,23 @@
 import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { User, UserRole } from './user.model';
 import { UserService } from './user.service';
+import { TableModule } from 'primeng/table';
+import { SharedModule } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
+    selector: 'app-user',
+    templateUrl: './user.component.html',
+    standalone: true,
+    imports: [
+        TableModule,
+        SharedModule,
+        ButtonModule,
+        DialogModule,
+        DropdownModule,
+    ],
 })
 export class UserComponent implements OnInit {
   private userService = inject(UserService);

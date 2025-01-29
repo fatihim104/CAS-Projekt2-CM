@@ -1,15 +1,30 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Router } from '@angular/router';
+import { MenuItem, SharedModule } from 'primeng/api';
+import { Router, RouterLink } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable} from 'rxjs';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UserService } from 'src/app/shared/user/user.service';
+import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'tab-menu',
-  templateUrl: './tab-menu.component.html',
+    selector: 'tab-menu',
+    templateUrl: './tab-menu.component.html',
+    standalone: true,
+    imports: [
+        MenubarModule,
+        SharedModule,
+        ButtonModule,
+        RouterLink,
+        AvatarModule,
+        TieredMenuModule,
+        AsyncPipe,
+    ],
 })
 export class TabMenuComponent implements OnInit {
   private router = inject(Router);

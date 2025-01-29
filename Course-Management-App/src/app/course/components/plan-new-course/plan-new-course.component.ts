@@ -1,28 +1,41 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Participant } from 'src/app/participant/participant.model';
 import { Team } from 'src/app/team/team.model';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CourseService } from 'src/app/course/services/course.service';
 import { TeamService } from 'src/app/team/services/team.service';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { LevelEnum, Status } from 'src/app/course/course.model';
 import { LanguageEnum } from 'src/app/course/course.model';
 import { TitleCasePipe, DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
-  selector: 'app-plan-new-course',
-  templateUrl: './plan-new-course.component.html',
-  styleUrls: ['./plan-new-course.component.scss'],
-  providers: [TitleCasePipe, MessageService, DatePipe],
+    selector: 'app-plan-new-course',
+    templateUrl: './plan-new-course.component.html',
+    styleUrls: ['./plan-new-course.component.scss'],
+    providers: [TitleCasePipe, MessageService, DatePipe],
+    standalone: true,
+    imports: [
+        HeaderPageComponent,
+        RouterLink,
+        ReactiveFormsModule,
+        DropdownModule,
+        InputTextModule,
+        CalendarModule,
+        MultiSelectModule,
+        ButtonModule,
+        ToastModule,
+    ],
 })
 export class PlanNewCourseComponent implements OnInit {
   private formBuilder = inject(FormBuilder);

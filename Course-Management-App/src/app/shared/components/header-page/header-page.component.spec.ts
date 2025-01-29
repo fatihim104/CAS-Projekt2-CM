@@ -16,10 +16,9 @@ describe('HeaderPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HeaderPageComponent ],
-      imports: [RouterTestingModule, ButtonModule],
-      schemas: [NO_ERRORS_SCHEMA] 
-    })
+    imports: [RouterTestingModule, ButtonModule, HeaderPageComponent],
+    schemas: [NO_ERRORS_SCHEMA]
+})
     .compileComponents();
   });
 

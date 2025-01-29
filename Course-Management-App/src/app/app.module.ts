@@ -33,12 +33,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserComponent } from './shared/user/user.component';
 
 
-@NgModule({ declarations: [
-        AppComponent,
-        TabMenuComponent,
-        HomeComponent,
-        UserComponent,
-    ],
+@NgModule({ declarations: [AppComponent],
     exports: [],
     bootstrap: [AppComponent], imports: [BrowserModule,
         BrowserAnimationsModule,
@@ -59,5 +54,7 @@ import { UserComponent } from './shared/user/user.component';
         DropdownModule,
         AvatarModule,
         TieredMenuModule,
-        DividerModule], providers: [MessageService, provideHttpClient(withInterceptorsFromDi())] })
+        DividerModule, TabMenuComponent,
+        HomeComponent,
+        UserComponent], providers: [MessageService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
