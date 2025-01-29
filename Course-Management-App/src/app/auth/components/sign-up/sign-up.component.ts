@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -9,13 +9,15 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit{
+  private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
 
   form: FormGroup = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
   });
-
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService:AuthService){}
 
   ngOnInit():void {
     this.getForm();

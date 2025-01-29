@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Participant } from '../participant.model';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
@@ -9,11 +9,15 @@ import * as firebase from 'firebase/compat';
   providedIn: 'root'
 })
 export class ParticipantService {
+  private db = inject(AngularFirestore);
+
   private dbPath = '/participants';
 
   participantsRef: AngularFirestoreCollection<Participant>;
 
-  constructor(private db: AngularFirestore) {
+  constructor() {
+    const db = this.db;
+
     this.participantsRef = db.collection(this.dbPath);
   }
 

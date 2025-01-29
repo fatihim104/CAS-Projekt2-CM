@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -21,6 +21,12 @@ import { ParticipantService } from 'src/app/participant/services/participant.ser
 })
 
 export class AddParticipantComponent {
+  private formBuilder = inject(FormBuilder);
+  private participantService = inject(ParticipantService);
+  private titlecasePipe = inject(TitleCasePipe);
+  private router = inject(Router);
+  private messageService = inject(MessageService);
+
   students!: Participant[];
   languageOptions: { label: string }[] = [];
   levelOptions: { label: string }[] = [];
@@ -36,13 +42,7 @@ export class AddParticipantComponent {
     completedCourses: new FormControl([]),
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private participantService: ParticipantService,
-    private titlecasePipe: TitleCasePipe,
-    private router: Router,
-    private messageService: MessageService
-  ) {
+  constructor() {
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));

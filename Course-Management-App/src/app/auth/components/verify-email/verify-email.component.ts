@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
@@ -6,10 +6,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   templateUrl: './verify-email.component.html',
   styleUrls: ['./verify-email.component.scss']
 })
-export class VerifyEmailComponent {
+export class VerifyEmailComponent {  authService = inject(AuthService);
 
-  constructor(
-    public authService: AuthService
-  ) { }
 
 }

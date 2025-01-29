@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import {
   AbstractControl,
@@ -20,6 +20,12 @@ import { TeamService } from 'src/app/team/services/team.service';
   providers: [TitleCasePipe, MessageService],
 })
 export class AddTeacherComponent {
+  private formBuilder = inject(FormBuilder);
+  private teamService = inject(TeamService);
+  private titlecasePipe = inject(TitleCasePipe);
+  private router = inject(Router);
+  private messageService = inject(MessageService);
+
   teachers!: Team[];
   languageOptions: { label: string }[] = [];
 
@@ -36,13 +42,7 @@ export class AddTeacherComponent {
     completedCourses: new FormControl([]),
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private teamService: TeamService,
-    private titlecasePipe: TitleCasePipe,
-    private router: Router,
-    private messageService: MessageService
-  ) {
+  constructor() {
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));

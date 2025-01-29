@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Participant } from 'src/app/participant/participant.model';
 import { Team } from 'src/app/team/team.model';
 import {
@@ -25,6 +25,14 @@ import { MessageService } from 'primeng/api';
   providers: [TitleCasePipe, MessageService, DatePipe],
 })
 export class PlanNewCourseComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private titlecasePipe = inject(TitleCasePipe);
+  private courseService = inject(CourseService);
+  private participantService = inject(ParticipantService);
+  private teamService = inject(TeamService);
+  private router = inject(Router);
+  private messageService = inject(MessageService);
+
   students!: Participant[];
   teachers!: Team[];
   statusOptions: { label: string }[] = [];
@@ -43,15 +51,7 @@ export class PlanNewCourseComponent implements OnInit {
     price: new FormControl(''),
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private titlecasePipe: TitleCasePipe,
-    private courseService: CourseService,
-    private participantService: ParticipantService,
-    private teamService: TeamService,
-    private router: Router,
-    private messageService: MessageService
-  ) {
+  constructor() {
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));

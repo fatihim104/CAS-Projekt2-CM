@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit  
-} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -15,6 +12,11 @@ import { UserService } from 'src/app/shared/user/user.service';
   templateUrl: './tab-menu.component.html',
 })
 export class TabMenuComponent implements OnInit {
+  private router = inject(Router);
+  authService = inject(AuthService);
+  afAuth = inject(AngularFireAuth);
+  private userService = inject(UserService);
+
   items: MenuItem[] | undefined;
   profileItems: MenuItem[] = [];
   activeItem: MenuItem | undefined;
@@ -24,12 +26,7 @@ export class TabMenuComponent implements OnInit {
   role: UserRole | undefined ;
   profileText:string | undefined = "";
 
-  constructor(
-    private router: Router,
-    public authService: AuthService,
-    public afAuth: AngularFireAuth,
-    private userService: UserService
-  ) {
+  constructor() {
     this.hasToken = this.authService.hasToken;
 
     this.currentUser$ = this.userService.getCurrentUser();

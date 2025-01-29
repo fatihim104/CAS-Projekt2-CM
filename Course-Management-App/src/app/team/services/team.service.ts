@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Team } from '../team.model';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
@@ -8,11 +8,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TeamService {
+  private db = inject(AngularFirestore);
+
   private dbPath = '/team';
 
   teamRef: AngularFirestoreCollection<Team>;
 
-  constructor(private db: AngularFirestore) {
+  constructor() {
+    const db = this.db;
+
     this.teamRef = db.collection(this.dbPath);
   }
 

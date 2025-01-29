@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
 })
 
 export class HomeComponent implements OnInit {
+    router = inject(Router);
+
     greeting:string="Hallo"
-    
-    constructor(public router: Router) { }
 
     ngOnInit() { }
 }

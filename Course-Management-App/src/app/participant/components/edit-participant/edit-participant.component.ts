@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -13,6 +13,13 @@ import { Location } from '@angular/common';
   providers: [ MessageService],
 })
 export class EditParticipantComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private participantService = inject(ParticipantService);
+  private activatedRoute = inject(ActivatedRoute);
+  private location = inject(Location);
+  private router = inject(Router);
+  private messageService = inject(MessageService);
+
   students!: Participant[];
   languageOptions: { label: string }[] = [];
   levelOptions: { label: string }[] = [];
@@ -29,16 +36,7 @@ export class EditParticipantComponent implements OnInit {
     nationality: new FormControl(''),
     activeCourses: new FormControl([]),
     completedCourses: new FormControl([]),
-  });
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private participantService: ParticipantService,
-    private activatedRoute: ActivatedRoute,
-    private location: Location,
-    private router: Router,
-    private messageService: MessageService
-  ) {}  
+  });  
 
   ngOnInit(): void {
     this.getForm();

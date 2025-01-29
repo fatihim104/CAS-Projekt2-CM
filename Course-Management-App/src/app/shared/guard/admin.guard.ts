@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { map, Observable, tap } from "rxjs";
 import { AuthService } from "../../auth/services/auth.service";
@@ -8,12 +8,12 @@ import { UserService } from "../user/user.service";
 
 @Injectable({ providedIn: 'root' })
 export class AdminGuard implements CanActivate {
+    private authService = inject(AuthService);
+    private router = inject(Router);
+    private userService = inject(UserService);
+
     currentUser$: Observable<User | undefined>;
-    constructor(
-        private authService: AuthService,
-        private router: Router,
-        private userService: UserService
-        ) {
+    constructor() {
             this.currentUser$ = this.userService.getCurrentUser();
         }
 

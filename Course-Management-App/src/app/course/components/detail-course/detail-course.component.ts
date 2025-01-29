@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -24,6 +24,16 @@ import { AuthService } from 'src/app/auth/services/auth.service';
   providers: [ConfirmationService, MessageService],
 })
 export class DetailCourseComponent implements OnInit {
+  private courseService = inject(CourseService);
+  private registrationService = inject(CourseRegistrationService);
+  private participantService = inject(ParticipantService);
+  private authService = inject(AuthService);
+  private activatedRoute = inject(ActivatedRoute);
+  private userService = inject(UserService);
+  private formBuilder = inject(FormBuilder);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+
   selectedCourse: any;
   selectedCourseId: string = '';
   participants: any[] = [];
@@ -39,17 +49,7 @@ export class DetailCourseComponent implements OnInit {
     email: new FormControl(''),
   });
 
-  constructor(
-    private courseService: CourseService,
-    private registrationService: CourseRegistrationService,
-    private participantService: ParticipantService,
-    private authService:AuthService,
-    private activatedRoute: ActivatedRoute,
-    private userService: UserService,
-    private formBuilder: FormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {
+  constructor() {
     this.currentUser$ = this.userService.getCurrentUser();
   }
 

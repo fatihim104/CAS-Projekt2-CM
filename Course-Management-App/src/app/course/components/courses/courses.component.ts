@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { BehaviorSubject, Observable, Subscription, combineLatest, of, startWith, switchMap } from 'rxjs';
 import { Course, LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
@@ -20,6 +20,12 @@ interface Column {
 })
 
 export class CoursesComponent implements OnInit, OnDestroy {
+  private courseService = inject(CourseService);
+  private userService = inject(UserService);
+  private confirmationService = inject(ConfirmationService);
+  private titlecasePipe = inject(TitleCasePipe);
+  private messageService = inject(MessageService);
+
   courses: Course[] = [];
   UserRole = UserRole;
   currentUser$:Observable<User | undefined> ;
@@ -34,13 +40,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   cols!: Column[];
 
-  constructor(
-    private courseService: CourseService,
-    private userService: UserService,
-    private confirmationService: ConfirmationService,
-    private titlecasePipe: TitleCasePipe,
-    private messageService: MessageService,
-  ) {
+  constructor() {
     this.currentUser$ =  this.userService.getCurrentUser()
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),

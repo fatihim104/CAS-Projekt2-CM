@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
@@ -11,14 +11,15 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService {
+  authService = inject(AuthService);
+  afAuth = inject(AngularFireAuth);
+  private firestore = inject(AngularFirestore);
+
   acceptMailRef: AngularFirestoreCollection<User>;
   
-  constructor(
-    public authService: AuthService,
-    public afAuth: AngularFireAuth,
-    private firestore: AngularFirestore,
-    
-  ) {
+  constructor() {
+    const firestore = this.firestore;
+
     this.acceptMailRef = firestore.collection('/acceptMails');
   }
 

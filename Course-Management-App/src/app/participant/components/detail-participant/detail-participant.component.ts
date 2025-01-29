@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Course } from 'src/app/course/course.model';
@@ -14,6 +14,13 @@ import { UserService } from 'src/app/shared/user/user.service';
   styleUrls: ['./detail-participant.component.scss'],
 })
 export class DetailParticipantComponent implements OnInit, OnDestroy {
+  private participantService = inject(ParticipantService);
+  private courseService = inject(CourseService);
+  private userService = inject(UserService);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private datepipe = inject(DatePipe);
+
   selectedStudent: any;
   selectedStudentId: string = '';
   courses: Course[] = [];
@@ -21,14 +28,7 @@ export class DetailParticipantComponent implements OnInit, OnDestroy {
   UserRole = UserRole;
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    private participantService: ParticipantService,
-    private courseService: CourseService,
-    private userService: UserService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private datepipe: DatePipe
-  ) {
+  constructor() {
     this.currentUser$ = this.userService.getCurrentUser();
   }
 

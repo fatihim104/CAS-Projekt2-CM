@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Team } from 'src/app/team/team.model';
@@ -13,16 +13,16 @@ import { UserService } from 'src/app/shared/user/user.service';
   providers: [TeamService, ConfirmationService, MessageService],
 })
 export class TeachersComponent {
+  private teamService = inject(TeamService);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
+  private userService = inject(UserService);
+
   teachers?: Team[] | any;
   currentUser$: Observable<User | undefined>;
   UserRole = UserRole;
 
-  constructor(
-    private teamService: TeamService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private userService: UserService
-  ) {
+  constructor() {
     this.currentUser$ = this.userService.getCurrentUser();
   }
 

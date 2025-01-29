@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
@@ -12,11 +12,15 @@ import { arrayRemove, arrayUnion } from 'firebase/firestore';
   providedIn: 'root',
 })
 export class CourseRegistrationService {
+  private db = inject(AngularFirestore);
+
   private dbPath = '/registrations';
 
   registrationsRef: AngularFirestoreCollection<Participant>;
 
-  constructor(private db: AngularFirestore) {
+  constructor() {
+    const db = this.db;
+
     this.registrationsRef = db.collection(this.dbPath);
   }
 

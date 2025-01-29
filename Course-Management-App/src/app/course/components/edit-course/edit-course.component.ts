@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Participant } from 'src/app/participant/participant.model';
 import { Team } from 'src/app/team/team.model';
 import { TitleCasePipe } from '@angular/common';
@@ -24,6 +24,15 @@ import { TeamService } from 'src/app/team/services/team.service';
   providers: [TitleCasePipe, MessageService],
 })
 export class EditCourseComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private activatedRoute = inject(ActivatedRoute);
+  private courseService = inject(CourseService);
+  private participantService = inject(ParticipantService);
+  private teamService = inject(TeamService);
+  private titlecasePipe = inject(TitleCasePipe);
+  private location = inject(Location);
+  private messageService = inject(MessageService);
+
   students!: Participant[] ;
   // students$!: Observable<Participant[] | undefined>;
   teachers!: Team[];
@@ -46,16 +55,7 @@ export class EditCourseComponent implements OnInit {
     price: new FormControl(''),
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private courseService: CourseService,
-    private participantService: ParticipantService,
-    private teamService: TeamService,
-    private titlecasePipe: TitleCasePipe,
-    private location: Location,
-    private messageService: MessageService
-  ) {
+  constructor() {
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));

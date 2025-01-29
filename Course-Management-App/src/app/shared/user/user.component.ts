@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { User, UserRole } from './user.model';
 import { UserService } from './user.service';
 
@@ -7,14 +7,14 @@ import { UserService } from './user.service';
   templateUrl: './user.component.html',
 })
 export class UserComponent implements OnInit {
+  private userService = inject(UserService);
+
   users: User[] = [];
   visible: boolean = false;
   selectedUser: User = {};
   userRoles: { value: string }[] = [];
 
-  constructor(
-    private userService: UserService,
-  ) {
+  constructor() {
     this.userRoles = Object.keys(UserRole).map((key) => {
       return { value: key };
     });

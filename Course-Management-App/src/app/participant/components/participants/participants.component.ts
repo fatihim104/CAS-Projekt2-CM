@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { Participant } from 'src/app/participant/participant.model';
@@ -13,16 +13,16 @@ import { UserService } from 'src/app/shared/user/user.service';
   providers: [ParticipantService, ConfirmationService, MessageService],
 })
 export class ParticipantsComponent implements OnInit {
+  private participantService = inject(ParticipantService);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
+  private userService = inject(UserService);
+
   students?: Participant[] | any;
   currentUser$: Observable<User | undefined>;
   UserRole = UserRole;
 
-  constructor(
-    private participantService: ParticipantService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private userService: UserService
-  ) {
+  constructor() {
     this.currentUser$ = this.userService.getCurrentUser();
   }
 

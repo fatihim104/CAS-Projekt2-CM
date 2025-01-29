@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { MessageService } from 'primeng/api';
 
@@ -7,10 +7,9 @@ import { MessageService } from 'primeng/api';
   templateUrl: './forgot-password.component.html',
 })
 export class ForgotPasswordComponent {
-  constructor(
-    public authService: AuthService,
-    private messageService: MessageService
-  ) {}
+  authService = inject(AuthService);
+  private messageService = inject(MessageService);
+
 
   forgotPassword(newPassword: string) {
     this.authService
