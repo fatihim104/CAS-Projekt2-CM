@@ -12,8 +12,8 @@
   position: absolute;
   bottom: -250px;
   right: 0;
-  animation: rise 20s infinite cubic-bezier(0.35, 0.37, 0.51, 0.40);
-//   animation: rise 15s infinite linear;
+  animation: rise 20s infinite cubic-bezier(0.35, 0.37, 0.51, 0.4);
+  //   animation: rise 15s infinite linear;
 }
 
 @keyframes rise {
@@ -25,7 +25,6 @@
     bottom: 0%;
     transform: scale(0.9);
     right: 5%;
-
   }
   20% {
     bottom: 10%;
@@ -41,7 +40,6 @@
     bottom: 35%;
     transform: scale(0.8);
     right: 20%;
-
   }
   60% {
     bottom: 50%;
@@ -58,7 +56,6 @@
     transform: scale(0.4);
     opacity: 0.4;
     right: 10%;
-
   }
   90% {
     bottom: 90%;

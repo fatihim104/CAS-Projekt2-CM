@@ -15,23 +15,23 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-teachers',
-    templateUrl: './teachers.component.html',
-    styleUrls: ['./teachers.component.scss'],
-    providers: [TeamService, ConfirmationService, MessageService],
-    standalone: true,
-    imports: [
-        HeaderPageComponent,
-        ToastModule,
-        ConfirmDialogModule,
-        NgClass,
-        CardModule,
-        SharedModule,
-        ButtonModule,
-        TooltipModule,
-        RouterLink,
-        AsyncPipe,
-    ],
+  selector: 'app-teachers',
+  templateUrl: './teachers.component.html',
+  styleUrls: ['./teachers.component.scss'],
+  providers: [TeamService, ConfirmationService, MessageService],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    ToastModule,
+    ConfirmDialogModule,
+    NgClass,
+    CardModule,
+    SharedModule,
+    ButtonModule,
+    TooltipModule,
+    RouterLink,
+    AsyncPipe,
+  ],
 })
 export class TeachersComponent {
   private teamService = inject(TeamService);
@@ -50,17 +50,15 @@ export class TeachersComponent {
   ngOnInit(): void {
     this.getTeachers();
   }
-  
+
   getTeachers() {
-    this.teamService
-      .getTeachers()
-      .subscribe({
-        next: (data) => (this.teachers = data),
-        error: (error) => {
-          console.error('Error fetching teachers', error);
-          this.teachers = [];
-        },
-      });
+    this.teamService.getTeachers().subscribe({
+      next: (data) => (this.teachers = data),
+      error: (error) => {
+        console.error('Error fetching teachers', error);
+        this.teachers = [];
+      },
+    });
   }
 
   deleteTeacher(teacher: Team) {

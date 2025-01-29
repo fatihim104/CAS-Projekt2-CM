@@ -8,16 +8,16 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
-    selector: 'app-user',
-    templateUrl: './user.component.html',
-    standalone: true,
-    imports: [
-        TableModule,
-        SharedModule,
-        ButtonModule,
-        DialogModule,
-        DropdownModule,
-    ],
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  standalone: true,
+  imports: [
+    TableModule,
+    SharedModule,
+    ButtonModule,
+    DialogModule,
+    DropdownModule,
+  ],
 })
 export class UserComponent implements OnInit {
   private userService = inject(UserService);
@@ -46,7 +46,7 @@ export class UserComponent implements OnInit {
     this.selectedUser = user;
   }
 
-  save( role: any) {
+  save(role: any) {
     const editedUser = {
       role: role.value,
     };

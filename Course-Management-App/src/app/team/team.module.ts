@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -13,11 +12,10 @@ import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ChipModule } from 'primeng/chip';
-import { MessageService, ConfirmationService} from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
 import { DividerModule } from 'primeng/divider';
-
 import { TeachersComponent } from './components/teachers/teachers.component';
 import { AddTeacherComponent } from './components/add-teacher/add-teacher.component';
 import { EditTeacherComponent } from './components/edit-teacher/edit-teacher.component';
@@ -31,15 +29,23 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', component: TeachersComponent },
-      { path: 'team/add', component: AddTeacherComponent, canActivate: [AdminGuard] },
-      { path: 'team/edit/:id', component: EditTeacherComponent, canActivate: [AdminGuard] },
+      {
+        path: 'team/add',
+        component: AddTeacherComponent,
+        canActivate: [AdminGuard],
+      },
+      {
+        path: 'team/edit/:id',
+        component: EditTeacherComponent,
+        canActivate: [AdminGuard],
+      },
       { path: 'team/detail/:id', component: DetailTeacherComponent },
     ],
   },
 ];
 
 @NgModule({
-    imports: [
+  imports: [
     CommonModule,
     ButtonModule,
     TableModule,
@@ -61,8 +67,8 @@ const routes: Routes = [
     AddTeacherComponent,
     EditTeacherComponent,
     DetailTeacherComponent,
-],
-    exports: [],
-    providers: [MessageService, ConfirmationService, DatePipe]
+  ],
+  exports: [],
+  providers: [MessageService, ConfirmationService, DatePipe],
 })
-export class TeamModule { }
+export class TeamModule {}

@@ -2,16 +2,15 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.scss'],
-    standalone: true
+  selector: 'home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.scss'],
+  standalone: true,
 })
-
 export class HomeComponent implements OnInit {
-    router = inject(Router);
+  router = inject(Router);
 
-    greeting:string="Hallo"
+  greeting: string = 'Hallo';
 
-    ngOnInit() { }
+  ngOnInit() {}
 }

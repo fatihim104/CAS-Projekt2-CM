@@ -2,7 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { TabMenuModule } from 'primeng/tabmenu';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -22,8 +25,10 @@ import { HomeComponent } from './shared/components/home/home.component';
 import { MenubarModule } from 'primeng/menubar';
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
+  beforeEach(() =>
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
         BrowserModule,
         BrowserAnimationsModule,
         AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -38,10 +43,13 @@ describe('AppComponent', () => {
         ToastModule,
         ButtonModule,
         TabMenuModule,
-        MenubarModule, TabMenuComponent,
-        HomeComponent, AppComponent],
-    providers: [MessageService, provideHttpClient(withInterceptorsFromDi())]
-}).compileComponents()
+        MenubarModule,
+        TabMenuComponent,
+        HomeComponent,
+        AppComponent,
+      ],
+      providers: [MessageService, provideHttpClient(withInterceptorsFromDi())],
+    }).compileComponents(),
   );
 
   it('should create the app', () => {

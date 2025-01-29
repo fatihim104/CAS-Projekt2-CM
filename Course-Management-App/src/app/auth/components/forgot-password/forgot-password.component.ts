@@ -7,20 +7,14 @@ import { RouterLink } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
-    selector: 'app-forgot-password',
-    templateUrl: './forgot-password.component.html',
-    standalone: true,
-    imports: [
-        InputTextModule,
-        ButtonModule,
-        RouterLink,
-        ToastModule,
-    ],
+  selector: 'app-forgot-password',
+  templateUrl: './forgot-password.component.html',
+  standalone: true,
+  imports: [InputTextModule, ButtonModule, RouterLink, ToastModule],
 })
 export class ForgotPasswordComponent {
   authService = inject(AuthService);
   private messageService = inject(MessageService);
-
 
   forgotPassword(newPassword: string) {
     this.authService

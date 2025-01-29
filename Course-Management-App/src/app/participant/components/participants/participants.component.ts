@@ -15,22 +15,22 @@ import { TooltipModule } from 'primeng/tooltip';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-participants',
-    templateUrl: './participants.component.html',
-    styleUrls: ['./participants.component.scss'],
-    providers: [ParticipantService, ConfirmationService, MessageService],
-    standalone: true,
-    imports: [
-        HeaderPageComponent,
-        ToastModule,
-        ConfirmDialogModule,
-        NgClass,
-        CardModule,
-        SharedModule,
-        ButtonModule,
-        TooltipModule,
-        RouterLink,
-    ],
+  selector: 'app-participants',
+  templateUrl: './participants.component.html',
+  styleUrls: ['./participants.component.scss'],
+  providers: [ParticipantService, ConfirmationService, MessageService],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    ToastModule,
+    ConfirmDialogModule,
+    NgClass,
+    CardModule,
+    SharedModule,
+    ButtonModule,
+    TooltipModule,
+    RouterLink,
+  ],
 })
 export class ParticipantsComponent implements OnInit {
   private participantService = inject(ParticipantService);

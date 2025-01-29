@@ -9,7 +9,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog'; 
+import { DialogModule } from 'primeng/dialog';
 import { CoursesComponent } from './components/courses/courses.component';
 import { Routes, RouterModule } from '@angular/router';
 import { PlanNewCourseComponent } from './components/plan-new-course/plan-new-course.component';
@@ -24,21 +24,28 @@ import { DetailCourseComponent } from './components/detail-course/detail-course.
 import { AdminGuard } from '../shared/guard/admin.guard';
 import { MycoursesComponent } from './components/mycourses/mycourses.component';
 
-
 const routes: Routes = [
-    {
-        path:"",
-        children:[
-            {path:"", component:CoursesComponent},
-            {path:"courses/plan", component:PlanNewCourseComponent, canActivate: [AdminGuard]},
-            {path:"courses/edit/:id", component:EditCourseComponent, canActivate: [AdminGuard]},
-            {path:"courses/detail/:id", component:DetailCourseComponent},
-            {path:"courses/mycourse", component:MycoursesComponent},
-        ]
-    }
-]   
+  {
+    path: '',
+    children: [
+      { path: '', component: CoursesComponent },
+      {
+        path: 'courses/plan',
+        component: PlanNewCourseComponent,
+        canActivate: [AdminGuard],
+      },
+      {
+        path: 'courses/edit/:id',
+        component: EditCourseComponent,
+        canActivate: [AdminGuard],
+      },
+      { path: 'courses/detail/:id', component: DetailCourseComponent },
+      { path: 'courses/mycourse', component: MycoursesComponent },
+    ],
+  },
+];
 @NgModule({
-    imports: [
+  imports: [
     CommonModule,
     ButtonModule,
     TableModule,
@@ -56,9 +63,13 @@ const routes: Routes = [
     SpeedDialModule,
     FieldsetModule,
     RouterModule.forChild(routes),
-    CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent
-],
-    exports: [],
-    providers: [MessageService, ConfirmationService],
+    CoursesComponent,
+    PlanNewCourseComponent,
+    EditCourseComponent,
+    DetailCourseComponent,
+    MycoursesComponent,
+  ],
+  exports: [],
+  providers: [MessageService, ConfirmationService],
 })
-export class CourseModule { }
+export class CourseModule {}

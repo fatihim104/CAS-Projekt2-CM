@@ -1,33 +1,31 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { MessageService } from 'primeng/api';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { AngularFireModule } from '@angular/fire/compat';
-import { environment } from 'src/environments/environment.development';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { TabMenuModule } from 'primeng/tabmenu';
-import { CourseModule } from './app/course/course.module';
-import { AuthModule } from './app/auth/auth.module';
-import { ParticipantModule } from './app/participant/participant.module';
-import { TeamModule } from './app/team/team.module';
-import { AppRoutingModule } from './app/app-routing.module';
-import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { DividerModule } from 'primeng/divider';
+import { DropdownModule } from 'primeng/dropdown';
 import { MenubarModule } from 'primeng/menubar';
 import { TableModule } from 'primeng/table';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { AvatarModule } from 'primeng/avatar';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { TieredMenuModule } from 'primeng/tieredmenu';
-import { DividerModule } from 'primeng/divider';
+import { ToastModule } from 'primeng/toast';
+import { environment } from 'src/environments/environment.development';
+import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
-import { importProvidersFrom } from '@angular/core';
+import { AuthModule } from './app/auth/auth.module';
+import { CourseModule } from './app/course/course.module';
+import { ParticipantModule } from './app/participant/participant.module';
+import { TeamModule } from './app/team/team.module';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -50,7 +48,7 @@ bootstrapApplication(AppComponent, {
       DropdownModule,
       AvatarModule,
       TieredMenuModule,
-      DividerModule
+      DividerModule,
     ),
     MessageService,
     provideHttpClient(withInterceptorsFromDi()),

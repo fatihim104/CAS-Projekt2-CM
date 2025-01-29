@@ -1,11 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { Team } from '../team.model';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestoreCollection,
+  AngularFirestore,
+} from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TeamService {
   private db = inject(AngularFirestore);
@@ -20,18 +23,19 @@ export class TeamService {
     this.teamRef = db.collection(this.dbPath);
   }
 
-  getTeacher(id:string){
+  getTeacher(id: string) {
     return this.teamRef.doc(id).valueChanges();
   }
 
   getTeachers(): Observable<Team[]> {
     return this.teamRef.snapshotChanges().pipe(
-      map(changes => changes.map((c) => ({
-        id: c.payload.doc.id,
-        ...(c.payload.doc.data() as Team),
-      }))
-      )
-    );;
+      map((changes) =>
+        changes.map((c) => ({
+          id: c.payload.doc.id,
+          ...(c.payload.doc.data() as Team),
+        })),
+      ),
+    );
   }
 
   create(participant: Team) {
@@ -39,11 +43,10 @@ export class TeamService {
   }
 
   update(id: string, data: any): any {
-    return this.teamRef.doc('/'+id).update(data);
+    return this.teamRef.doc('/' + id).update(data);
   }
 
-  delete(id?: string ): Promise<void> {
+  delete(id?: string): Promise<void> {
     return this.teamRef.doc(id).delete();
   }
 }
-

@@ -1,5 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Participant } from 'src/app/participant/participant.model';
@@ -12,19 +19,19 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
-    selector: 'app-edit-participant',
-    templateUrl: './edit-participant.component.html',
-    styleUrls: ['./edit-participant.component.scss'],
-    providers: [MessageService],
-    standalone: true,
-    imports: [
-        HeaderPageComponent,
-        ReactiveFormsModule,
-        InputTextModule,
-        CalendarModule,
-        ButtonModule,
-        ToastModule,
-    ],
+  selector: 'app-edit-participant',
+  templateUrl: './edit-participant.component.html',
+  styleUrls: ['./edit-participant.component.scss'],
+  providers: [MessageService],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    ReactiveFormsModule,
+    InputTextModule,
+    CalendarModule,
+    ButtonModule,
+    ToastModule,
+  ],
 })
 export class EditParticipantComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
@@ -38,8 +45,8 @@ export class EditParticipantComponent implements OnInit {
   languageOptions: { label: string }[] = [];
   levelOptions: { label: string }[] = [];
 
-  selectedStudent:any;
-  selectedStudentId:string="";
+  selectedStudent: any;
+  selectedStudentId: string = '';
 
   form: FormGroup = new FormGroup({
     firstName: new FormControl(''),
@@ -50,17 +57,20 @@ export class EditParticipantComponent implements OnInit {
     nationality: new FormControl(''),
     activeCourses: new FormControl([]),
     completedCourses: new FormControl([]),
-  });  
+  });
 
   ngOnInit(): void {
     this.getForm();
-    this.selectedStudentId = this.activatedRoute.snapshot.paramMap.get('id')!
-    this.participantService.getParticipant(this.selectedStudentId).subscribe((participant:any) => {
-      this.selectedStudent = participant;
-      this.form.patchValue(this.selectedStudent)
-      this.form.controls['birthDay'].patchValue(this.selectedStudent.birthDay?.toDate())
-    })
-
+    this.selectedStudentId = this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.participantService
+      .getParticipant(this.selectedStudentId)
+      .subscribe((participant: any) => {
+        this.selectedStudent = participant;
+        this.form.patchValue(this.selectedStudent);
+        this.form.controls['birthDay'].patchValue(
+          this.selectedStudent.birthDay?.toDate(),
+        );
+      });
   }
 
   getForm() {
@@ -84,37 +94,36 @@ export class EditParticipantComponent implements OnInit {
   }
 
   save(): void {
-       
     if (this.form.invalid) {
       return;
     }
 
-    this.participantService.update(this.selectedStudentId, this.form.value).then(() => {
-    
-      this.messageService.add({
-        key: 'tl',
-        severity: 'success',
-        summary: 'Participant updated',
+    this.participantService
+      .update(this.selectedStudentId, this.form.value)
+      .then(() => {
+        this.messageService.add({
+          key: 'tl',
+          severity: 'success',
+          summary: 'Participant updated',
+        });
+
+        setTimeout(() => {
+          this.goBack();
+        }, 1000);
+      })
+      .catch((error: any) => {
+        console.log(error);
+
+        this.messageService.add({
+          key: 'tl',
+          severity: 'error',
+          summary: 'There is an error',
+          detail: error,
+        });
       });
-      
-      setTimeout(() => {
-        this.goBack()
-      }, 1000);
-      }
-    ).catch((error:any) => {
-      console.log(error);
-      
-      this.messageService.add({
-        key: 'tl',
-        severity: 'error',
-        summary: 'There is an error',
-        detail: error,
-      });
-    })
   }
 
   goBack(): void {
     this.location.back();
   }
-
 }

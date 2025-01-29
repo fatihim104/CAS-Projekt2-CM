@@ -58,7 +58,7 @@ export class AuthService {
     email: string,
     password: string,
     sendMail: boolean,
-    name?: string
+    name?: string,
   ) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
@@ -82,7 +82,7 @@ export class AuthService {
 
   setUserData(user: any, name: string) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
+      `users/${user.uid}`,
     );
     const userData: User = {
       uid: user.uid,
@@ -125,7 +125,7 @@ export class AuthService {
       catchError((error) => {
         console.error('error by user creation', error);
         return of(null);
-      })
+      }),
     );
   }
 }

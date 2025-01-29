@@ -3,48 +3,52 @@
     class="flex flex-column md:flex-row justify-content-between"
     id="menu"
     [model]="items"
-    >
+  >
     <ng-template pTemplate="start">
       <img
         src="../../../../assets/logo-2/png/logo-no-background.png"
         class="mr-2 h-3rem md:h-4rem lg:h-7rem"
-        />
-      </ng-template>
+      />
+    </ng-template>
 
-      <ng-template pTemplate="end">
-        <div>
-          @if (!(hasToken | async)) {
-            <p-button
-              routerLink="/auth"
-              [text]="true"
-              severity="help"
-              class="font-bold"
-              >
-              LOGIN</p-button
-              >
-          }
-          @if (hasToken | async) {
-            <p-avatar
-              class="mr-2 cursor-pointer"
-              label="{{ profileText }}"
-              styleClass="mr-2"
-              size="large"
-              (click)="avatarMenu.toggle($event)"
-          [style]="{ 'background-image': 'radial-gradient(
+    <ng-template pTemplate="end">
+      <div>
+        @if (!(hasToken | async)) {
+          <p-button
+            routerLink="/auth"
+            [text]="true"
+            severity="help"
+            class="font-bold"
+          >
+            LOGIN</p-button
+          >
+        }
+        @if (hasToken | async) {
+          <p-avatar
+            class="mr-2 cursor-pointer"
+            label="{{ profileText }}"
+            styleClass="mr-2"
+            size="large"
+            (click)="avatarMenu.toggle($event)"
+            [style]="{
+              'background-image':
+                'radial-gradient(
             circle at left top,
             violet,
             blue
-          )', 'color': '#ffffff' }"
-              shape="circle"
-            ></p-avatar>
-          }
-          <p-tieredMenu
-            id="profile"
-            #avatarMenu
-            [model]="profileItems"
-            [popup]="true"
-          ></p-tieredMenu>
-        </div>
-      </ng-template>
-    </p-menubar>
-  </div>
+          )',
+              color: '#ffffff',
+            }"
+            shape="circle"
+          ></p-avatar>
+        }
+        <p-tieredMenu
+          id="profile"
+          #avatarMenu
+          [model]="profileItems"
+          [popup]="true"
+        ></p-tieredMenu>
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>

@@ -31,15 +31,26 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', component: ParticipantsComponent },
-      { path: 'participants/add', component: AddParticipantComponent, canActivate:[AdminGuard] },
-      { path: 'participants/edit/:id', component: EditParticipantComponent, canActivate:[AdminGuard] },
-      { path: 'participants/detail/:id', component: DetailParticipantComponent },
+      {
+        path: 'participants/add',
+        component: AddParticipantComponent,
+        canActivate: [AdminGuard],
+      },
+      {
+        path: 'participants/edit/:id',
+        component: EditParticipantComponent,
+        canActivate: [AdminGuard],
+      },
+      {
+        path: 'participants/detail/:id',
+        component: DetailParticipantComponent,
+      },
     ],
   },
 ];
 
 @NgModule({
-    imports: [
+  imports: [
     CommonModule,
     ButtonModule,
     TableModule,
@@ -61,10 +72,8 @@ const routes: Routes = [
     AddParticipantComponent,
     DetailParticipantComponent,
     EditParticipantComponent,
-],
-    exports: [],
-    providers: [MessageService, ConfirmationService]
+  ],
+  exports: [],
+  providers: [MessageService, ConfirmationService],
 })
-export class ParticipantModule {
-  
-}
+export class ParticipantModule {}

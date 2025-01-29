@@ -24,11 +24,16 @@ export class CourseRegistrationService {
     this.registrationsRef = db.collection(this.dbPath);
   }
 
-  removeParticipantFromCourse( participant: Participant, selectedCourseId: string ) {
+  removeParticipantFromCourse(
+    participant: Participant,
+    selectedCourseId: string,
+  ) {
     const courseRef = this.db.collection('courses').doc(selectedCourseId);
-    return from(courseRef.update({
-      students: arrayRemove(participant)
-    }));
+    return from(
+      courseRef.update({
+        students: arrayRemove(participant),
+      }),
+    );
   }
 
   create(participant: Participant) {
@@ -40,25 +45,29 @@ export class CourseRegistrationService {
   }
 
   addCandidateToCourse(courseId: string, participantId: string | undefined) {
-    const participant$ = this.db.collection('participants').doc(participantId).snapshotChanges().pipe(
-      map(action => {
-        const data = action.payload.data() as Participant;
-        const id = action.payload.id;
-        return { id, ...data }; 
-      })
-    );
-  
+    const participant$ = this.db
+      .collection('participants')
+      .doc(participantId)
+      .snapshotChanges()
+      .pipe(
+        map((action) => {
+          const data = action.payload.data() as Participant;
+          const id = action.payload.id;
+          return { id, ...data };
+        }),
+      );
+
     return participant$.pipe(
       switchMap((participant) => {
         const courseRef = this.db.collection('courses').doc(courseId);
         return from(courseRef.update({ students: arrayUnion(participant) }));
-      })
+      }),
     );
   }
 
   getCandidatesByCourseId(courseId: string): Observable<Participant[]> {
     const collectionRef = this.db.collection<Participant>(this.dbPath, (ref) =>
-      ref.where('courseId', '==', courseId)
+      ref.where('courseId', '==', courseId),
     );
 
     return collectionRef.snapshotChanges().pipe(
@@ -66,8 +75,8 @@ export class CourseRegistrationService {
         changes.map((c) => ({
           id: c.payload.doc.id,
           ...(c.payload.doc.data() as Participant),
-        }))
-      )
+        })),
+      ),
     );
   }
 }

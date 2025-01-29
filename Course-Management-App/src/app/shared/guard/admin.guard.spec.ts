@@ -4,7 +4,7 @@
 // import { AdminGuard } from './admin.guard';
 
 // describe('adminGuard', () => {
-//   const executeGuard: CanActivateFn = (...guardParameters) => 
+//   const executeGuard: CanActivateFn = (...guardParameters) =>
 //       TestBed.runInInjectionContext(() => new AdminGuard(...guardParameters));
 
 //   beforeEach(() => {

@@ -1,6 +1,13 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LanguageEnum, Level, LevelEnum } from 'src/app/course/course.model';
@@ -13,21 +20,20 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
-    selector: 'app-add-participant',
-    templateUrl: './add-participant.component.html',
-    styleUrls: ['./add-participant.component.scss'],
-    providers: [TitleCasePipe, MessageService],
-    standalone: true,
-    imports: [
-        HeaderPageComponent,
-        ReactiveFormsModule,
-        InputTextModule,
-        CalendarModule,
-        ButtonModule,
-        ToastModule,
-    ],
+  selector: 'app-add-participant',
+  templateUrl: './add-participant.component.html',
+  styleUrls: ['./add-participant.component.scss'],
+  providers: [TitleCasePipe, MessageService],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    ReactiveFormsModule,
+    InputTextModule,
+    CalendarModule,
+    ButtonModule,
+    ToastModule,
+  ],
 })
-
 export class AddParticipantComponent {
   private formBuilder = inject(FormBuilder);
   private participantService = inject(ParticipantService);
@@ -82,7 +88,6 @@ export class AddParticipantComponent {
   }
 
   onSubmit(): void {
-       
     if (this.form.invalid) {
       return;
     }

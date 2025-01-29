@@ -12,17 +12,17 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { DividerModule } from 'primeng/divider';
 
 @Component({
-    selector: 'app-detail-participant',
-    templateUrl: './detail-participant.component.html',
-    styleUrls: ['./detail-participant.component.scss'],
-    standalone: true,
-    imports: [
-        HeaderPageComponent,
-        FieldsetModule,
-        DividerModule,
-        AsyncPipe,
-        DatePipe,
-    ],
+  selector: 'app-detail-participant',
+  templateUrl: './detail-participant.component.html',
+  styleUrls: ['./detail-participant.component.scss'],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    FieldsetModule,
+    DividerModule,
+    AsyncPipe,
+    DatePipe,
+  ],
 })
 export class DetailParticipantComponent implements OnInit, OnDestroy {
   private participantService = inject(ParticipantService);

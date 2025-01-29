@@ -1,4 +1,3 @@
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderPageComponent } from './header-page.component';
 import { By } from '@angular/platform-browser';
@@ -9,17 +8,15 @@ import { User } from '../../user/user.model';
 import { UserRole } from 'src/app/shared/user/user.model';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-
 describe('HeaderPageComponent', () => {
   let component: HeaderPageComponent;
   let fixture: ComponentFixture<HeaderPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule, ButtonModule, HeaderPageComponent],
-    schemas: [NO_ERRORS_SCHEMA]
-})
-    .compileComponents();
+      imports: [RouterTestingModule, ButtonModule, HeaderPageComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -34,7 +31,9 @@ describe('HeaderPageComponent', () => {
     component.addButton = true; // Simulate addButton input set to true
     fixture.detectChanges(); // Trigger a change detection cycle
 
-    const addButton = fixture.debugElement.query(By.css('[data-test-id="add-button"]'));
+    const addButton = fixture.debugElement.query(
+      By.css('[data-test-id="add-button"]'),
+    );
     expect(addButton).not.toBeNull(); // Check that the add button is present in the DOM
   });
 
@@ -44,7 +43,9 @@ describe('HeaderPageComponent', () => {
     component.addButton = true; // Simulate addButton input set to true
     fixture.detectChanges(); // Trigger a change detection cycle
 
-    const addButton = fixture.debugElement.query(By.css('[data-test-id="add-button"]'));
+    const addButton = fixture.debugElement.query(
+      By.css('[data-test-id="add-button"]'),
+    );
     expect(addButton).toBeNull(); // Check that the add button is not present in the DOM
   });
 });

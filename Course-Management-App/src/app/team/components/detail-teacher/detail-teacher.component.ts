@@ -12,17 +12,17 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { DividerModule } from 'primeng/divider';
 
 @Component({
-    selector: 'app-detail-teacher',
-    templateUrl: './detail-teacher.component.html',
-    styleUrls: ['./detail-teacher.component.scss'],
-    standalone: true,
-    imports: [
-        HeaderPageComponent,
-        FieldsetModule,
-        DividerModule,
-        AsyncPipe,
-        DatePipe,
-    ],
+  selector: 'app-detail-teacher',
+  templateUrl: './detail-teacher.component.html',
+  styleUrls: ['./detail-teacher.component.scss'],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    FieldsetModule,
+    DividerModule,
+    AsyncPipe,
+    DatePipe,
+  ],
 })
 export class DetailTeacherComponent {
   private teamService = inject(TeamService);

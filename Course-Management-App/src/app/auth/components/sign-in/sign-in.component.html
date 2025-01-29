@@ -3,71 +3,70 @@
     <div class="text-900 text-3xl font-medium mb-3">Welcome...</div>
     <span class="text-600 font-medium line-height-3"
       >Don't have an account?</span
+    >
+    <a
+      class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+      routerLink="/auth/register-user"
+      >Create today!</a
+    >
+  </div>
+
+  <form [formGroup]="form" autocomplete="off" (ngSubmit)="onSubmit()">
+    <div class="mb-4">
+      <label for="email" class="block text-900 font-medium mb-2">Email</label>
+      <input
+        id="email"
+        formControlName="email"
+        type="text"
+        placeholder="Email address"
+        pInputText
+        class="w-full"
+      />
+      @if (f["email"].touched && f["email"].errors) {
+        <div>
+          @if (f["email"].errors["required"]) {
+            <small class="text-pink-600">Email is required</small>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="block text-900 font-medium mb-2"
+        >Password</label
       >
-      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" routerLink="/auth/register-user"
-        >Create today!</a
-        >
-      </div>
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        placeholder="Password"
+        pInputText
+        class="w-full"
+      />
+      @if (f["password"].touched && f["password"].errors) {
+        <div>
+          @if (f["password"].errors["required"]) {
+            <small class="text-pink-600">Password is required</small>
+          }
+        </div>
+      }
+    </div>
 
-      <form [formGroup]="form" autocomplete="off" (ngSubmit)="onSubmit()">
-        <div class="mb-4">
-          <label for="email" class="block text-900 font-medium mb-2">Email</label>
-          <input
-            id="email"
-            formControlName="email"
-            type="text"
-            placeholder="Email address"
-            pInputText
-            class="w-full"
-            />
-            @if (f['email'].touched && f['email'].errors) {
-              <div >
-                @if (f['email'].errors['required']) {
-                  <small class="text-pink-600"
-                    >Email is required</small
-                    >
-                }
-              </div>
-            }
-          </div>
+    <div class="flex align-items-center justify-content-between mb-6">
+      <a
+        routerLink="/auth/forgot-password"
+        class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
+        >Forgot password?</a
+      >
+    </div>
 
-          <div class="mb-3">
-            <label for="password" class="block text-900 font-medium mb-2"
-              >Password</label
-              >
-              <input
-                id="password"
-                formControlName="password"
-                type="password"
-                placeholder="Password"
-                pInputText
-                class="w-full "
-                />
-                @if (f['password'].touched && f['password'].errors) {
-                  <div>
-                    @if (f['password'].errors['required']) {
-                      <small class="text-pink-600"
-                        >Password is required</small
-                        >
-                    }
-                  </div>
-                }
-              </div>
-
-              <div class="flex align-items-center justify-content-between mb-6">
-                <a routerLink="/auth/forgot-password"
-                  class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
-                  >Forgot password?</a
-                  >
-                </div>
-
-                <p-button
-                  pRipple
-                  label="Sign In"
-                  type="submit"
-                  icon="pi pi-user"
-                  class="w-full"
-                ></p-button>
-              </form>
-            </div>
-            <p-toast position="center" key="tl" ></p-toast>
+    <p-button
+      pRipple
+      label="Sign In"
+      type="submit"
+      icon="pi pi-user"
+      class="w-full"
+    ></p-button>
+  </form>
+</div>
+<p-toast position="center" key="tl"></p-toast>

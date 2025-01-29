@@ -13,53 +13,55 @@
 
   <div
     class="card flex flex-column md:flex-row justify-content-between flex-wrap"
-    [ngClass]="teachers?.length < 5 ? 'justify-content-start' : 'justify-content-between'"
-    >
+    [ngClass]="
+      teachers?.length < 5 ? 'justify-content-start' : 'justify-content-between'
+    "
+  >
     @for (teacher of teachers; track teacher) {
       <p-card
         header="{{ teacher.firstName + ' ' + teacher.lastName }}"
-        subheader="{{teacher?.branch?.label}}"
+        subheader="{{ teacher?.branch?.label }}"
         [style]="{ width: '250px' }"
         class="mb-4"
         [ngClass]="teachers.length < 5 ? 'with-margin' : 'without-margin'"
-        >
+      >
         <ng-template pTemplate="header">
           <img
             alt="Card"
             src="https://primefaces.org/cdn/primeng/images/usercard.png"
-            />
-          </ng-template>
-          <ng-template pTemplate="footer" class="absolute bottom-0">
+          />
+        </ng-template>
+        <ng-template pTemplate="footer" class="absolute bottom-0">
+          <p-button
+            pTooltip="Detail"
+            icon="pi pi-eye"
+            [outlined]="true"
+            [attr.data-test-id]="'detail-button-' + teacher.id"
+            routerLink="/team/detail/{{ teacher.id }}"
+            styleClass="p-button-warning"
+          ></p-button>
+          @if ((currentUser$ | async)?.role === UserRole.ADMIN) {
             <p-button
-              pTooltip="Detail"
-              icon="pi pi-eye"
+              pTooltip="Edit"
               [outlined]="true"
-              [attr.data-test-id]="'detail-button-'+ teacher.id"
-              routerLink="/team/detail/{{ teacher.id }}"
-              styleClass="p-button-warning"
+              icon="pi pi-pencil"
+              routerLink="/team/edit/{{ teacher.id }}"
+              styleClass="text-teal-500"
+              [style]="{ 'margin-left': '.5em' }"
             ></p-button>
-            @if ((currentUser$ | async)?.role === UserRole.ADMIN) {
-              <p-button
-                pTooltip="Edit"
-                [outlined]="true"
-                icon="pi pi-pencil"
-                routerLink="/team/edit/{{ teacher.id }}"
-                styleClass="text-teal-500"
-                [style]="{ 'margin-left': '.5em', }"
-              ></p-button>
-            }
-            @if ((currentUser$ | async)?.role === UserRole.ADMIN) {
-              <p-button
-                pTooltip="Delete"
-                [outlined]="true"
-                icon="pi pi-trash"
-                styleClass="p-button-danger"
-                (click)="deleteTeacher(teacher)"
-                [style]="{ 'margin-left': '.5em' }"
-              ></p-button>
-            }
-          </ng-template>
-        </p-card>
-      }
-    </div>
+          }
+          @if ((currentUser$ | async)?.role === UserRole.ADMIN) {
+            <p-button
+              pTooltip="Delete"
+              [outlined]="true"
+              icon="pi pi-trash"
+              styleClass="p-button-danger"
+              (click)="deleteTeacher(teacher)"
+              [style]="{ 'margin-left': '.5em' }"
+            ></p-button>
+          }
+        </ng-template>
+      </p-card>
+    }
   </div>
+</div>

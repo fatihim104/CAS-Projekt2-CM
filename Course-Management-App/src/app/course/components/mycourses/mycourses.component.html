@@ -1,17 +1,14 @@
 <h2 class="text-0 mb-2">My Courses</h2>
 <div class="col">
-
   @for (course of courses; track course) {
-    <ul
-      class="list-none p-0 m-0 text-900 flex flex-row flex-wrap"
-      >
+    <ul class="list-none p-0 m-0 text-900 flex flex-row flex-wrap">
       <li class="mr-3 mb-4">
         {{
-        course.language.label +
-        " " +
-        (course.level.label || "") +
-        " " +
-        getDate(course)
+          course.language.label +
+            " " +
+            (course.level.label || "") +
+            " " +
+            getDate(course)
         }}
       </li>
     </ul>

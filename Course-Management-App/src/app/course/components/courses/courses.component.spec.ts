@@ -1,8 +1,13 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { CoursesComponent } from './courses.component';
 import { CourseService } from 'src/app/course/services/course.service';
-import {  DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import {  of } from 'rxjs';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserService } from 'src/app/shared/user/user.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -32,20 +37,34 @@ describe('CoursesComponent', () => {
   };
 
   beforeEach(async () => {
-
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule, ButtonModule, CoursesComponent, HeaderPageComponent,],
-    providers: [
-        { provide: CourseService, useValue: jasmine.createSpyObj('CourseService', ['getCourses', 'filterCourses']) },
-        { provide: UserService, useValue: jasmine.createSpyObj('UserService', { getCurrentUser: of({}) }) },
+      imports: [
+        RouterTestingModule,
+        ButtonModule,
+        CoursesComponent,
+        HeaderPageComponent,
+      ],
+      providers: [
+        {
+          provide: CourseService,
+          useValue: jasmine.createSpyObj('CourseService', [
+            'getCourses',
+            'filterCourses',
+          ]),
+        },
+        {
+          provide: UserService,
+          useValue: jasmine.createSpyObj('UserService', {
+            getCurrentUser: of({}),
+          }),
+        },
         { provide: AngularFireAuth, useValue: MockAngularFireAuth },
         { provide: AngularFirestore, useValue: MockAngularFirestore },
-    ],
-    schemas: [NO_ERRORS_SCHEMA]
-})
-    .compileComponents();
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
 
-    userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>
+    userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
     fixture = TestBed.createComponent(CoursesComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
@@ -55,33 +74,32 @@ describe('CoursesComponent', () => {
   it('should update languageFilter$ when filterByLanguage is called', () => {
     const mockLanguage = { label: 'ENGLISH' };
     component.filterByLanguage({ value: mockLanguage });
-    component.languageFilter$.subscribe(value => {
+    component.languageFilter$.subscribe((value) => {
       expect(value).toEqual(mockLanguage.label);
     });
   });
- 
+
   it('should add button for admin users', fakeAsync(() => {
     userServiceSpy.getCurrentUser.and.returnValue(of({ role: UserRole.ADMIN }));
 
     fixture.detectChanges();
-          
-    const headerComponentInstance  = fixture.debugElement.query(By.directive(HeaderPageComponent)).componentInstance;
-    
+
+    const headerComponentInstance = fixture.debugElement.query(
+      By.directive(HeaderPageComponent),
+    ).componentInstance;
+
     expect(headerComponentInstance).toBeTruthy();
     expect(headerComponentInstance.addButton).toBeTrue();
-    expect(headerComponentInstance.header).toEqual("Active Courses");
- 
+    expect(headerComponentInstance.header).toEqual('Active Courses');
   }));
 
-   
   it('should header display for all users', fakeAsync(() => {
     fixture.detectChanges();
-     
-    const headerComponentInstance  = fixture.debugElement.query(By.directive(HeaderPageComponent)).componentInstance;
-   
-    expect(headerComponentInstance.header).toEqual("Active Courses");
- 
+
+    const headerComponentInstance = fixture.debugElement.query(
+      By.directive(HeaderPageComponent),
+    ).componentInstance;
+
+    expect(headerComponentInstance.header).toEqual('Active Courses');
   }));
-
 });
-

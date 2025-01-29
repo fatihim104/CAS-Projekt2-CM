@@ -1,12 +1,15 @@
 import { Injectable, inject } from '@angular/core';
 import { Participant } from '../participant.model';
-import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+  AngularFirestoreCollection,
+  AngularFirestore,
+} from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as firebase from 'firebase/compat';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ParticipantService {
   private db = inject(AngularFirestore);
@@ -21,21 +24,22 @@ export class ParticipantService {
     this.participantsRef = db.collection(this.dbPath);
   }
 
-  getParticipant(id:string){
+  getParticipant(id: string) {
     return this.participantsRef.doc(id).valueChanges();
   }
 
   getParticipants(): Observable<Participant[]> {
     return this.participantsRef.snapshotChanges().pipe(
-      map(changes => changes.map((c) => {
-        const studentData = c.payload.doc.data();
-        return({
-          id: c.payload.doc.id,
-          name: `${studentData.firstName} ${studentData.lastName}`,
-          ...(c.payload.doc.data() as Participant),
-        });        
-      })
-      )
+      map((changes) =>
+        changes.map((c) => {
+          const studentData = c.payload.doc.data();
+          return {
+            id: c.payload.doc.id,
+            name: `${studentData.firstName} ${studentData.lastName}`,
+            ...(c.payload.doc.data() as Participant),
+          };
+        }),
+      ),
     );
   }
 
@@ -44,10 +48,10 @@ export class ParticipantService {
   }
 
   update(id: string, data: any): any {
-    return this.participantsRef.doc('/'+id).update(data);
+    return this.participantsRef.doc('/' + id).update(data);
   }
 
-  delete(id?: string ): Promise<void> {
+  delete(id?: string): Promise<void> {
     return this.participantsRef.doc(id).delete();
   }
 }

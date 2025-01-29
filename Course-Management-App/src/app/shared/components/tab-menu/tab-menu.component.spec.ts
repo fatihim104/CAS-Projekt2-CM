@@ -9,68 +9,64 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 describe('TabMenuComponent', () => {
-    let component : TabMenuComponent;
-    let fixture : ComponentFixture<TabMenuComponent>;
-    let userServiceSpy: jasmine.SpyObj<UserService>;
-  
-    class MockAuthService {
-        hasToken = of(true);
-    }
-    
-    class MockUserService {
-        // Simulate an admin user
-        getCurrentUser() {
-          return of({ role: UserRole.ADMIN, email: 'admin@example.com' });
-        }
-    }
-      
-    class MockAngularFireAuth {
-    }
+  let component: TabMenuComponent;
+  let fixture: ComponentFixture<TabMenuComponent>;
+  let userServiceSpy: jasmine.SpyObj<UserService>;
 
-    beforeEach(waitForAsync( () => {
+  class MockAuthService {
+    hasToken = of(true);
+  }
 
-        TestBed.configureTestingModule({
-    providers: [
-        { provide: UserService, useValue: jasmine.createSpyObj('UserService', { getCurrentUser: of({}) }) },
+  class MockUserService {
+    // Simulate an admin user
+    getCurrentUser() {
+      return of({ role: UserRole.ADMIN, email: 'admin@example.com' });
+    }
+  }
+
+  class MockAngularFireAuth {}
+
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: UserService,
+          useValue: jasmine.createSpyObj('UserService', {
+            getCurrentUser: of({}),
+          }),
+        },
         { provide: AuthService, useClass: MockAuthService },
         { provide: UserService, useClass: MockUserService },
         { provide: AngularFireAuth, useClass: MockAngularFireAuth },
-    ],
-    imports: [RouterTestingModule, TabMenuComponent,],
-    schemas: [NO_ERRORS_SCHEMA]
-}).compileComponents();
+      ],
+      imports: [RouterTestingModule, TabMenuComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  }));
 
+  beforeEach(() => {
+    userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>;
+    fixture = TestBed.createComponent(TabMenuComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    }));
+  it('should display users tab menu for an admin user', (done) => {
+    // component.currentUser$ = of({ id: '2', role: UserRole.ADMIN } as User);
+    // userServiceSpy.getCurrentUser.and.returnValue(of({ role: UserRole.ADMIN }));
 
-    beforeEach(() => {
+    fixture.detectChanges();
+    component.ngOnInit();
+    fixture.detectChanges();
 
-        userServiceSpy = TestBed.inject(UserService) as jasmine.SpyObj<UserService>
-        fixture = TestBed.createComponent(TabMenuComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-      });
+    // Try finding the Users item now that the component should be fully initialized
+    const usersItem = component.items?.find((item) => item.label === 'Users');
+    console.log('useritem', usersItem);
 
-    it('should display users tab menu for an admin user', (done) => {
-        // component.currentUser$ = of({ id: '2', role: UserRole.ADMIN } as User);
-        // userServiceSpy.getCurrentUser.and.returnValue(of({ role: UserRole.ADMIN }));
-                
-        fixture.detectChanges();
-        component.ngOnInit();
-        fixture.detectChanges();
+    // Perform your assertions
+    expect(usersItem).toBeDefined(); // Check that the Users item is defined
+    // expect(usersItem?.visible).toBeTruthy(); // Check that it's visible
 
-       
-        
-            // Try finding the Users item now that the component should be fully initialized
-            const usersItem = component.items?.find(item => item.label === 'Users');
-            console.log("useritem", usersItem);
-        
-            // Perform your assertions
-            expect(usersItem).toBeDefined(); // Check that the Users item is defined
-            // expect(usersItem?.visible).toBeTruthy(); // Check that it's visible
-        
-            done(); // Indicate that the test is complete
-    
-    })
-
-})
+    done(); // Indicate that the test is complete
+  });
+});
