@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -33,40 +33,31 @@ import { AuthModule } from './auth/auth.module';
 import { UserComponent } from './shared/user/user.component';
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    TabMenuComponent,
-    HomeComponent,
-    UserComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
-    AngularFireAuthModule,
-    HttpClientModule,   
-    TabMenuModule,  
-    CourseModule,
-    AuthModule,
-    ParticipantModule,
-    TeamModule,
-    AppRoutingModule,
-    ToastModule,
-    ButtonModule,
-    MenubarModule,
-    TableModule,
-    DialogModule,
-    DropdownModule,
-    AvatarModule,
-    TieredMenuModule,
-    DividerModule
-  ],
-  exports:[
-   
-  ],
-  providers: [MessageService],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        TabMenuComponent,
+        HomeComponent,
+        UserComponent,
+    ],
+    exports: [],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFirestoreModule,
+        AngularFireAuthModule,
+        TabMenuModule,
+        CourseModule,
+        AuthModule,
+        ParticipantModule,
+        TeamModule,
+        AppRoutingModule,
+        ToastModule,
+        ButtonModule,
+        MenubarModule,
+        TableModule,
+        DialogModule,
+        DropdownModule,
+        AvatarModule,
+        TieredMenuModule,
+        DividerModule], providers: [MessageService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
