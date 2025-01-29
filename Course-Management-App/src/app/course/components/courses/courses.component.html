@@ -67,7 +67,7 @@
     [showCurrentPageReport]="true"
     responsiveLayout="stack"
     [breakpoint]="'960px'"
-    >
+  >
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="language.label" style="min-width: 15%">
@@ -107,65 +107,65 @@
       <tr>
         <td>
           <span class="p-column-title">Language</span
-            >{{ course.language.label }}
-          </td>
-          <td>
-            <span class="p-column-title">Level</span>{{ course.level.label }}
-          </td>
-          <td><span class="p-column-title">Place</span>{{ course.place }}</td>
-          <td>
-            <span class="p-column-title">Status</span>
-            <p-tag
-              [value]="course.status.label"
-              [severity]="getSeverity(course.status.label)"
-            ></p-tag>
-          </td>
-          <td><span class="p-column-title">Price</span>{{ course.price }} fr</td>
+          >{{ course.language.label }}
+        </td>
+        <td>
+          <span class="p-column-title">Level</span>{{ course.level.label }}
+        </td>
+        <td><span class="p-column-title">Place</span>{{ course.place }}</td>
+        <td>
+          <span class="p-column-title">Status</span>
+          <p-tag
+            [value]="course.status.label"
+            [severity]="getSeverity(course.status.label)"
+          ></p-tag>
+        </td>
+        <td><span class="p-column-title">Price</span>{{ course.price }} fr</td>
 
-          <td>
+        <td>
+          <p-button
+            pRipple
+            pTooltip="Detail"
+            tooltipPosition="bottom"
+            icon="pi pi-eye"
+            [outlined]="true"
+            class="detail-button"
+            styleClass="p-button-warning mr-2"
+            routerLink="/courses/detail/{{ course.id }}"
+            size="small"
+          ></p-button>
+          @if ((currentUser$ | async)?.role === UserRole.ADMIN) {
             <p-button
               pRipple
-              pTooltip="Detail"
+              icon="pi pi-pencil"
+              pTooltip="Edit"
               tooltipPosition="bottom"
-              icon="pi pi-eye"
               [outlined]="true"
-              class="detail-button"
-              styleClass="p-button-warning mr-2"
-              routerLink="/courses/detail/{{ course.id }}"
+              styleClass="text-teal-500 mr-2"
+              routerLink="/courses/edit/{{ course.id }}"
               size="small"
             ></p-button>
-            @if ((currentUser$ | async)?.role === UserRole.ADMIN) {
-              <p-button
-                pRipple
-                icon="pi pi-pencil"
-                pTooltip="Edit"
-                tooltipPosition="bottom"
-                [outlined]="true"
-                styleClass="text-teal-500 mr-2"
-                routerLink="/courses/edit/{{ course.id }}"
-                size="small"
-              ></p-button>
-            }
-            @if ((currentUser$ | async)?.role === UserRole.ADMIN) {
-              <p-button
-                pRipple
-                pTooltip="Delete"
-                tooltipPosition="bottom"
-                icon="pi pi-trash"
-                [outlined]="true"
-                styleClass="text-red-500"
-                (click)="deleteCourse(course)"
-                size="small"
-              ></p-button>
-            }
-          </td>
-        </tr>
-      </ng-template>
+          }
+          @if ((currentUser$ | async)?.role === UserRole.ADMIN) {
+            <p-button
+              pRipple
+              pTooltip="Delete"
+              tooltipPosition="bottom"
+              icon="pi pi-trash"
+              [outlined]="true"
+              styleClass="text-red-500"
+              (click)="deleteCourse(course)"
+              size="small"
+            ></p-button>
+          }
+        </td>
+      </tr>
+    </ng-template>
 
-      <ng-template pTemplate="summary">
-        <div class="flex align-items-center justify-content-between">
-          In total there are {{ courses ? courses.length : 0 }} course.
-        </div>
-      </ng-template>
-    </p-table>
-  </div>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ courses ? courses.length : 0 }} course.
+      </div>
+    </ng-template>
+  </p-table>
+</div>

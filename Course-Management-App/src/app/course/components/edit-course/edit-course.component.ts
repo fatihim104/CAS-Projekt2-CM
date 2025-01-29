@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Participant } from 'src/app/participant/participant.model';
 import { Team } from 'src/app/team/team.model';
 import { TitleCasePipe } from '@angular/common';
@@ -9,30 +9,58 @@ import {
   FormControl,
   FormGroup,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { CourseService } from 'src/app/course/services/course.service';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { LanguageEnum, LevelEnum, Status } from 'src/app/course/course.model';
 import { Location } from '@angular/common';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { TeamService } from 'src/app/team/services/team.service';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-edit-course',
   templateUrl: './edit-course.component.html',
   styleUrls: ['./edit-course.component.scss'],
   providers: [TitleCasePipe, MessageService],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    ReactiveFormsModule,
+    DropdownModule,
+    InputTextModule,
+    CalendarModule,
+    MultiSelectModule,
+    ButtonModule,
+    ToastModule,
+  ],
 })
 export class EditCourseComponent implements OnInit {
-  students!: Participant[] ;
+  private formBuilder = inject(FormBuilder);
+  private activatedRoute = inject(ActivatedRoute);
+  private courseService = inject(CourseService);
+  private participantService = inject(ParticipantService);
+  private teamService = inject(TeamService);
+  private titlecasePipe = inject(TitleCasePipe);
+  private location = inject(Location);
+  private messageService = inject(MessageService);
+
+  students!: Participant[];
   // students$!: Observable<Participant[] | undefined>;
   teachers!: Team[];
   statusOptions: { label: string }[] = [];
   languageOptions: { label: string }[] = [];
   levelOptions: { label: string }[] = [];
 
-  selectedCourse:any;
-  selectedCourseId:string = "";
+  selectedCourse: any;
+  selectedCourseId: string = '';
 
   editForm: FormGroup = new FormGroup({
     language: new FormControl(''),
@@ -46,16 +74,7 @@ export class EditCourseComponent implements OnInit {
     price: new FormControl(''),
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private courseService: CourseService,
-    private participantService: ParticipantService,
-    private teamService: TeamService,
-    private titlecasePipe: TitleCasePipe,
-    private location: Location,
-    private messageService: MessageService
-  ) {
+  constructor() {
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));
@@ -68,16 +87,22 @@ export class EditCourseComponent implements OnInit {
   ngOnInit(): void {
     this.getForm();
     this.getParticipants();
-    this.getTeachers()
-    this.selectedCourseId = this.activatedRoute.snapshot.paramMap.get('id')!
-    this.courseService.getCourse(this.selectedCourseId).subscribe((course: any) => {
-      this.selectedCourse=course;
-      this.editForm.setValue(this.selectedCourse) 
-      this.editForm.controls['date'].patchValue(this.selectedCourse.date.toDate())
-      this.editForm.controls['time'].patchValue(this.selectedCourse.time.toDate())
-    }) 
+    this.getTeachers();
+    this.selectedCourseId = this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.courseService
+      .getCourse(this.selectedCourseId)
+      .subscribe((course: any) => {
+        this.selectedCourse = course;
+        this.editForm.setValue(this.selectedCourse);
+        this.editForm.controls['date'].patchValue(
+          this.selectedCourse.date.toDate(),
+        );
+        this.editForm.controls['time'].patchValue(
+          this.selectedCourse.time.toDate(),
+        );
+      });
   }
-  getForm(){
+  getForm() {
     this.editForm = this.formBuilder.group({
       language: [
         '',
@@ -92,49 +117,48 @@ export class EditCourseComponent implements OnInit {
       teacher: [''],
       price: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
-    
   }
 
   get f(): { [key: string]: AbstractControl } {
     return this.editForm.controls;
   }
-  
-  save(){
+
+  save() {
     if (this.editForm.invalid) {
       return;
     }
-       
-    this.courseService.update(this.selectedCourseId, this.editForm.value).then(() => {
-    
-      this.messageService.add({
-        key: 'tl',
-        severity: 'success',
-        summary: 'Course updated',
+
+    this.courseService
+      .update(this.selectedCourseId, this.editForm.value)
+      .then(() => {
+        this.messageService.add({
+          key: 'tl',
+          severity: 'success',
+          summary: 'Course updated',
+        });
+
+        setTimeout(() => {
+          this.goBack();
+        }, 1000);
+      })
+      .catch((error: any) => {
+        console.log(error);
+
+        this.messageService.add({
+          key: 'tl',
+          severity: 'error',
+          summary: 'There is an error',
+          detail: error,
+        });
       });
-      
-      setTimeout(() => {
-        this.goBack()
-      }, 1000);
-      }
-    ).catch((error:any) => {
-      console.log(error);
-      
-      this.messageService.add({
-        key: 'tl',
-        severity: 'error',
-        summary: 'There is an error',
-        detail: error,
-      });
-    })
-    
   }
 
   getParticipants() {
     return this.participantService.getParticipants().subscribe({
       next: (data) => {
-        this.students = data.map(participant => ({
+        this.students = data.map((participant) => ({
           ...participant,
-          name: participant.firstName + ' ' + participant.lastName // firstname ve lastname birleştiriliyor
+          name: participant.firstName + ' ' + participant.lastName, // firstname ve lastname birleştiriliyor
         }));
       },
       error: (error) => {
@@ -145,15 +169,13 @@ export class EditCourseComponent implements OnInit {
   }
 
   getTeachers() {
-    return this.teamService
-      .getTeachers()
-      .subscribe({
-        next: (data) => (this.teachers = data),
-        error: (error) => {
-          console.error('Error fetching teachers', error);
-          this.teachers = [];
-        },
-      });
+    return this.teamService.getTeachers().subscribe({
+      next: (data) => (this.teachers = data),
+      error: (error) => {
+        console.error('Error fetching teachers', error);
+        this.teachers = [];
+      },
+    });
   }
 
   goBack(): void {

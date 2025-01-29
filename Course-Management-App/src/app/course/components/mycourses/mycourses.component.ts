@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User, UserRole } from 'src/app/shared/user/user.model';
 import { UserService } from 'src/app/shared/user/user.service';
@@ -9,18 +9,19 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-mycourses',
   templateUrl: './mycourses.component.html',
+  standalone: true,
 })
 export class MycoursesComponent implements OnInit {
+  private userService = inject(UserService);
+  private courseService = inject(CourseService);
+  private datepipe = inject(DatePipe);
+
   currentUser$: Observable<User | undefined>;
-  role: UserRole | undefined ;
+  role: UserRole | undefined;
   user: User | undefined;
   courses: Course[] = [];
 
-  constructor(
-    private userService: UserService,
-    private courseService: CourseService,
-    private datepipe: DatePipe
-  ) {
+  constructor() {
     this.currentUser$ = this.userService.getCurrentUser();
   }
 
@@ -37,7 +38,6 @@ export class MycoursesComponent implements OnInit {
   }
 
   getCourseOfUsers(email: string | undefined) {
-
     return this.courseService
       .getCoursesByEmail(email)
       .subscribe((data: Course[]) => {

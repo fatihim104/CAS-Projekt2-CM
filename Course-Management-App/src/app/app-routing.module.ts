@@ -5,30 +5,42 @@ import { UserComponent } from './shared/user/user.component';
 
 const routes: Routes = [
   {
-    path:"", redirectTo: '/home', pathMatch: 'full',
-  }, 
-  {
-    path:"auth", loadChildren:() => import('./auth/auth.module').then(m=>m.AuthModule),
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
   },
   {
-    path:"home", component:HomeComponent,
+    path: 'auth',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path:"courses", loadChildren:() => import('./course/course.module').then(m=>m.CourseModule),
+    path: 'home',
+    component: HomeComponent,
   },
   {
-    path:"team", loadChildren:() => import('./team/team.module').then(m=>m.TeamModule),
+    path: 'courses',
+    loadChildren: () =>
+      import('./course/course.module').then((m) => m.CourseModule),
   },
   {
-    path:"participants", loadChildren:() => import('./participant/participant.module').then(m=>m.ParticipantModule),
+    path: 'team',
+    loadChildren: () => import('./team/team.module').then((m) => m.TeamModule),
   },
   {
-    path:"user", component:UserComponent,
-  }
+    path: 'participants',
+    loadChildren: () =>
+      import('./participant/participant.module').then(
+        (m) => m.ParticipantModule,
+      ),
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

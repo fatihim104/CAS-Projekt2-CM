@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import {
   AbstractControl,
@@ -6,20 +6,48 @@ import {
   FormControl,
   FormGroup,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { Language, LanguageEnum, Level, LevelEnum } from 'src/app/course/course.model';
+import {
+  Language,
+  LanguageEnum,
+  Level,
+  LevelEnum,
+} from 'src/app/course/course.model';
 import { Team } from 'src/app/team/team.model';
 import { TeamService } from 'src/app/team/services/team.service';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-add-teacher',
   templateUrl: './add-teacher.component.html',
   styleUrls: ['./add-teacher.component.scss'],
   providers: [TitleCasePipe, MessageService],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    ReactiveFormsModule,
+    InputTextModule,
+    CalendarModule,
+    DropdownModule,
+    ButtonModule,
+    ToastModule,
+  ],
 })
 export class AddTeacherComponent {
+  private formBuilder = inject(FormBuilder);
+  private teamService = inject(TeamService);
+  private titlecasePipe = inject(TitleCasePipe);
+  private router = inject(Router);
+  private messageService = inject(MessageService);
+
   teachers!: Team[];
   languageOptions: { label: string }[] = [];
 
@@ -29,20 +57,14 @@ export class AddTeacherComponent {
     phone: new FormControl(''),
     email: new FormControl(''),
     birthDay: new FormControl(''),
-    startDay: new FormControl(''),  
+    startDay: new FormControl(''),
     branch: new FormControl(''),
     nationality: new FormControl(''),
     activeCourses: new FormControl([]),
     completedCourses: new FormControl([]),
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private teamService: TeamService,
-    private titlecasePipe: TitleCasePipe,
-    private router: Router,
-    private messageService: MessageService
-  ) {
+  constructor() {
     this.languageOptions = Object.keys(LanguageEnum).map((key) => ({
       label: this.titlecasePipe.transform(key),
     }));
@@ -75,12 +97,12 @@ export class AddTeacherComponent {
   }
 
   onSubmit(): void {
-       
     if (this.form.invalid) {
       return;
     }
 
-    this.teamService.create(this.form.value)
+    this.teamService
+      .create(this.form.value)
       .then((data) => {
         if (data) {
           this.messageService.add({
@@ -107,7 +129,4 @@ export class AddTeacherComponent {
   onReset(): void {
     this.form.reset();
   }
-
-
-
 }

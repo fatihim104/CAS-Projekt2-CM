@@ -9,7 +9,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { DialogModule } from 'primeng/dialog'; 
+import { DialogModule } from 'primeng/dialog';
 import { CoursesComponent } from './components/courses/courses.component';
 import { Routes, RouterModule } from '@angular/router';
 import { PlanNewCourseComponent } from './components/plan-new-course/plan-new-course.component';
@@ -23,43 +23,53 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { DetailCourseComponent } from './components/detail-course/detail-course.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
 import { MycoursesComponent } from './components/mycourses/mycourses.component';
-import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
-    {
-        path:"",
-        children:[
-            {path:"", component:CoursesComponent},
-            {path:"courses/plan", component:PlanNewCourseComponent, canActivate: [AdminGuard]},
-            {path:"courses/edit/:id", component:EditCourseComponent, canActivate: [AdminGuard]},
-            {path:"courses/detail/:id", component:DetailCourseComponent},
-            {path:"courses/mycourse", component:MycoursesComponent},
-        ]
-    }
-]   
-@NgModule({
-    declarations: [CoursesComponent, PlanNewCourseComponent, EditCourseComponent, DetailCourseComponent, MycoursesComponent,],
-    imports: [ 
-        CommonModule,
-        ButtonModule,
-        TableModule,
-        CalendarModule,
-        MultiSelectModule,
-        DropdownModule,
-        InputTextModule,
-        ReactiveFormsModule,
-        ToastModule,
-        TagModule,
-        ChipModule,
-        FormsModule,
-        DialogModule,
-        ConfirmDialogModule,
-        SpeedDialModule,   
-        FieldsetModule, 
-        SharedModule,     
-        RouterModule.forChild(routes)
+  {
+    path: '',
+    children: [
+      { path: '', component: CoursesComponent },
+      {
+        path: 'courses/plan',
+        component: PlanNewCourseComponent,
+        canActivate: [AdminGuard],
+      },
+      {
+        path: 'courses/edit/:id',
+        component: EditCourseComponent,
+        canActivate: [AdminGuard],
+      },
+      { path: 'courses/detail/:id', component: DetailCourseComponent },
+      { path: 'courses/mycourse', component: MycoursesComponent },
     ],
-    exports: [],    
-    providers: [MessageService, ConfirmationService],
+  },
+];
+@NgModule({
+  imports: [
+    CommonModule,
+    ButtonModule,
+    TableModule,
+    CalendarModule,
+    MultiSelectModule,
+    DropdownModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    ToastModule,
+    TagModule,
+    ChipModule,
+    FormsModule,
+    DialogModule,
+    ConfirmDialogModule,
+    SpeedDialModule,
+    FieldsetModule,
+    RouterModule.forChild(routes),
+    CoursesComponent,
+    PlanNewCourseComponent,
+    EditCourseComponent,
+    DetailCourseComponent,
+    MycoursesComponent,
+  ],
+  exports: [],
+  providers: [MessageService, ConfirmationService],
 })
-export class CourseModule { }
+export class CourseModule {}

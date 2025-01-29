@@ -1,29 +1,64 @@
-import { Component, OnInit } from '@angular/core';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { Observable, catchError, of } from 'rxjs';
-import { Participant } from 'src/app/participant/participant.model';
-import { User, UserRole } from 'src/app/shared/user/user.model';
+import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService, MessageService, SharedModule } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { TooltipModule } from 'primeng/tooltip';
+import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { CourseRegistrationService } from 'src/app/course/services/course-registration.service';
 import { CourseService } from 'src/app/course/services/course.service';
-import { UserService } from 'src/app/shared/user/user.service';
+import { Participant } from 'src/app/participant/participant.model';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
-import { AuthService } from 'src/app/auth/services/auth.service';
+import { User, UserRole } from 'src/app/shared/user/user.model';
+import { UserService } from 'src/app/shared/user/user.service';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
 
 @Component({
   selector: 'app-detail-course',
   templateUrl: './detail-course.component.html',
   styleUrls: ['./detail-course.component.scss'],
   providers: [ConfirmationService, MessageService],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    FieldsetModule,
+    ButtonModule,
+    TooltipModule,
+    DialogModule,
+    SharedModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    ToastModule,
+    ConfirmDialogModule,
+    AsyncPipe,
+    DatePipe,
+  ],
 })
 export class DetailCourseComponent implements OnInit {
+  private courseService = inject(CourseService);
+  private registrationService = inject(CourseRegistrationService);
+  private participantService = inject(ParticipantService);
+  private authService = inject(AuthService);
+  private activatedRoute = inject(ActivatedRoute);
+  private userService = inject(UserService);
+  private formBuilder = inject(FormBuilder);
+  private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
+
   selectedCourse: any;
   selectedCourseId: string = '';
   participants: any[] = [];
@@ -39,30 +74,20 @@ export class DetailCourseComponent implements OnInit {
     email: new FormControl(''),
   });
 
-  constructor(
-    private courseService: CourseService,
-    private registrationService: CourseRegistrationService,
-    private participantService: ParticipantService,
-    private authService:AuthService,
-    private activatedRoute: ActivatedRoute,
-    private userService: UserService,
-    private formBuilder: FormBuilder,
-    private messageService: MessageService,
-    private confirmationService: ConfirmationService
-  ) {
+  constructor() {
     this.currentUser$ = this.userService.getCurrentUser();
   }
 
   ngOnInit(): void {
     this.selectedCourseId =
       this.activatedRoute.snapshot.paramMap.get('id') || '';
-      
+
     this.courseService.getCourse(this.selectedCourseId).subscribe({
-      next:(course) => {
+      next: (course) => {
         this.selectedCourse = course;
         this.participants = this.selectedCourse.students;
       },
-      error: (error) => console.error('Error getting selected course', error)      
+      error: (error) => console.error('Error getting selected course', error),
     });
 
     this.getCandidates();
@@ -70,12 +95,18 @@ export class DetailCourseComponent implements OnInit {
     this.getForm();
   }
 
-  removeParticipant(participant: Participant, selectedCourseId: string){
-    this.registrationService.removeParticipantFromCourse(participant, selectedCourseId)
+  removeParticipant(participant: Participant, selectedCourseId: string) {
+    this.registrationService
+      .removeParticipantFromCourse(participant, selectedCourseId)
       .subscribe({
-        next: () => this.showMessage('success', 'Successful', 'Participant removed from course'),
-        error: (error) => console.error('Error removing student',  error)
-      })
+        next: () =>
+          this.showMessage(
+            'success',
+            'Successful',
+            'Participant removed from course',
+          ),
+        error: (error) => console.error('Error removing student', error),
+      });
   }
 
   getCandidates() {
@@ -87,55 +118,68 @@ export class DetailCourseComponent implements OnInit {
   }
 
   acceptCourse(candidate: Participant, courseId: string) {
-    
     const newUser = {
       firstName: candidate.firstName,
       lastName: candidate.lastName,
       phone: candidate.phone,
       email: candidate.email,
-      birthDay: "",
-    }
+      birthDay: '',
+    };
 
-    this.addCandidateToParticipants(candidate, courseId, newUser)
+    this.addCandidateToParticipants(candidate, courseId, newUser);
 
-    this.createNewUser(candidate)
+    this.createNewUser(candidate);
 
-    this.userService.addUserForMailTrigger(newUser)
-     
+    this.userService.addUserForMailTrigger(newUser);
   }
 
-  addCandidateToParticipants(candidate: Participant, courseId: string, newUser:any){
-    let participantId : string = "";
-    this.participantService.create(newUser)
-    .then((documentReference) => {
-      participantId = documentReference.id
+  addCandidateToParticipants(
+    candidate: Participant,
+    courseId: string,
+    newUser: any,
+  ) {
+    let participantId: string = '';
+    this.participantService.create(newUser).then((documentReference) => {
+      participantId = documentReference.id;
 
       this.registrationService
-      .addCandidateToCourse(courseId, participantId)
-      .subscribe({
-        next: () => {
-          this.registrationService.delete(candidate.id)
-          
-          this.showMessage('success', 'Successful', 'Candidate added Course and Participant list.')
-        },
-        error: (error) => console.error(error),
+        .addCandidateToCourse(courseId, participantId)
+        .subscribe({
+          next: () => {
+            this.registrationService.delete(candidate.id);
+
+            this.showMessage(
+              'success',
+              'Successful',
+              'Candidate added Course and Participant list.',
+            );
+          },
+          error: (error) => console.error(error),
+        });
     });
-    }) 
   }
 
-  createNewUser(candidate:Participant){
-    const generatedPassword = this.generateRandomPassword(8)
-    
-    this.authService.createUser(candidate.email as string, generatedPassword, candidate.firstName).subscribe({
-      next: (data) => {
-        console.log(data.userId);
-        
-        this.showMessage('success', 'Successful', 'Candidate added to User list.')
-      },
-      error: (error) => console.error(error),
-    }
-    )
+  createNewUser(candidate: Participant) {
+    const generatedPassword = this.generateRandomPassword(8);
 
+    this.authService
+      .createUser(
+        candidate.email as string,
+        generatedPassword,
+        candidate.firstName,
+      )
+      .subscribe({
+        next: (data) => {
+          console.log(data.userId);
+
+          this.showMessage(
+            'success',
+            'Successful',
+            'Candidate added to User list.',
+          );
+        },
+        error: (error) => console.error(error),
+      });
   }
 
   deleteCandidate(candidate: Participant) {
@@ -145,7 +189,7 @@ export class DetailCourseComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.registrationService.delete(candidate.id);
-        this.showMessage('success', 'Successful', 'Candidate Deleted')
+        this.showMessage('success', 'Successful', 'Candidate Deleted');
       },
     });
   }
@@ -179,23 +223,31 @@ export class DetailCourseComponent implements OnInit {
       .create(newRegistration)
       .then((data) => {
         if (data) {
-          this.showMessage('success', 'Successful', 'Thank you for your apply. We will contact with you!')
+          this.showMessage(
+            'success',
+            'Successful',
+            'Thank you for your apply. We will contact with you!',
+          );
         }
         this.form.reset();
         this.closeDialog();
       })
       .catch((error) => {
-        this.showMessage('error', 'There is an error', error)
+        this.showMessage('error', 'There is an error', error);
       });
   }
 
-
-  showMessage(severity?:string, summary?:string, detail?: string, life?:number){
+  showMessage(
+    severity?: string,
+    summary?: string,
+    detail?: string,
+    life?: number,
+  ) {
     this.messageService.add({
       severity: severity,
       summary: summary,
       detail: detail,
-      life: life ? life : 3000 ,
+      life: life ? life : 3000,
     });
   }
 
@@ -207,17 +259,15 @@ export class DetailCourseComponent implements OnInit {
     this.visible = false;
   }
 
-  generateRandomPassword(passlength:number) {
+  generateRandomPassword(passlength: number) {
     return Array(passlength)
       .fill(
-        "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        '0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ',
       )
       .map(function (x) {
         const pwd = Math.floor(Math.random() * x.length);
         return x.substring(pwd, pwd + 1);
       })
-      .join("");
-  };
-
-
+      .join('');
+  }
 }

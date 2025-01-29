@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
@@ -13,16 +13,16 @@ import { User, UserRole } from 'src/app/shared/user/user.model';
   providedIn: 'root',
 })
 export class AuthService {
+  afs = inject(AngularFirestore);
+  afAuth = inject(AngularFireAuth);
+  router = inject(Router);
+  private functions = inject(AngularFireFunctions);
+
   userData: any;
   userSubject = new BehaviorSubject<User | null>(null);
   hasToken = new BehaviorSubject<boolean>(false);
 
-  constructor(
-    public afs: AngularFirestore,
-    public afAuth: AngularFireAuth,
-    public router: Router,
-    private functions: AngularFireFunctions
-  ) {
+  constructor() {
     const currenUser = localStorage.getItem('user');
 
     this.afAuth.authState.subscribe((user) => {
@@ -58,7 +58,7 @@ export class AuthService {
     email: string,
     password: string,
     sendMail: boolean,
-    name?: string
+    name?: string,
   ) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
@@ -82,7 +82,7 @@ export class AuthService {
 
   setUserData(user: any, name: string) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `users/${user.uid}`
+      `users/${user.uid}`,
     );
     const userData: User = {
       uid: user.uid,
@@ -125,7 +125,7 @@ export class AuthService {
       catchError((error) => {
         console.error('error by user creation', error);
         return of(null);
-      })
+      }),
     );
   }
 }

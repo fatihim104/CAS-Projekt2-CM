@@ -1,6 +1,5 @@
 describe('Course page Test', () => {
   beforeEach(() => {
-
     cy.wait(2000);
     cy.visit('/');
     cy.wait(2000);

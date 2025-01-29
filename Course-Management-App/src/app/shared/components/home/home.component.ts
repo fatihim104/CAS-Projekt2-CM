@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-    selector: 'home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.scss']
+  selector: 'home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.scss'],
+  standalone: true,
 })
-
 export class HomeComponent implements OnInit {
-    greeting:string="Hallo"
-    
-    constructor(public router: Router) { }
+  router = inject(Router);
 
-    ngOnInit() { }
+  greeting: string = 'Hallo';
+
+  ngOnInit() {}
 }

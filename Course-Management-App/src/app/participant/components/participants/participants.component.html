@@ -13,46 +13,48 @@
 
   <div
     class="card flex flex-column md:flex-row justify-content-between flex-wrap"
-    [ngClass]="students?.length < 5 ? 'justify-content-start' : 'justify-content-between'"
-    >
+    [ngClass]="
+      students?.length < 5 ? 'justify-content-start' : 'justify-content-between'
+    "
+  >
     @for (student of students; track student) {
       <p-card
         header="{{ student.firstName + ' ' + student.lastName }}"
         [style]="{ width: '250px' }"
         class="mb-4"
         [ngClass]="students.length < 5 ? 'with-margin' : 'without-margin'"
-        >
+      >
         <ng-template pTemplate="header">
           <img
             alt="Card"
             src="https://primefaces.org/cdn/primeng/images/usercard.png"
-            />
-          </ng-template>
-          <ng-template pTemplate="footer">
-            <p-button
-              pTooltip="Detail"
-              [outlined]="true"
-              icon="pi pi-eye"
-              routerLink="/participants/detail/{{ student.id }}"
-              styleClass="p-button-warning"
-            ></p-button>
-            <p-button
-              pTooltip="Edit"
-              [outlined]="true"
-              icon="pi pi-pencil"
-              routerLink="/participants/edit/{{ student.id }}"
-              [style]="{ 'margin-left': '.5em', }"
-            ></p-button>
-            <p-button
-              pTooltip="Delete"
-              [outlined]="true"
-              icon="pi pi-trash"
-              styleClass="p-button-danger"
-              (click)="deleteStudent(student)"
-              [style]="{ 'margin-left': '.5em' }"
-            ></p-button>
-          </ng-template>
-        </p-card>
-      }
-    </div>
+          />
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <p-button
+            pTooltip="Detail"
+            [outlined]="true"
+            icon="pi pi-eye"
+            routerLink="/participants/detail/{{ student.id }}"
+            styleClass="p-button-warning"
+          ></p-button>
+          <p-button
+            pTooltip="Edit"
+            [outlined]="true"
+            icon="pi pi-pencil"
+            routerLink="/participants/edit/{{ student.id }}"
+            [style]="{ 'margin-left': '.5em' }"
+          ></p-button>
+          <p-button
+            pTooltip="Delete"
+            [outlined]="true"
+            icon="pi pi-trash"
+            styleClass="p-button-danger"
+            (click)="deleteStudent(student)"
+            [style]="{ 'margin-left': '.5em' }"
+          ></p-button>
+        </ng-template>
+      </p-card>
+    }
   </div>
+</div>

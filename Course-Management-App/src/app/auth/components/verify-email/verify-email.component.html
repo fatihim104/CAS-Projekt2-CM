@@ -2,30 +2,20 @@
   <h3>Thank You for Registering</h3>
   @if (authService.userData; as user) {
     <div class="formGroup">
-      <p >
+      <p>
         We have sent a confirmation email to <strong>{{ user.email }}</strong
         >.
       </p>
-      <p >
+      <p>
         Please check your email and click on the link to verfiy your email
         address.
       </p>
     </div>
   }
   <div class="mb-4">
-    <p-button
-      severity="secondary"
-      (click)="authService.sendVerificationMail()"
-      >
+    <p-button severity="secondary" (click)="authService.sendVerificationMail()">
       Resend Verification Email
     </p-button>
   </div>
-  <span
-    >Go back to?<a  routerLink="/auth/sign-in">
-    Sign in</a
-    ></span
-    >
-  </div>
-
-
-
+  <span>Go back to?<a routerLink="/auth/sign-in"> Sign in</a></span>
+</div>

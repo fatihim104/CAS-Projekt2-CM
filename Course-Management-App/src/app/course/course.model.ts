@@ -1,4 +1,3 @@
-
 import { Participant } from '../participant/participant.model';
 import { Team } from '../team/team.model';
 import { Timestamp } from 'firebase/firestore';

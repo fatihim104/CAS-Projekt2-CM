@@ -38,9 +38,7 @@ exports.sendWelcomeEmail = functions.firestore
     }
   });
 
-
 exports.createUser = functions.https.onCall((data, context) => {
-
   return admin
     .auth()
     .createUser({

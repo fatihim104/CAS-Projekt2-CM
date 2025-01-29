@@ -23,7 +23,7 @@ import { AddParticipantComponent } from './components/add-participant/add-partic
 import { DetailParticipantComponent } from './components/detail-participant/detail-participant.component';
 import { EditParticipantComponent } from './components/edit-participant/edit-participant.component';
 import { AdminGuard } from '../shared/guard/admin.guard';
-import { SharedModule } from '../shared/shared.module';
+
 import { FieldsetModule } from 'primeng/fieldset';
 
 const routes: Routes = [
@@ -31,20 +31,25 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', component: ParticipantsComponent },
-      { path: 'participants/add', component: AddParticipantComponent, canActivate:[AdminGuard] },
-      { path: 'participants/edit/:id', component: EditParticipantComponent, canActivate:[AdminGuard] },
-      { path: 'participants/detail/:id', component: DetailParticipantComponent },
+      {
+        path: 'participants/add',
+        component: AddParticipantComponent,
+        canActivate: [AdminGuard],
+      },
+      {
+        path: 'participants/edit/:id',
+        component: EditParticipantComponent,
+        canActivate: [AdminGuard],
+      },
+      {
+        path: 'participants/detail/:id',
+        component: DetailParticipantComponent,
+      },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [
-    ParticipantsComponent,
-    AddParticipantComponent,
-    DetailParticipantComponent,
-    EditParticipantComponent,
-  ],
   imports: [
     CommonModule,
     ButtonModule,
@@ -62,12 +67,13 @@ const routes: Routes = [
     DividerModule,
     ConfirmDialogModule,
     FieldsetModule,
-    SharedModule,
     RouterModule.forChild(routes),
+    ParticipantsComponent,
+    AddParticipantComponent,
+    DetailParticipantComponent,
+    EditParticipantComponent,
   ],
-  exports:[],
-  providers:[MessageService, ConfirmationService]
+  exports: [],
+  providers: [MessageService, ConfirmationService],
 })
-export class ParticipantModule {
-  
-}
+export class ParticipantModule {}

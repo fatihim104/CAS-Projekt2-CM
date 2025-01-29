@@ -1,24 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Participant } from 'src/app/participant/participant.model';
 import { ParticipantService } from 'src/app/participant/services/participant.service';
 import { Location } from '@angular/common';
+import { HeaderPageComponent } from '../../../shared/components/header-page/header-page.component';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-edit-participant',
   templateUrl: './edit-participant.component.html',
   styleUrls: ['./edit-participant.component.scss'],
-  providers: [ MessageService],
+  providers: [MessageService],
+  standalone: true,
+  imports: [
+    HeaderPageComponent,
+    ReactiveFormsModule,
+    InputTextModule,
+    CalendarModule,
+    ButtonModule,
+    ToastModule,
+  ],
 })
 export class EditParticipantComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private participantService = inject(ParticipantService);
+  private activatedRoute = inject(ActivatedRoute);
+  private location = inject(Location);
+  private router = inject(Router);
+  private messageService = inject(MessageService);
+
   students!: Participant[];
   languageOptions: { label: string }[] = [];
   levelOptions: { label: string }[] = [];
 
-  selectedStudent:any;
-  selectedStudentId:string="";
+  selectedStudent: any;
+  selectedStudentId: string = '';
 
   form: FormGroup = new FormGroup({
     firstName: new FormControl(''),
@@ -31,24 +59,18 @@ export class EditParticipantComponent implements OnInit {
     completedCourses: new FormControl([]),
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private participantService: ParticipantService,
-    private activatedRoute: ActivatedRoute,
-    private location: Location,
-    private router: Router,
-    private messageService: MessageService
-  ) {}  
-
   ngOnInit(): void {
     this.getForm();
-    this.selectedStudentId = this.activatedRoute.snapshot.paramMap.get('id')!
-    this.participantService.getParticipant(this.selectedStudentId).subscribe((participant:any) => {
-      this.selectedStudent = participant;
-      this.form.patchValue(this.selectedStudent)
-      this.form.controls['birthDay'].patchValue(this.selectedStudent.birthDay?.toDate())
-    })
-
+    this.selectedStudentId = this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.participantService
+      .getParticipant(this.selectedStudentId)
+      .subscribe((participant: any) => {
+        this.selectedStudent = participant;
+        this.form.patchValue(this.selectedStudent);
+        this.form.controls['birthDay'].patchValue(
+          this.selectedStudent.birthDay?.toDate(),
+        );
+      });
   }
 
   getForm() {
@@ -72,37 +94,36 @@ export class EditParticipantComponent implements OnInit {
   }
 
   save(): void {
-       
     if (this.form.invalid) {
       return;
     }
 
-    this.participantService.update(this.selectedStudentId, this.form.value).then(() => {
-    
-      this.messageService.add({
-        key: 'tl',
-        severity: 'success',
-        summary: 'Participant updated',
+    this.participantService
+      .update(this.selectedStudentId, this.form.value)
+      .then(() => {
+        this.messageService.add({
+          key: 'tl',
+          severity: 'success',
+          summary: 'Participant updated',
+        });
+
+        setTimeout(() => {
+          this.goBack();
+        }, 1000);
+      })
+      .catch((error: any) => {
+        console.log(error);
+
+        this.messageService.add({
+          key: 'tl',
+          severity: 'error',
+          summary: 'There is an error',
+          detail: error,
+        });
       });
-      
-      setTimeout(() => {
-        this.goBack()
-      }, 1000);
-      }
-    ).catch((error:any) => {
-      console.log(error);
-      
-      this.messageService.add({
-        key: 'tl',
-        severity: 'error',
-        summary: 'There is an error',
-        detail: error,
-      });
-    })
   }
 
   goBack(): void {
     this.location.back();
   }
-
 }
